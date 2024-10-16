@@ -26,7 +26,8 @@
 		game.value.setup()
 	})
 
-	watch(() => store.isGameOver, () => {
+	watch(() => store.isGameOver, (v) => {
+		if (v) return
 		game.value.reset()
 	})
 
