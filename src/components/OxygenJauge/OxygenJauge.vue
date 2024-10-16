@@ -1,5 +1,5 @@
 <script setup>
-	import { inject } from "vue"
+	import { inject, computed } from "vue"
 
 	const props = defineProps({
 		player: {
@@ -9,7 +9,11 @@
 	})
 
 	const game = inject("game")
-	console.log(game.value)
+
+	let player1Oxygen = computed(() => game.value ? game.value.player1OxygenRef.value : 100)
+	let player2Oxygen = computed(() => game.value ? game.value.player2OxygenRef.value : 100)
+
+	const oxygen = props.player === 1 ? player1Oxygen : player2Oxygen
 </script>
 
 <template>
@@ -23,7 +27,7 @@
 			class="progress"
 			:style="
 				{
-					transform: 'scaleY(' + progress / 100 + ')',
+					transform: 'scaleY(' + oxygen / 100 + ')',
 				}
 			"
 		/>
@@ -41,17 +45,11 @@
 		width: 1.5rem;
 
 		.progress {
+			@include inset(0);
+
 			background-color: red;
-			height: 100%;
-
-			// @include inset(0, absolute);
-
-			// background-color: red;
-
-			// height: 100%;
-			// width: 100%;
 			transform-origin: bottom;
-			width: 100%;
+			transition: transform 0s;
 		}
 
 		&.player-1 {
