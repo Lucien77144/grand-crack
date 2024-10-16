@@ -3,7 +3,7 @@
 	import { onMounted, onBeforeUnmount, provide, shallowRef } from "vue"
 	import { useRaf } from "@/composables/useRaf/useRaf"
 	import { Game } from "@/game/Game"
-	import Desk from "@/components/Desk/Desk.vue"
+	import KitchenPlan from "@/components/KitchenPlan/KitchenPlan.vue"
 	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
 
 	const $$canvasWrapper = shallowRef()
@@ -33,7 +33,7 @@
 	<!-- <RouterView /> -->
 	<main class="site-wrapper">
 		<div ref="$$canvasWrapper" />
-		<Desk />
+		<KitchenPlan />
 		<OxygenJauge :player="1" />
 		<OxygenJauge :player="2" />
 	</main>
