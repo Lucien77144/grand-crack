@@ -1,0 +1,38 @@
+{
+  "name": "ete-96",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "gen": "node generateAssets.js"
+  },
+  "dependencies": {
+    "@stylistic/stylelint-config": "^1.0.1",
+    "@stylistic/stylelint-plugin": "^2.1.0",
+    "gl-perf": "^0.0.9",
+    "glslify": "^7.1.1",
+    "gsap": "^3.12.5",
+    "howler": "^2.2.4",
+    "lil-gui": "^0.19.2",
+    "stats.js": "^0.17.0",
+    "three": "^0.158.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.4.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-vue": "^9.22.0",
+    "postcss-html": "^1.6.0",
+    "sass": "^1.69.5",
+    "stylelint": "^16.2.1",
+    "stylelint-config-recommended-vue": "^1.5.0",
+    "stylelint-config-standard-scss": "^13.0.0",
+    "stylelint-order": "^6.0.4",
+    "vite": "^4.4.11",
+    "vite-plugin-glsl": "^1.2.1"
+  }
+}

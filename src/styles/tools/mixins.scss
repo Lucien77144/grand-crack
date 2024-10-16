@@ -1,0 +1,90 @@
+@use "sass:math";
+@use "sass:list";
+
+@mixin grid($col, $col-gap, $row-gap) {
+	align-items: flex-start;
+	display: grid;
+	gap: $row-gap $col-gap;
+	grid-template-columns: repeat($col, 1fr);
+}
+
+@mixin inset($position: absolute, $top, $right: $top, $bottom: $top, $left: $right) {
+	inset: $top $right $bottom $left;
+	position: $position;
+}
+
+@mixin reset-appearance() {
+	appearance: none;
+	background: none;
+	border: none;
+	border-radius: 0;
+	border-radius: none;
+	font: inherit;
+	letter-spacing: inherit;
+	outline: none;
+	resize: none;
+}
+
+@mixin between($min, $max) {
+	@media (min-width: #{ $min }) and (max-width: #{ $max - 1px }) {
+		@content;
+	}
+}
+
+@mixin below($max) {
+	@media (max-width: #{ $max - 1px }) {
+		@content;
+	}
+}
+
+@mixin above($min) {
+	@media (min-width: #{ $min }) {
+		@content;
+	}
+}
+
+@function lerp($from-bp, $from, $to-bp, $to, $raw: false) {
+	$m: math.div(($to - $from), ($to-bp - $from-bp));
+	$b: $from - $m * $from-bp;
+	$sign: "+";
+
+	@if $b < 0 {
+		$sign: "-";
+		$b: math.abs($b);
+	}
+
+	@if $raw {
+		@return "#{$m * 100}vw #{$sign} #{$b}";
+	} @else {
+		@return calc(#{$m * 100}vw #{$sign} #{$b});
+	}
+}
+
+@mixin fluid-size($var, $bps, $demult: "h-demult") {
+	$demult: "--" + $demult;
+	$key: "--" + $var;
+	$last: list.length($bps);
+
+	@each $sizeObj in $bps {
+		$index: list.index($bps, $sizeObj);
+		$prev-size-obj: list.nth($bps, math.max(1, $index - 1));
+		$prev-bp: list.nth($prev-size-obj, 1);
+		$prev-size: list.nth($prev-size-obj, 2);
+		$bp: list.nth($sizeObj, 1);
+		$size: list.nth($sizeObj, 2);
+
+		@if $index == 1 {
+			#{$key}: calc((#{$size}) * var(#{$demult}, 1));
+		} @else if ($size - $prev-size) > 1px {
+			@include between($prev-bp, $bp) {
+				#{$key}: calc((#{lerp($prev-bp, $prev-size, $bp, $size, true)}) * var(#{$demult}, 1));
+			}
+		}
+
+		@if $index == $last {
+			@include above($bp) {
+				#{$key}: calc((#{$size}) * var(#{$demult}, 1));
+			}
+		}
+	}
+}

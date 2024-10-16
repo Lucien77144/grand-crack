@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "@stylistic/stylelint-config",
+    "stylelint-config-standard-scss",
+    "stylelint-config-recommended-vue/scss"
+  ],
+  "plugins": ["stylelint-order"],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": true,
+    "order/properties-alphabetical-order": true,
+    "@stylistic/indentation": ["tab", {
+      "baseIndentLevel": 1
+    }],
+    "scss/dollar-variable-empty-line-before": null,
+    "@stylistic/block-closing-brace-newline-after": null,
+    "at-rule-empty-line-before": null
+  }
+}
