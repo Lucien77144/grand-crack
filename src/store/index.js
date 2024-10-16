@@ -14,4 +14,5 @@ export const store = reactive({
 			score: 0,
 		}
 	],
+	isGameOver: false,
 })

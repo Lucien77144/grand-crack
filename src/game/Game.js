@@ -1,6 +1,7 @@
 import PixiApplication from "./pixi/PixiApplication"
 import PixiSprite from "./pixi/PixiSprite"
 import { shallowRef } from "vue"
+import { store } from "@/store"
 
 const OXYGEN_DECAY_RATE = 0.02
 
@@ -10,7 +11,7 @@ export class Game {
 	existingIngredientList = {}
 	stationsList = []
 
-	// TODO! - Delete these variables and put them inside a Player class
+	// TODO! - Put this inside a Player class
 	player1Oxygen = 100
 	player2Oxygen = 100
 
@@ -46,17 +47,29 @@ export class Game {
 			})
 		})
 
-		// TODO! - Replace this later
+		// TODO! - Replace this later with AXIS inputs
 		document.addEventListener("click", () => {
 			if (this.player1Oxygen >= 100) return
 			this.player1Oxygen += 2
 		})
+
+		document.addEventListener("contextmenu", (e) => {
+			e.preventDefault()
+			if (this.player2Oxygen >= 100) return
+			this.player2Oxygen += 2
+		})
 	}
 
 	update(dt, t) {
-		// console.log("Game update")
-		if (this.pixiSprite) {
-			this.pixiSprite.update(t)
+		if (store.isGameOver) return
+
+		if (this.pixiSprite) this.pixiSprite.update(t)
+
+		// TODO! - Handle this in a Player class later
+		if (this.player1Oxygen < 0 || this.player2Oxygen < 0) {
+			console.log("Game over")
+			store.isGameOver = true
+			return
 		}
 
 		this.player1Oxygen -= OXYGEN_DECAY_RATE
@@ -65,6 +78,13 @@ export class Game {
 		// HACK - Mutate the ref separately and use Math.round to limit the number of computations
 		this.player1OxygenRef.value = Math.round(this.player1Oxygen * 10) / 10
 		this.player2OxygenRef.value = Math.round(this.player2Oxygen * 10) / 10
+	}
+
+	reset() {
+		this.player1Oxygen = 100
+		this.player2Oxygen = 100
+		this.player1OxygenRef.value = 100
+		this.player2OxygenRef.value = 100
 	}
 
 	destroy() {

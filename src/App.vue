@@ -1,10 +1,12 @@
 <script setup>
 	import { RouterView } from "vue-router"
-	import { onMounted, onBeforeUnmount, provide, shallowRef } from "vue"
+	import { onMounted, onBeforeUnmount, provide, shallowRef, watch } from "vue"
 	import { useRaf } from "@/composables/useRaf/useRaf"
 	import { Game } from "@/game/Game"
 	import KitchenPlan from "@/components/KitchenPlan/KitchenPlan.vue"
 	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
+	import GameOver from "@/components/GameOver/GameOver.vue"
+	import { store } from "@/store"
 
 	const $$canvasWrapper = shallowRef()
 
@@ -24,6 +26,10 @@
 		game.value.setup()
 	})
 
+	watch(() => store.isGameOver, () => {
+		game.value.reset()
+	})
+
 	onBeforeUnmount(() => {
 		game.value.destroy()
 	})
@@ -33,6 +39,7 @@
 	<!-- <RouterView /> -->
 	<main class="site-wrapper">
 		<div ref="$$canvasWrapper" />
+		<GameOver v-if="store.isGameOver" />
 		<KitchenPlan />
 		<OxygenJauge :player="1" />
 		<OxygenJauge :player="2" />
