@@ -110,8 +110,8 @@ $mq-show-breakpoints: (
 @if length($mq-show-breakpoints) > 0 {
 	body::before {
 		background-color: #fcf8e3;
-		border-bottom: 1px solid #fbeed5;
-		border-left: 1px solid #fbeed5;
+		border-bottom: 0.05rem solid #fbeed5;
+		border-left: 0.05rem solid #fbeed5;
 		color: #c09853;
 		font: small-caption;
 		padding: 3px 6px;
