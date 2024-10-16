@@ -5,6 +5,8 @@
 	import { Game } from "@/game/Game"
 	import Desk from "@/components/Desk/Desk.vue"
 
+	const $$canvasWrapper = shallowRef();
+
 	// Game state
 	let game = shallowRef()
 	let t = 0
@@ -17,7 +19,7 @@
 	})
 
 	onMounted(() => {
-		game.value = new Game()
+		game.value = new Game($$canvasWrapper.value)
 		game.value.setup()
 	})
 
@@ -27,6 +29,7 @@
 </script>
 
 <template>
+	<div ref="$$canvasWrapper"></div>
 	<Oxygen :player="1" />
 	<Oxygen :player="2" />
 	<Desk />
