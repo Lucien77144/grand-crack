@@ -3,6 +3,7 @@
 	import { onMounted, onBeforeUnmount, provide, shallowRef } from "vue"
 	import { useRaf } from "@/composables/useRaf/useRaf"
 	import { Game } from "@/game/Game"
+	import Desk from "@/components/Desk/Desk.vue"
 
 	// Game state
 	let game = shallowRef()
@@ -26,5 +27,8 @@
 </script>
 
 <template>
-	<RouterView />
+	<Oxygen :player="1" />
+	<Oxygen :player="2" />
+	<Desk />
+	<!-- <RouterView /> -->
 </template>

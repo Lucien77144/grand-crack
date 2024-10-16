@@ -9,15 +9,17 @@ export class CookingStation {
 
 	constructor() {}
 
-	addInteractorPlayer(player) {}
+	addInteractingPlayer(player) {}
 
-	_startTimer() {}
+	removeInteractingPlayer() {}
 
-	_stopTimer() {}
+	__startTimer() {}
 
-	_checkCanInteractWith() {}
+	__stopTimer() {}
 
-	_success() {}
+	__checkCanInteractWith() {}
 
-	_fail() {}
+	__success() {}
+
+	__fail() {}
 }
