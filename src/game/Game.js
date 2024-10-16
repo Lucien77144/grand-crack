@@ -1,11 +1,13 @@
 import PixiApplication from "./pixi/PixiApplication"
-import PixiSprite from "./pixi/PixiSprite"
 import { shallowRef } from "vue"
 import { store } from "@/store"
 
 const OXYGEN_DECAY_RATE = 0.02
+import InputSet from "./InputSet";
+import Player from "@/game/player/Player";
 
 export class Game {
+	static instance
 	isPaused = false
 	soundManager = null
 	existingIngredientList = {}
@@ -19,6 +21,11 @@ export class Game {
 	player2OxygenRef = shallowRef(100)
 
 	constructor(canvasWrapper) {
+		if(Game.instance){
+			return Game.instance
+		}
+
+		Game.instance = this
 		this.canvasWrapper = canvasWrapper
 	}
 
@@ -37,14 +44,19 @@ export class Game {
 
 	setup() {
 		console.log("Game setup")
+		// Initialize InputSet
+		InputSet.emulateKeyboard()
+		InputSet.emulateGamePad()
+		InputSet.initPlayersInputs()
 
-		this.pixiApplication = new PixiApplication(this.canvasWrapper)
+
+		this.pixiApplication = new PixiApplication()
+
 		this.initApplication(this.pixiApplication).then(async () => {
 			// Objects
-			this.pixiSprite = new PixiSprite("https://pixijs.com/assets/bunny.png")
-			await this.pixiSprite.init().then((sprite) => {
-				this.pixiApplication.appendToStage(sprite)
-			})
+			this.playerA = new Player(1,"https://pixijs.com/assets/bunny.png")
+			await this.playerA.initPixiSprite()
+			this.playerA.addInputsListener()
 		})
 
 		// TODO! - Replace this later with AXIS inputs
@@ -63,7 +75,11 @@ export class Game {
 	update(dt, t) {
 		if (store.isGameOver) return
 
-		if (this.pixiSprite) this.pixiSprite.update(t)
+
+		InputSet.update()
+		if(this.playerA) {
+			this.playerA.update(dt,t)
+		}
 
 		// TODO! - Handle this in a Player class later
 		if (this.player1Oxygen < 0 || this.player2Oxygen < 0) {
