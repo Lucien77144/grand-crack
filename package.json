@@ -12,6 +12,7 @@
   "dependencies": {
     "@stylistic/stylelint-config": "^1.0.1",
     "@stylistic/stylelint-plugin": "^2.1.0",
+    "axis-api": "github:gobelins-axis/axis-api",
     "gl-perf": "^0.0.9",
     "glslify": "^7.1.1",
     "gsap": "^3.12.5",
