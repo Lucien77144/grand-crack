@@ -4,8 +4,9 @@
 	import { useRaf } from "@/composables/useRaf/useRaf"
 	import { Game } from "@/game/Game"
 	import Desk from "@/components/Desk/Desk.vue"
+	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
 
-	const $$canvasWrapper = shallowRef();
+	const $$canvasWrapper = shallowRef()
 
 	// Game state
 	let game = shallowRef()
@@ -29,9 +30,19 @@
 </script>
 
 <template>
-	<div ref="$$canvasWrapper"></div>
-	<Oxygen :player="1" />
-	<Oxygen :player="2" />
-	<Desk />
 	<!-- <RouterView /> -->
+	<main class="site-wrapper">
+		<div ref="$$canvasWrapper" />
+		<Desk />
+		<OxygenJauge :player="1" />
+		<OxygenJauge :player="2" />
+	</main>
 </template>
+
+<style lang="scss" scoped>
+	.site-wrapper {
+		height: 100%;
+		position: relative;
+		width: 100%;
+	}
+</style>

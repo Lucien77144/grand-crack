@@ -19,15 +19,15 @@
 	<div class="desk">
 		<div class="container">
 			<div
-				class="cooking-station"
 				v-for="(station, i) in stations"
 				:key="i"
+				class="cooking-station"
 			>
-				<img
+				<!-- <img
 					:src="station.icon"
 					alt=""
-				>
-				<p v-html="station.name"></p>
+				> -->
+				<p v-html="station.name" />
 			</div>
 		</div>
 	</div>
@@ -43,16 +43,20 @@
 		width: 100%;
 
 		.container {
-			border: 1px solid blue;
-			display: flex;
+			display: grid;
+			gap: 2rem;
+			grid-template-columns: repeat(3, 1fr);
 			height: 100%;
-			justify-content: space-evenly;
 			padding: 2rem;
 			width: 100%;
 		}
 
 		.cooking-station {
-			// ...
+			align-items: center;
+			border: 1px solid black;
+			display: flex;
+			justify-content: center;
+			width: 100%;
 		}
 	}
 </style>
