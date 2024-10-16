@@ -36,7 +36,7 @@
 
 <style lang="scss" scoped>
 	.oxygen-jauge {
-		border: 1px solid black;
+		border: 0.05rem solid black;
 		border-radius: 1rem;
 		height: 15rem;
 		overflow: hidden;
