@@ -1,7 +1,0 @@
-@font-face {
-	font-family: OldNewspaperTypes;
-	src:
-		url("./OldNewspaperTypes.ttf") format("truetype"),
-		url("./OldNewspaperTypes.woff") format("woff"),
-		url("./OldNewspaperTypes.woff2") format("woff2");
-}
