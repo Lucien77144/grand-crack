@@ -1,21 +1,23 @@
 html {
-	font-size: 62.5%;
-	height: 100%;
-	left: 0;
-	line-height: 1;
-	position: relative;
-	top: 0;
-	width: 100%;
+	@include inset(0, fixed);
+
+	font-size: 20px;
+
+	/*
+	This is a base font size for the entire project
+	In dev mode, the original font-size is 20px and every component uses rem units
+	When the project is built, the font-size needs to be changed to match the arcade machine
+	20px corresponds to a 1280x720 resolution
+	The arcade machine has a 5120x2880 resolution
+	The font-size should be four times bigger (80px) in production.
+	*/
+
+	overflow: hidden;
 }
 
 body {
-	font-size: 1.6rem;
-	font-weight: 400;
-	height: 100%;
-	left: 0;
-	line-height: 1.618;
-	position: relative;
-	top: 0;
+	@include inset(0, fixed);
+
+	overflow: hidden;
 	user-select: none;
-	width: 100%;
 }

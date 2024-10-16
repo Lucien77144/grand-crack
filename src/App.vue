@@ -36,6 +36,9 @@
 		<KitchenPlan />
 		<OxygenJauge :player="1" />
 		<OxygenJauge :player="2" />
+		<div class="background">
+			<img src="/assets/img/background.jpg" alt="background">
+		</div>
 	</main>
 </template>
 
@@ -44,5 +47,11 @@
 		height: 100%;
 		position: relative;
 		width: 100%;
+
+		.background {
+			@include inset(0, fixed);
+
+			z-index: -1;
+		}
 	}
 </style>

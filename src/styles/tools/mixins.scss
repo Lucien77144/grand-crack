@@ -8,8 +8,8 @@
 	grid-template-columns: repeat($col, 1fr);
 }
 
-@mixin inset($position: absolute, $top, $right: $top, $bottom: $top, $left: $right) {
-	inset: $top $right $bottom $left;
+@mixin inset($val: 0, $position: absolute) {
+	inset: $val $val $val $val;
 	position: $position;
 }
 

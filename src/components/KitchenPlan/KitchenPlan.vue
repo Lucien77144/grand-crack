@@ -35,7 +35,6 @@
 
 <style lang="scss" scoped>
 	.kitchen-plan {
-		border: 1px solid black;
 		bottom: 0;
 		height: 300px;
 		left: 0;
@@ -54,6 +53,7 @@
 		.cooking-station {
 			align-items: center;
 			border: 1px solid black;
+			border-radius: 1rem;
 			display: flex;
 			justify-content: center;
 			width: 100%;
