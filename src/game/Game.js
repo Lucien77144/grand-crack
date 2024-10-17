@@ -13,8 +13,11 @@ const recipes = [
 		name: "Recipe 1",
 		ingredients: [
 			{
-				name: "ingredient 1",
-				texture: "https://pixijs.com/assets/bunny.png",
+				name: "sardine",
+				texture: "/assets/sprites/ingredients/sardine.png",
+				atlasData: "/assets/sprites/ingredients/sardine.json",
+				animationName: "sardines",
+				size: .3,
 				spawnRate: 1000,
 				spawnZone: "zone1",
 				canMove: true,
