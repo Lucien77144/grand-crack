@@ -1,32 +1,33 @@
 import { CookingStation } from "./CookingStation"
-import PixiSprite from "@/game/pixi/PixiSprite";
+import PixiSprite from "@/game/pixi/PixiSprite"
 
 export class Cutter extends CookingStation {
 	currentClicks = 0
-	amount = 5
+	steps = null
 
 	constructor({ ...props }) {
 		super({ ...props })
 		this.timeLimit = 5000
-		this.action = "cut"
 	}
 
 	startTimer() {
+		this.steps = this.sprite.totalFrames
+
 		// TODO! - Replace this by AXIS input
 		this.sprite.interactive = true
 		this.sprite.buttonMode = true
 
 		this.sprite.on("pointerdown", () => {
-			if (this.currentClicks >= this.amount) return
+			if (this.currentClicks >= this.steps) return
 
 			this.currentClicks++
 			this.sprite.gotoAndStop(this.currentClicks)
 
-			if (this.currentClicks === this.amount) this.__success()
+			if (this.currentClicks === this.steps) this.__success()
 		})
 
 		this.timer = setTimeout(() => {
-			if (this.currentClicks < this.amount) this.__fail()
+			if (this.currentClicks < this.steps) this.__fail()
 		}, this.cookingTime)
 	}
 
@@ -52,6 +53,4 @@ export class Cutter extends CookingStation {
 	// setCanMove(canMove){
 	// 	this.canMove = canMove
 	// }
-
-
 }
