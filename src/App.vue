@@ -1,14 +1,18 @@
 <script setup>
-	import { RouterView } from "vue-router"
 	import { onMounted, onBeforeUnmount, provide, shallowRef, watch } from "vue"
 	import { useRaf } from "@/composables/useRaf/useRaf"
+	import { useSize } from "@/composables/useSize/useSize"
 	import { Game } from "@/game/Game"
-	import KitchenPlan from "@/components/KitchenPlan/KitchenPlan.vue"
+	import Kitchen from "@/components/Kitchen/Kitchen.vue"
 	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
 	import GameOver from "@/components/GameOver/GameOver.vue"
 	import { store } from "@/store"
 
-	const $$canvasWrapper = shallowRef()
+	const $$canvas = shallowRef()
+
+	const isKitchenVisible = shallowRef(true)
+
+	const { size } = useSize({ ref: $$canvas, cb: resize })
 
 	// Game state
 	let game = shallowRef()
@@ -22,8 +26,10 @@
 	})
 
 	onMounted(() => {
-		game.value = new Game($$canvasWrapper.value)
+		game.value = new Game($$canvas.value, size)
 		game.value.setup()
+
+		watch([ () => size ], resize)
 	})
 
 	watch(() => store.isGameOver, (v) => {
@@ -34,16 +40,30 @@
 	onBeforeUnmount(() => {
 		game.value.destroy()
 	})
+
+	function resize() {
+		if (!game.value || !$$canvas.value) return
+
+		// Resize canvas
+		game.value.resize(size)
+
+		// Resize UI
+		const screenWidth = window.innerWidth
+		const fontSize = screenWidth / 64
+		document.documentElement.style.fontSize = `${ fontSize }px`
+	}
 </script>
 
 <template>
-	<!-- <RouterView /> -->
 	<main class="site-wrapper">
-		<div ref="$$canvasWrapper" />
+		<button class="debug-button" @click="isKitchenVisible = !isKitchenVisible">
+			Toggle Kitchen DOM
+		</button>
 		<GameOver v-if="store.isGameOver" />
-		<KitchenPlan />
 		<OxygenJauge :player="1" />
 		<OxygenJauge :player="2" />
+		<Kitchen v-if="isKitchenVisible" />
+		<div ref="$$canvas" />
 		<div class="background">
 			<img src="/assets/img/background.jpg" alt="background">
 		</div>
@@ -55,6 +75,16 @@
 		height: 100%;
 		position: relative;
 		width: 100%;
+
+		.debug-button {
+			background-color: white;
+			border: 0.1rem solid white;
+			left: 50%;
+			position: absolute;
+			top: 1rem;
+			transform: translateX(-50%);
+			z-index: 1;
+		}
 
 		.background {
 			@include inset(0, fixed);

@@ -2,31 +2,24 @@
 	const stations = [
 		{
 			name: "cutter",
-			icon: "",
 		},
 		{
 			name: "mixer",
-			icon: "",
 		},
 		{
 			name: "baker",
-			icon: ""
 		}
 	]
 </script>
 
 <template>
-	<div class="kitchen-plan">
+	<div class="kitchen">
 		<div class="container">
 			<div
 				v-for="(station, i) in stations"
 				:key="i"
 				class="cooking-station"
 			>
-				<!-- <img
-					:src="station.icon"
-					alt=""
-				> -->
 				<p v-html="station.name" />
 			</div>
 		</div>
@@ -34,26 +27,29 @@
 </template>
 
 <style lang="scss" scoped>
-	.kitchen-plan {
+	.kitchen {
 		bottom: 0;
-		height: 300px;
+		height: 8rem;
 		left: 0;
+		margin: 0 auto;
+		pointer-events: none;
 		position: absolute;
 		width: 100%;
 
 		.container {
 			display: grid;
-			gap: 2rem;
+			gap: 1rem;
 			grid-template-columns: repeat(3, 1fr);
 			height: 100%;
-			padding: 2rem;
-			width: 100%;
+			margin: 0 auto;
+			width: 70%;
 		}
 
 		.cooking-station {
 			align-items: center;
-			border: 1px solid black;
+			border: 0.05rem solid white;
 			border-radius: 1rem;
+			color: white;
 			display: flex;
 			justify-content: center;
 			width: 100%;

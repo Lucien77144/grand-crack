@@ -7,13 +7,15 @@ export default class PixiApplication {
 			return PixiApplication.instance
 		}
 		PixiApplication.instance = this
+		console.log("init")
 	}
 
 	async init(wrapper, color = "#da0000") {
 		this.app = new Application()
-		await this.app.init({ backgroundAlpha: 0, resizeTo: window })
-		console.log(wrapper)
-		this.canvas = wrapper.appendChild(this.app.canvas)
+		await this.app.init({ backgroundAlpha: 0, resizeTo: window }).then(() => {
+			wrapper.appendChild(this.app.canvas)
+			this.canvas = this.app.canvas
+		})
 	}
 
 	appendToStage(elt) {

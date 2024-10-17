@@ -1,4 +1,4 @@
-# Forget Me Not
+# Gamejam 2024
 This template is a minimal starter to put you on track to develop with Vue 3, Vite and Three.js. It does not support Typescript.
 
 ## Features
@@ -6,7 +6,6 @@ This template is a minimal starter to put you on track to develop with Vue 3, Vi
 - Vue Router
 - Vite
 - SCSS
-- Three.js
 - State management
 - Minimal scaffold
 - ESLint + Editor Config + StyleLint
@@ -114,8 +113,3 @@ const { collectibles } = toRefs(store)
 
 ### StyleLint
 [...]
-
-### Starter Possible Improvements
-- Refactor the Camera, Helpers, and EventEmitter inside `webgl` folder
-- Fix stats.js (for now, it does not work)
-- Install GLSL plugin and glslify

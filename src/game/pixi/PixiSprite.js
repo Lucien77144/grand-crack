@@ -1,32 +1,36 @@
-import { Application, Assets, Sprite } from "pixi.js"
+import { Assets, Sprite } from "pixi.js"
 
 export default class PixiSprite {
-	constructor(src) {
+	constructor(src, x, y, size = 1, anchor = [ 0.5, 0.5 ]) {
 		this.src = src
+		this.x = x
+		this.y = y
+		this.size = size
+		this.anchor = anchor
 	}
 
 	async init() {
 		this.texture = await Assets.load(this.src)
 		this.sprite = new Sprite(this.texture)
 
-		this.sprite.anchor.set(0.5)
-		this.sprite.x = 200
-		this.sprite.y = 200
+		this.sprite.anchor.set(...this.anchor)
+		this.sprite.x = this.x
+		this.sprite.y = this.y
+
+		this.sprite.scale = this.size
+
 		return Promise.resolve(this.sprite)
 	}
 
-	update(t) {
-		if (this.sprite)
-			this.sprite.position.x = Math.sin(t * 0.001) * 300
-	}
+	update(dt, t) {}
 
 	setSpritePos(nextPos) {
 		this.sprite.position.set(nextPos.x, nextPos.y)
 	}
 
-	addVecPos(x,y){
+	addVecPos(x, y) {
 		this.sprite.x += x
-        this.sprite.y += y
+		this.sprite.y += y
 	}
 
 	setSpriteRotation(nextRotation) {
