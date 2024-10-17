@@ -1,0 +1,37 @@
+{
+  "textures": [
+    {
+      "name": "player",
+      "src": "https://pixijs.com/assets/bunny.png"
+    },
+    {
+      "name": "kitchen",
+      "src": "/assets/sprites/kitchen/kitchen.png"
+    },
+    {
+      "name": "baker",
+      "src": "/assets/sprites/baker/baker.png",
+      "atlasData": "/assets/sprites/baker/baker.json"
+    },
+    {
+      "name": "cutter",
+      "src": "/assets/sprites/cutter/cutter.png",
+      "atlasData": "/assets/sprites/cutter/cutter.json"
+    },
+    {
+      "name": "mixer",
+      "src": "/assets/sprites/mixer/mixer.png",
+      "atlasData": "/assets/sprites/mixer/mixer.json"
+    },
+    {
+      "name": "mushroom",
+      "src": "/assets/sprites/ingredients/mushroom.png",
+      "atlasData": "/assets/sprites/ingredients/mushroom.json"
+    },
+    {
+      "name": "sardine",
+      "src": "/assets/sprites/ingredients/sardine.png",
+      "atlasData": "/assets/sprites/ingredients/sardine.json"
+    }
+  ]
+}

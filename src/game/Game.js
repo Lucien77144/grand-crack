@@ -14,8 +14,6 @@ const recipes = [
 		ingredients: [
 			{
 				name: "sardine",
-				texture: "/assets/sprites/ingredients/sardine.png",
-				atlasData: "/assets/sprites/ingredients/sardine.json",
 				size: .3,
 				spawnRate: 2000,
 				spawnZone: "zone1",
@@ -26,8 +24,6 @@ const recipes = [
 			},
 			{
 				name: "mushroom",
-				texture: "/assets/sprites/ingredients/mushroom.png",
-				atlasData: "/assets/sprites/ingredients/mushroom.json",
 				size: .1,
 				spawnRate: 3000,
 				spawnZone: "zone2",
@@ -84,8 +80,6 @@ export class Game {
 		this.pixiApplication = new PixiApplication()
 		this.canvas = canvas
 		this.size = size
-
-		console.log(this.canvas)
 	}
 
 	async prepareCanvas(pixiApplication) {
@@ -97,8 +91,6 @@ export class Game {
 		this.existingIngredientList.push(ingredient)
 	}
 
-
-
 	setup() {
 		console.log("Game setup")
 
@@ -109,16 +101,18 @@ export class Game {
 
 		this.pixiApplication = new PixiApplication()
 
-		this.prepareCanvas(this.pixiApplication).then(async () => {
-			this.playerA = new Player(1, "https://pixijs.com/assets/bunny.png")
-			await this.playerA.initPixiSprite()
-			this.playerA.addInputsListener()
+		this.prepareCanvas(this.pixiApplication).then(() => {
+			this.player1 = new Player(1)
+			this.player1.addInputsListener()
+
+			this.player2 = new Player(2)
+			this.player2.addInputsListener()
+
+			this.kitchen = new Kitchen()
+			this.kitchen.setup()
 
 			this.ingredientManager = new IngredientManager(recipes)
 			this.ingredientManager.init()
-
-			this.kitchen = new Kitchen()
-			await this.kitchen.setup()
 		})
 	}
 
@@ -126,8 +120,8 @@ export class Game {
 		if (store.isGameOver) return
 
 		InputSet.update()
-		if (this.playerA) {
-			this.playerA.update(dt, t)
+		if (this.player1) {
+			this.player1.update(dt, t)
 		}
 
 		if (this.ingredientManager) {

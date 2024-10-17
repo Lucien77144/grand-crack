@@ -1,89 +1,101 @@
 import { v4 as uuidv4 } from "uuid"
-import PixiApplication from "@/game/pixi/PixiApplication"
-import { Assets, AnimatedSprite } from "pixi.js"
-
-
+import { Game } from "@/game/Game"
+import PixiSprite from "@/game/pixi/PixiSprite"
+import TextureLoader from "@/game/TextureLoader"
 export default class Ingredient {
 	#id
 	#name
-	#sprite
 	#canMove
 	#action
 	#isCooked
+	#inCooking = false
+	#speed = .5
 	#nbOfFrames = 0
 
-	constructor(ref, name, spritesheet, atlasData, size, x, canMove = true, action, isCooked = false) {
-		this.ref = ref
+	constructor(
+		ref,
+		name,
+		size,
+		x,
+		canMove = true,
+		action,
+		isCooked = false
+	) {
+		this.#game = new Game()
 		this.#id = uuidv4()
 		this.#name = name
-		this.spritesheet = spritesheet
-		this.atlasData = atlasData
-		this.size = size
-		this.x = x
+		this.#action = action
 		this.#canMove = canMove
-		// this.#action = new Action()
 		this.#isCooked = isCooked
+
+		this.ref = ref
+		this.x = x
+		this.size = size
+		this.tl = new TextureLoader()
+		this.textureData = this.tl.assetArray[ this.#name ]
 	}
 
 	setAnimatedSpriteFrame(frame) {
-		this.sprite.gotoAndStop(frame)
+		this.pixiSprite.gotoAndStop(frame)
 	}
 
-	async initPixiSprite() {
-		if (!this.spritesheet || !this.atlasData) return
-		const pixiApplication = new PixiApplication()
+	initPixiSprite() {
+		this.pixiSprite = new PixiSprite({
+			x: this.x,
+			y: 0,
+			size: 0.3,
+			action: this.#action,
+			animationName: this.#name,
+		}, this.textureData)
 
-		const sheetTexture = await Assets.load(this.spritesheet)
-		Assets.add({
-			alias: `atlas-${ this.#name }`,
-			src: this.atlasData,
-			data: { texture: sheetTexture }
-		})
-
-		const sheet = await Assets.load(`atlas-${ this.#name }`)
-
-		this.sprite = new AnimatedSprite(sheet.animations[ this.#name ])
-
-		this.#nbOfFrames = this.sprite.totalFrames
-
-		this.sprite.scale = this.size
-
-		this.sprite.x = this.x
-		this.sprite.y = 0
-
-		pixiApplication.appendToStage(this.sprite)
+		this.addInputOnA()
 	}
 
-	async create() {
+	create() {
 		try {
 			this.ref.addIngredient(this)
-			await this.initPixiSprite()
+			this.initPixiSprite()
 		} catch (error) {
 			console.error("Error creating ingredient:", error)
 		}
 	}
 
 	update(dt) {
-		if (this.sprite && this.sprite.position) {
-			this.sprite.position.y += 1 * dt / 16.666
+		this.updateGravity(dt)
+	}
 
-			if (this.sprite.position.y > window.innerHeight) {
-				this.destroy()
+	updateGravity(dt) {
+		// if (this.pixiSprite) {
+		// 	this.pixiSprite.position.y += dt * this.#speed
+
+		// 	if (this.pixiSprite.position.y > window.innerHeight) {
+		// 		this.destroy()
+		// 	}
+		// }
+	}
+
+	addInputOnA() {
+		const inputSet1 = this.#game.player1.inputSet
+		inputSet1.addEvent("a", this.checkCanInteract, this)
+
+		const inputSet2 = this.#game.player2.inputSet
+		inputSet2.addEvent("a", this.checkCanInteract, this)
+	}
+
+	checkCanInteract(e) {
+		const player = e.id === 1 ? this.#game.player1 : this.#game.player2
+		if (this.#canMove && !this.#inCooking && this.pixiSprite) {
+			if (player && PixiSprite.checkOverlap(player.pixiSprite.sprite, this.pixiSprite)) {
+				player.holdIngredient(this)
+				console.log("overlap P1")
 			}
 		}
 	}
 
 	destroy() {
 		this.ref.removeIngredient(this)
-		this.sprite.destroy()
-	}
-
-	getNbOfFrames() {
-		return this.#nbOfFrames
-	}
-
-	setNbOfFrames(nbOfFrames) {
-		this.#nbOfFrames = nbOfFrames
+		this.pixiSprite.destroy()
+		this.pixiSprite = null
 	}
 
 	getId() {
@@ -96,14 +108,6 @@ export default class Ingredient {
 
 	getName() {
 		return this.#name
-	}
-
-	setSprite(sprite) {
-		this.#sprite = sprite
-	}
-
-	getSprite() {
-		return this.#sprite
 	}
 
 	setCanMove(canMove) {

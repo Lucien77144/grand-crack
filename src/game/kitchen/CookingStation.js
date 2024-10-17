@@ -1,6 +1,9 @@
 import PixiApplication from "@/game/pixi/PixiApplication"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import { Assets, Sprite, AnimatedSprite } from "pixi.js"
+import { Game } from "@/game/Game"
+import TextureLoader from "@/game/TextureLoader"
+
 
 export class CookingStation {
 	player = null
@@ -11,46 +14,34 @@ export class CookingStation {
 	atlasData = null
 	action = ""
 	anim = null
+	game
 
 	constructor({ ...props }) {
 		this.x = props.x
 		this.y = props.y
+		this.action = props.action
 		this.size = props.size
 		this.spritesheet = props.spritesheet
 		this.atlasData = props.atlasData
 		this.pixiApplication = new PixiApplication()
+		this.game = new Game()
+		this.tl = new TextureLoader()
+		this.textureData = this.tl.assetArray[ props.action ]
+
+		this.initPixiSprite()
 	}
 
-	async initPixiSprite() {
-		const sheetTexture = await Assets.load(this.spritesheet)
-		Assets.add({
-			alias: "atlas",
-			src: this.atlasData,
-			data: { texture: sheetTexture }
-		})
-
-		const sheet = await Assets.load("atlas")
-		this.sprite = new AnimatedSprite(sheet.animations.cutter)
-		this.sprite.x = this.x
-		this.sprite.y = this.y
-
-		const reference = sheet.data.frames
-		let w
-		let h
-
-		// Get the first frame as a reference (because they all have the same size)
-		const keys = Object.keys(reference)
-		if (keys.length > 0) {
-			const firstKey = keys[ 0 ]
-			const firstValue = reference[ firstKey ]
-			w = firstValue.sourceSize.w
-			h = firstValue.sourceSize.h
-		}
-
-		this.sprite.width = this.size
-		this.sprite.height = this.size * (h / w)
-
-		this.pixiApplication.app.stage.addChild(this.sprite)
+	initPixiSprite() {
+		this.pixiSprite = new PixiSprite(
+			{
+				x: this.x,
+				y: this.y,
+				size: this.size,
+				anchor: [ 0, 0 ],
+				animationName: this.action,
+			},
+			this.textureData
+		)
 	}
 
 	addInteractingPlayer(player) {}

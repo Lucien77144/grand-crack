@@ -3,93 +3,88 @@ import { Game } from "@/game/Game"
 import { Cutter } from "./Cutter"
 import { Mixer } from "./Mixer"
 import { Baker } from "./Baker"
+import TextureLoader from "@/game/TextureLoader"
 
 const KITCHEN_PLAN_BASE_SIZE = 0.23
 const CUTTER_BASE_SIZE = 0.23
-const MIXER_BASE_SIZE = 0.3
-const BAKER_BASE_SIZE = 0.26
+const MIXER_BASE_SIZE = 0.23
+const BAKER_BASE_SIZE = 0.23
 
 export class Kitchen {
 	constructor() {
 		this.game = new Game()
 		this.canvas = this.game.canvas
 		this.size = this.game.size
+		this.tl = new TextureLoader()
+
+		this.textureDataKitchen = this.tl.assetArray[ "kitchen" ]
 	}
 
 	setup() {
 		this.createKitchenPlan()
 		this.createCutter()
-		// await this.createMixer()
-		// await this.createBaker()
+		this.createMixer()
+		this.createBaker()
 	}
 
 	addCookingStation(cookingStation) {
 		this.game.stationsList.push(cookingStation)
 	}
 
-	async createKitchenPlan() {
-		const size = KITCHEN_PLAN_BASE_SIZE
-		const src = "assets/sprites/kitchen.png"
+	createKitchenPlan() {
+		const size = KITCHEN_PLAN_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
 		const x = this.canvas.offsetWidth / 2
 		const y = this.canvas.offsetHeight
 		const anchor = [ 0.5, 1 ]
 
-		this.kitchen = new PixiSprite({ src, x, y, size, anchor })
-		await this.kitchen.init().then((sprite) => {
-			this.game.pixiApplication.appendToStage(sprite)
-		})
+		this.kitchen = new PixiSprite({ x, y, size, anchor }, this.textureDataKitchen)
 	}
 
-	async createCutter() {
-		const size = this.canvas.offsetWidth * CUTTER_BASE_SIZE
-		const x = this.canvas.offsetWidth / 6.5
-		const y = this.canvas.offsetHeight * 0.8
+	createCutter() {
+		const size = CUTTER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
+		const x = this.canvas.offsetWidth / 6.8
+		const y = this.canvas.offsetHeight * 0.79
 
+		// TODO! - The cutter has no spritesheet. But we need to place the ingredient sprite shit on it
 		this.cutter = new Cutter({
-			spritesheet: "assets/sprites/cutter/cutter.png",
-			atlasData: "assets/sprites/cutter/cutter.json",
 			x,
 			y,
 			size,
+			action: "cutter"
 		})
-		await this.cutter.initPixiSprite()
-		this.cutter.startTimer()
+
 		this.addCookingStation(this.cutter)
 	}
 
-	// async createMixer() {
-	// 	const size = this.canvas.offsetWidth * MIXER_BASE_SIZE
-	// 	const x = this.canvas.offsetWidth / 2
-	// 	const y = this.canvas.offsetHeight * 0.89
+	createMixer() {
+		const size = MIXER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
+		const x = this.canvas.offsetWidth / 2.9
+		const y = this.canvas.offsetHeight * 0.76
 
-	// 	this.mixer = new Mixer({
-	// 		texture: "assets/sprites/mixer.png",
-	// 		x,
-	// 		y,
-	// 		size
-	// 	})
+		this.mixer = new Mixer({
+			x,
+			y,
+			size,
+			action: "mixer"
+		})
 
-	// 	await this.mixer.initPixiSprite()
-	// 	this.mixer.startTimer()
-	// 	this.addCookingStation(this.mixer)
-	// }
+		this.addCookingStation(this.mixer)
+	}
 
-	// async createBaker() {
-	// 	const size = this.canvas.offsetWidth * BAKER_BASE_SIZE
-	// 	const x = this.canvas.offsetWidth / 1.38
-	// 	const y = this.canvas.offsetHeight * 0.87
+	createBaker() {
+		const size = BAKER_BASE_SIZE * (this.canvas.offsetWidth * 0.00076)
+		const x = this.canvas.offsetWidth / 1.7
+		const y = this.canvas.offsetHeight * 0.72
 
-	// 	this.baker = new Baker({
-	// 		texture: "assets/sprites/baker.png",
-	// 		x,
-	// 		y,
-	// 		size
-	// 	})
+		this.baker = new Baker({
+			x,
+			y,
+			size,
+			action: "baker"
+		})
 
-	// 	await this.baker.initPixiSprite()
-	// 	this.baker.startTimer()
-	// 	this.addCookingStation(this.baker)
-	// }
+		this.addCookingStation(this.baker)
+	}
 
 	update() {}
 }
