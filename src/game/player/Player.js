@@ -33,7 +33,8 @@ export default class Player {
 				x: 0,
 				y: 0,
 				size: 5,
-				anchor: [ 0.5, 0.5 ]
+				anchor: [ 0.5, 0.5 ],
+				zIndex: 3
 			},
 			this.textureData
 		)

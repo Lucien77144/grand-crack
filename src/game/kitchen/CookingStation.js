@@ -39,6 +39,7 @@ export class CookingStation {
 				size: this.size,
 				anchor: [ 0, 0 ],
 				animationName: this.action,
+				zIndex: 2
 			},
 			this.textureData
 		)

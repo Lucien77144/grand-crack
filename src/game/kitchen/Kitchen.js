@@ -36,8 +36,9 @@ export class Kitchen {
 		const x = this.canvas.offsetWidth / 2
 		const y = this.canvas.offsetHeight
 		const anchor = [ 0.5, 1 ]
+		const zIndex = 1
 
-		this.kitchen = new PixiSprite({ x, y, size, anchor }, this.textureDataKitchen)
+		this.kitchen = new PixiSprite({ x, y, size, anchor, zIndex }, this.textureDataKitchen)
 	}
 
 	createCutter() {

@@ -47,6 +47,7 @@ export default class Ingredient {
 			size: this.size,
 			action: this.#action,
 			animationName: this.#name,
+			zIndex: 0
 		}, this.textureData)
 
 		this.addInputOnA()
