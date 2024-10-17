@@ -1,8 +1,6 @@
 html {
 	@include inset(0, fixed);
 
-	font-size: 20px;
-
 	/*
 	This is a base font size for the entire project
 	In dev mode, the original font-size is 20px and every component uses rem units
