@@ -110,10 +110,10 @@ export default class PixiSprite {
 
 		// Vérifie s'il y a chevauchement entre les rectangles
 		return (
-			bounds1.x < bounds2.x + bounds2.width &&
-			bounds1.x + bounds1.width > bounds2.x &&
-			bounds1.y < bounds2.y + bounds2.height &&
-			bounds1.y + bounds1.height > bounds2.y
+			baseSprite.x < bounds2.maxX &&
+			baseSprite.x > bounds2.minX &&
+			baseSprite.y < bounds2.maxY &&
+			baseSprite.y > bounds2.minY
 		)
 	}
 }

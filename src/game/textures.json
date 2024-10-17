@@ -1,8 +1,8 @@
 {
   "textures": [
     {
-      "name": "player",
-      "src": "https://pixijs.com/assets/bunny.png"
+      "name": "cursor",
+      "src": "/assets/sprites/cursor/cursor.png"
     },
     {
       "name": "kitchen",
@@ -12,6 +12,10 @@
       "name": "baker",
       "src": "/assets/sprites/baker/baker.png",
       "atlasData": "/assets/sprites/baker/baker.json"
+    },
+    {
+      "name": "cutter",
+      "src": "/assets/sprites/cutter/cutter.png"
     },
     {
       "name": "mixer",

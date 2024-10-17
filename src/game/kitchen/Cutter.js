@@ -2,58 +2,54 @@ import { CookingStation } from "./CookingStation"
 
 export class Cutter extends CookingStation {
 	currentClicks = 0
-	steps = null
+	progress = -1
+	inCutter = false
 
 	constructor({ ...props }) {
 		super({ ...props })
 		this.timeLimit = 5000
+		this.addInputCounterIn()
 	}
 
-	startTimer() {
-		this.steps = this.sprite.totalFrames
+	onPressButtonInteract(e) {
+		const player = e.id === 1 ? this.game.player1 : this.game.player2
+		const ingredient = player.ingredientHold
+		if (player && ingredient && this.checkCanInteractWithIngredient(player, ingredient) && !this.inMixer) {
+			ingredient.onInteractionCounterIn()
+			player.onPlayerInteractCounter(false)
+			this.player = player
+			this.ingredient = ingredient
+			this.inCutter = true
+			console.log("dans le cutter")
+		}
+	}
 
+	onPressButtonCut(e) {
+		if (this.inCutter) {
+			//Cutter
+			this.progress += 1
+			if (this.progress === this.ingredient.pixiSprite.sprite.totalFrames) {
+				console.log("leaving the station")
+
+				this.player.onPlayerInteractCounter(true)
+				this.ingredient.onInteractionCounterEnd()
+				this.inCutter = false
+				this.player = null
+				this.ingredient = null
+				this.progress = 0
+
+				// this.ingredient.pixiSprite.sprite.x = this.pixiSprite.sprite.x
+			}
+		}
+	}
+
+	addInputCounterIn() {
 		const inputSet1 = this.game.player1.inputSet
-		inputSet1.addEvent("i", this.onPressButton, this)
+		inputSet1.addEvent("i", this.onPressButtonInteract, this)
+		inputSet1.addEvent("i", this.onPressButtonCut, this)
 
 		const inputSet2 = this.game.player2.inputSet
-		inputSet2.addEvent("i", this.onPressButton, this)
-
-		this.timer = setTimeout(() => {
-			if (this.currentClicks < this.steps) this.fail()
-		}, this.cookingTime)
+		inputSet2.addEvent("i", this.onPressButtonInteract, this)
+		inputSet2.addEvent("i", this.onPressButtonCut, this)
 	}
-
-	onPressButton(e) {
-		console.log(e)
-
-		if (this.currentClicks >= this.steps) return
-
-		this.currentClicks++
-		this.sprite.gotoAndStop(this.currentClicks)
-
-		if (this.currentClicks === this.steps) this.success()
-	}
-
-	// checkCanInteract(e){
-	// 	const player = e.id === 1  ? this.game.player1 : this.game.player2;
-	// 	if(!this.player && !this.ingredient){
-	// 		if(player && PixiSprite.checkOverlap(player.pixiSprite.sprite,this.sprite)){
-	// 			player.holdIngredient(this)
-	// 			console.log("overlap P1")
-	// 		}
-	// 	}
-	// }
-	//
-	// addInputOnA(){
-	// 	const inputSet1 = this.game.player1.inputSet;
-	// 	inputSet1.addEvent("a",this.checkCanInteract,this)
-	//
-	// 	const inputSet2 = this.game.player2.inputSet;
-	// 	inputSet2.addEvent("a",this.checkCanInteract,this)
-	// }
-	//
-	//
-	// setCanMove(canMove){
-	// 	this.canMove = canMove
-	// }
 }

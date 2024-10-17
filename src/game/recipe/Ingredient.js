@@ -12,6 +12,7 @@ export default class Ingredient {
 	#speed = .05
 	#nbOfFrames = 0
 	#game
+	#rotation = (Math.random() * 2) - 1
 
 	constructor(
 		ref,
@@ -69,6 +70,8 @@ export default class Ingredient {
 	updateGravity(dt) {
 		if (this.pixiSprite) {
 			this.pixiSprite.sprite.position.y += dt * this.#speed
+			this.pixiSprite.sprite.rotation += 0.001 * dt * this.#speed * this.#rotation
+
 			if (this.pixiSprite.sprite.position.y > window.innerHeight && this.#canMove) {
 				this.destroy()
 				this.ref.removeIngredient(this)

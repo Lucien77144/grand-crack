@@ -46,7 +46,6 @@ export class Kitchen {
 		const x = this.canvas.offsetWidth / 6.8
 		const y = this.canvas.offsetHeight * 0.79
 
-		// TODO! - The cutter has no spritesheet. But we need to place the ingredient sprite shit on it
 		this.cutter = new Cutter({
 			x,
 			y,

@@ -31,8 +31,6 @@ export class CookingStation {
 	}
 
 	initPixiSprite() {
-		if (this.action === "cutter") return
-
 		this.pixiSprite = new PixiSprite(
 			{
 				x: this.x,
@@ -52,15 +50,13 @@ export class CookingStation {
 		if (player && ingredient && this.checkCanInteractWithIngredient(player, ingredient)) {
 			ingredient.onInteractionCounterIn()
 			player.onPlayerInteractCounter(false)
-
-			console.log("do the stuff, create the listener")
 		}
 	}
 
 	checkCanInteractWithIngredient(player, ingredient) {
 		const isEmpty = !this.player && !this.ingredient
 
-		if(player.pixiSprite && player.pixiSprite.sprite && this.pixiSprite && this.pixiSprite.sprite ){
+		if (player.pixiSprite && player.pixiSprite.sprite && this.pixiSprite && this.pixiSprite.sprite) {
 			const overlapping = player && PixiSprite.checkOverlap(
 				player.pixiSprite.sprite,
 				this.pixiSprite.sprite
@@ -69,8 +65,7 @@ export class CookingStation {
 				&& ingredient.getIsCooked() === false
 
 			return ingredient && isEmpty && overlapping && isNotCook
-		}
-		else{
+		} else {
 			return false
 		}
 	}

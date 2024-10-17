@@ -16,7 +16,7 @@ export default class Player {
 		this.distIngredient = null
 		this.allowGrab = true
 		this.tl = new TextureLoader()
-		this.textureData = this.tl.assetArray[ "player" ]
+		this.textureData = this.tl.assetArray[ "cursor" ]
 
 		// Variables pour l'accélération et la vélocité
 		this.acceleration = 0 // Accélération initiale
@@ -31,8 +31,8 @@ export default class Player {
 		this.pixiSprite = new PixiSprite(
 			{
 				x: 500,
-				y: 500,
-				size: 5,
+				y: 200,
+				size: 1,
 				anchor: [ 0.5, 0.5 ],
 				zIndex: 3
 			},
@@ -45,7 +45,7 @@ export default class Player {
 		let xInput = e.position.x
 		let yInput = e.position.y
 
-		const normalized = InputSet.normalizeJoystickInput(xInput,yInput)
+		const normalized = InputSet.normalizeJoystickInput(xInput, yInput)
 		xInput = normalized.x
 		yInput = normalized.y
 
@@ -132,15 +132,15 @@ export default class Player {
 	}
 
 	eventInputX(e) {
-		this.pixiSprite.sprite.x -= 10
+		this.pixiSprite.sprite.x -= 50
 	}
 
 	eventInputI(e) {
-		this.pixiSprite.sprite.x += 10
+		this.pixiSprite.sprite.x += 50
 	}
 
 	eventInputS(e) {
-		this.pixiSprite.sprite.y += 10
+		this.pixiSprite.sprite.y += 50
 	}
 
 	// Gère l'oxygène du joueur
