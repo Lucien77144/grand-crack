@@ -46,7 +46,7 @@ export default class IngredientManager {
 
 				const x = Math.random() * window.innerWidth
 
-				const ingredient = new Ingredient(this, recipeIngredient.name, recipeIngredient.texture, recipeIngredient.atlasData, recipeIngredient.animationName, recipeIngredient.size, x, recipeIngredient.canMove, recipeIngredient.action, recipeIngredient.isCooked)
+				const ingredient = new Ingredient(this, recipeIngredient.name, recipeIngredient.texture, recipeIngredient.atlasData, recipeIngredient.size, x, recipeIngredient.canMove, recipeIngredient.action, recipeIngredient.isCooked)
 				await ingredient.create()
 				this.#ingredientsSpawned[ ingredientName ] = (this.#ingredientsSpawned[ ingredientName ] || 0) + 1
 				this.#ingredientsToSpawn[ ingredientName ]--
