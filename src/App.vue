@@ -2,6 +2,7 @@
 	import { RouterView } from "vue-router"
 	import { onMounted, onBeforeUnmount, provide, shallowRef, watch } from "vue"
 	import { useRaf } from "@/composables/useRaf/useRaf"
+	import { useSize } from "@/composables/useSize/useSize"
 	import { Game } from "@/game/Game"
 	import KitchenPlan from "@/components/KitchenPlan/KitchenPlan.vue"
 	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
@@ -11,6 +12,8 @@
 	const $$canvasWrapper = shallowRef()
 
 	const isKitchenPlanVisible = shallowRef(true)
+
+	useSize({ ref: $$canvasWrapper, cb: resize })
 
 	// Game state
 	let game = shallowRef()
@@ -36,6 +39,12 @@
 	onBeforeUnmount(() => {
 		game.value.destroy()
 	})
+
+	function resize() {
+		const screenWidth = window.innerWidth
+		const fontSize = screenWidth / 64
+		document.documentElement.style.fontSize = `${ fontSize }px`
+	}
 </script>
 
 <template>
