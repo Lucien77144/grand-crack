@@ -14,7 +14,7 @@
 	let player1Oxygen = computed(() => game.value ? game?.value?.player1OxygenRef?.value : 100)
 	let player2Oxygen = computed(() => game.value ? game?.value?.player2OxygenRef?.value : 100)
 
-	const oxygen = props.player === 1 ? 100 : player2Oxygen
+	const oxygen = props.player === 1 ? player1Oxygen : player2Oxygen
 </script>
 
 <template>
