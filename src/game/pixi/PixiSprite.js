@@ -2,7 +2,6 @@ import { Assets, Sprite, Point, AnimatedSprite } from "pixi.js"
 import { v4 as uuidv4 } from "uuid"
 import PixiApplication from "@/game/pixi/PixiApplication"
 
-
 export default class PixiSprite {
 	constructor({
 		x = 0,
@@ -10,6 +9,7 @@ export default class PixiSprite {
 		size = 1,
 		anchor = [ 0.5, 0.5 ],
 		animationName = "",
+		zIndex = 0
 	} = {},
 	textureData
 	) {
@@ -21,6 +21,7 @@ export default class PixiSprite {
 		this.size = size
 		this.anchor = anchor
 		this.animationName = animationName
+		this.zIndex = zIndex
 
 		this.init()
 	}
@@ -34,7 +35,7 @@ export default class PixiSprite {
 				this.textureData.sheet.animations[ this.animationName ]
 			)
 
-		// Otherwise, create a sprite
+			// Otherwise, create a sprite
 		} else {
 			this.sprite = new Sprite(this.textureData.texture)
 		}
@@ -44,11 +45,12 @@ export default class PixiSprite {
 		this.sprite.y = this.y
 		this.sprite.scale = this.size
 		this.sprite.layer = this.layer
+		this.sprite.zIndex = this.zIndex
 
 		pixiApplication.appendToStage(this.sprite)
 	}
 
-	update(dt, t) {}
+	update(dt, t) { }
 
 	setSpritePos(nextPos) {
 		this.sprite.position.set(nextPos.x, nextPos.y)
@@ -103,16 +105,15 @@ export default class PixiSprite {
 			return false
 		}
 
-
 		const bounds1 = baseSprite.getBounds()
 		const bounds2 = targetSprite.getBounds()
 
 		// Vérifie s'il y a chevauchement entre les rectangles
 		return (
 			bounds1.x < bounds2.x + bounds2.width &&
-				bounds1.x + bounds1.width > bounds2.x &&
-				bounds1.y < bounds2.y + bounds2.height &&
-				bounds1.y + bounds1.height > bounds2.y
+			bounds1.x + bounds1.width > bounds2.x &&
+			bounds1.y < bounds2.y + bounds2.height &&
+			bounds1.y + bounds1.height > bounds2.y
 		)
 	}
 }

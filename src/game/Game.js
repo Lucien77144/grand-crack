@@ -15,7 +15,7 @@ const recipes = [
 			{
 				name: "sardine",
 				size: .3,
-				spawnRate: 1000,
+				spawnRate: 2000,
 				spawnZone: "zone1",
 				canMove: true,
 				action: "action1",
