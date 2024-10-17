@@ -71,7 +71,7 @@ export class Kitchen {
 		this.addCookingStation(this.mixer)
 	}
 
-	async createBaker() {
+	createBaker() {
 		const size = BAKER_BASE_SIZE * (this.canvas.offsetWidth * 0.00076)
 		const x = this.canvas.offsetWidth / 1.7
 		const y = this.canvas.offsetHeight * 0.72

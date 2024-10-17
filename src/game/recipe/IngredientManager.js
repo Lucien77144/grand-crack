@@ -22,7 +22,7 @@ export default class IngredientManager {
 		this.#lastSpawnTime = {}
 	}
 
-	async spawnIngredient() {
+	spawnIngredient() {
 		const ingredientNames = Object.keys(this.#ingredientsToSpawn)
 		if (ingredientNames.length > 0) {
 			const currentTime = Date.now()
@@ -44,11 +44,19 @@ export default class IngredientManager {
 					return null
 				}
 
-
 				const x = Math.random() * window.innerWidth
 
-				const ingredient = new Ingredient(this, recipeIngredient.name, recipeIngredient.texture, recipeIngredient.atlasData, recipeIngredient.size, x, recipeIngredient.canMove, recipeIngredient.action, recipeIngredient.isCooked)
-				await ingredient.create()
+				const ingredient = new Ingredient(
+					this,
+					recipeIngredient.name,
+					recipeIngredient.size,
+					x,
+					recipeIngredient.canMove,
+					recipeIngredient.action,
+					recipeIngredient.isCooked
+				)
+
+				ingredient.create()
 
 				this.#ingredientsSpawned[ ingredientName ] = (this.#ingredientsSpawned[ ingredientName ] || 0) + 1
 				this.#ingredientsToSpawn[ ingredientName ]--

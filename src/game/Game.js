@@ -7,7 +7,6 @@ const OXYGEN_DECAY_RATE = 0.02
 import InputSet from "./InputSet"
 import Player from "@/game/player/Player"
 import IngredientManager from "./recipe/IngredientManager"
-import TextureLoader from "./TextureLoader"
 
 const recipes = [
 	{
@@ -15,8 +14,6 @@ const recipes = [
 		ingredients: [
 			{
 				name: "sardine",
-				texture: "/assets/sprites/ingredients/sardine.png",
-				atlasData: "/assets/sprites/ingredients/sardine.json",
 				size: .3,
 				spawnRate: 1000,
 				spawnZone: "zone1",
@@ -27,8 +24,6 @@ const recipes = [
 			},
 			{
 				name: "mushroom",
-				texture: "/assets/sprites/ingredients/mushroom.png",
-				atlasData: "/assets/sprites/ingredients/mushroom.json",
 				size: .1,
 				spawnRate: 3000,
 				spawnZone: "zone2",
@@ -106,7 +101,7 @@ export class Game {
 
 		this.pixiApplication = new PixiApplication()
 
-		this.prepareCanvas(this.pixiApplication).then(async () => {
+		this.prepareCanvas(this.pixiApplication).then(() => {
 			this.player1 = new Player(1)
 			this.player1.addInputsListener()
 
@@ -114,10 +109,10 @@ export class Game {
 			this.player2.addInputsListener()
 
 			this.kitchen = new Kitchen()
-			await this.kitchen.setup()
+			this.kitchen.setup()
 
-			// this.ingredientManager = new IngredientManager(recipes)
-			// this.ingredientManager.init()
+			this.ingredientManager = new IngredientManager(recipes)
+			this.ingredientManager.init()
 		})
 	}
 
