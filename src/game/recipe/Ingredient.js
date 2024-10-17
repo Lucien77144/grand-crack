@@ -8,7 +8,6 @@ export default class Ingredient {
 	#name
 	#sprite
 	#canMove
-	#game
 	#action
 	#isCooked
 	#nbOfFrames = 0
@@ -21,8 +20,6 @@ export default class Ingredient {
 		this.atlasData = atlasData
 		this.size = size
 		this.x = x
-		// this.#game = new Game()
-		// this.#sprite = new Sprite(spritesheet);
 		this.#canMove = canMove
 		// this.#action = new Action()
 		this.#isCooked = isCooked
@@ -47,6 +44,8 @@ export default class Ingredient {
 
 		this.sprite = new AnimatedSprite(sheet.animations[ this.#name ])
 
+		this.#nbOfFrames = this.sprite.totalFrames
+
 		this.sprite.scale = this.size
 
 		this.sprite.x = this.x
@@ -65,8 +64,8 @@ export default class Ingredient {
 	}
 
 	update(dt) {
-		if (this.sprite) {
-			this.sprite.position.y += 1
+		if (this.sprite && this.sprite.position) {
+			this.sprite.position.y += 1 * dt / 16.666
 
 			if (this.sprite.position.y > window.innerHeight) {
 				this.destroy()
@@ -76,7 +75,15 @@ export default class Ingredient {
 
 	destroy() {
 		this.ref.removeIngredient(this)
-		this.pixiSprite.sprite.destroy()
+		this.sprite.destroy()
+	}
+
+	getNbOfFrames() {
+		return this.#nbOfFrames
+	}
+
+	setNbOfFrames(nbOfFrames) {
+		this.#nbOfFrames = nbOfFrames
 	}
 
 	getId() {

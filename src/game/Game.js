@@ -17,7 +17,7 @@ const recipes = [
 				texture: "/assets/sprites/ingredients/sardine.png",
 				atlasData: "/assets/sprites/ingredients/sardine.json",
 				size: .3,
-				spawnRate: 1000,
+				spawnRate: 2000,
 				spawnZone: "zone1",
 				canMove: true,
 				action: "action1",
