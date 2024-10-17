@@ -42,8 +42,12 @@ export default class Player {
 
 	// Fonction appelée quand il y a un mouvement du joystick
 	joystickEvent(e) {
-		const xInput = e.position.x
-		const yInput = e.position.y
+		let xInput = e.position.x
+		let yInput = e.position.y
+
+		const normalized = InputSet.normalizeJoystickInput(xInput,yInput)
+		xInput = normalized.x
+		yInput = normalized.y
 
 		if (this.pixiSprite && this.canMove && xInput !== 0 && yInput !== 0) {
 			this.joystickActive = true // On active le joystick

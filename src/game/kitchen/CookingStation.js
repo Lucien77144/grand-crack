@@ -28,7 +28,6 @@ export class CookingStation {
 		this.textureData = this.tl.assetArray[ props.action ]
 
 		this.initPixiSprite()
-		this.addInputCounterIn()
 	}
 
 	initPixiSprite() {
