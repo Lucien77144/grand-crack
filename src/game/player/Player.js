@@ -30,8 +30,8 @@ export default class Player {
 	initPixiSprite() {
 		this.pixiSprite = new PixiSprite(
 			{
-				x: 0,
-				y: 0,
+				x: 500,
+				y: 500,
 				size: 5,
 				anchor: [ 0.5, 0.5 ],
 				zIndex: 3
@@ -83,15 +83,15 @@ export default class Player {
 
 	updateGrab() {
 		// Gère le holding d'ingrédient
-        if (this.ingredientHold) {
+		if (this.ingredientHold) {
 			this.ingredientHold.pixiSprite.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
 			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient.y
 		}
 	}
 
-	onPlayerInteractCounter(isOut = true){
+	onPlayerInteractCounter(isOut = true) {
 		this.ingredientHold = null
-		this.canMove = isOut;
+		this.canMove = isOut
 		this.pixiSprite.sprite.visible = isOut
 		this.allowGrab = isOut
 	}
@@ -106,8 +106,8 @@ export default class Player {
 		}
 	}
 
-	releaseIngredient(){
-		if(this.ingredientHold && !this.allowGrab){
+	releaseIngredient() {
+		if (this.ingredientHold && !this.allowGrab) {
 			this.ingredientHold.setCanMove(true)
 			this.ingredientHold = null
 			this.distIngredient = null
@@ -121,7 +121,22 @@ export default class Player {
 	addInputsListener() {
 		this.inputSet.addEventJoystick(this.joystickEvent, this)
 		this.inputSet.addEvent("a", this.releaseIngredient, this)
-		// this.inputSet.addEvent("a", this.eventInputA, this)
+
+		this.inputSet.addEvent("x", this.eventInputX, this)
+		this.inputSet.addEvent("i", this.eventInputI, this)
+		this.inputSet.addEvent("s", this.eventInputS, this)
+	}
+
+	eventInputX(e) {
+		this.pixiSprite.sprite.x -= 10
+	}
+
+	eventInputI(e) {
+		this.pixiSprite.sprite.x += 10
+	}
+
+	eventInputS(e) {
+		this.pixiSprite.sprite.y += 10
 	}
 
 	// Gère l'oxygène du joueur

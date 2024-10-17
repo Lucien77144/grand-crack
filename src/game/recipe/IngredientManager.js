@@ -26,7 +26,7 @@ export default class IngredientManager {
 	async spawnIngredient() {
 		const currentTime = Date.now()
 
-		if (currentTime - this.#lastSpawnTime > 1000) {
+		if (currentTime - this.#lastSpawnTime > 3000) {
 			const missingIngredients = this.getMissingIngredients()
 
 			const randomIngredient = missingIngredients[ Math.floor(Math.random() * missingIngredients.length) ]

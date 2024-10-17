@@ -10,8 +10,9 @@
 	import TextureLoader from "@/game/TextureLoader"
 
 	const $$canvas = shallowRef()
+	const $$video = shallowRef()
 
-	const isKitchenVisible = shallowRef(true)
+	const isKitchenVisible = shallowRef(false)
 
 	const { size } = useSize({ ref: $$canvas, cb: resize })
 
@@ -28,6 +29,9 @@
 	})
 
 	onMounted(() => {
+		$$video.value.play()
+
+		// Create a texture loader
 		textureLoader.value = new TextureLoader()
 		textureLoader.value.loadTexture().then(() => {
 			// Create game
@@ -71,7 +75,12 @@
 		<Kitchen v-if="isKitchenVisible" />
 		<div ref="$$canvas" />
 		<div class="background">
-			<img src="/assets/img/background.jpg" alt="background">
+			<video
+				ref="$$video"
+				src="/assets/video/background.mp4"
+				muted
+				loop
+			/>
 		</div>
 	</main>
 </template>

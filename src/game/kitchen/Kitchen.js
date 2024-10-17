@@ -60,7 +60,7 @@ export class Kitchen {
 	createMixer() {
 		const size = MIXER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
 		const x = this.canvas.offsetWidth / 2.9
-		const y = this.canvas.offsetHeight * 0.76
+		const y = this.canvas.offsetHeight * 0.762
 
 		this.mixer = new Mixer({
 			x,

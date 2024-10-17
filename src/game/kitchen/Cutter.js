@@ -1,5 +1,4 @@
 import { CookingStation } from "./CookingStation"
-import PixiSprite from "@/game/pixi/PixiSprite"
 
 export class Cutter extends CookingStation {
 	currentClicks = 0
@@ -13,22 +12,26 @@ export class Cutter extends CookingStation {
 	startTimer() {
 		this.steps = this.sprite.totalFrames
 
-		// TODO! - Replace this by AXIS input
-		this.sprite.interactive = true
-		this.sprite.buttonMode = true
+		const inputSet1 = this.game.player1.inputSet
+		inputSet1.addEvent("i", this.onPressButton, this)
 
-		this.sprite.on("pointerdown", () => {
-			if (this.currentClicks >= this.steps) return
-
-			this.currentClicks++
-			this.sprite.gotoAndStop(this.currentClicks)
-
-			if (this.currentClicks === this.steps) this.__success()
-		})
+		const inputSet2 = this.game.player2.inputSet
+		inputSet2.addEvent("i", this.onPressButton, this)
 
 		this.timer = setTimeout(() => {
-			if (this.currentClicks < this.steps) this.__fail()
+			if (this.currentClicks < this.steps) this.fail()
 		}, this.cookingTime)
+	}
+
+	onPressButton(e) {
+		console.log(e)
+
+		if (this.currentClicks >= this.steps) return
+
+		this.currentClicks++
+		this.sprite.gotoAndStop(this.currentClicks)
+
+		if (this.currentClicks === this.steps) this.success()
 	}
 
 	// checkCanInteract(e){

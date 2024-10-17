@@ -9,9 +9,9 @@ export class Baker extends CookingStation {
 		this.timeLimit = 5000
 	}
 
-	startTimer() {
-		this.timer = setTimeout(() => {
-			this.__fail()
-		}, this.cookingTime + this.overcookTreshold)
-	}
+	// startTimer() {
+	// 	this.timer = setTimeout(() => {
+	// 		this.fail()
+	// 	}, this.cookingTime + this.overcookTreshold)
+	// }
 }
