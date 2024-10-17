@@ -6,8 +6,8 @@ import TextureLoader from "@/game/TextureLoader"
 
 
 export class CookingStation {
-	player = null
 	ingredient = null
+	player = null
 	currentTime = 0
 	timeLimit = 0
 	spritesheet = null
@@ -23,12 +23,12 @@ export class CookingStation {
 		this.size = props.size
 		this.spritesheet = props.spritesheet
 		this.atlasData = props.atlasData
-		this.pixiApplication = new PixiApplication()
 		this.game = new Game()
 		this.tl = new TextureLoader()
 		this.textureData = this.tl.assetArray[ props.action ]
 
 		this.initPixiSprite()
+		this.addInputCounterIn()
 	}
 
 	initPixiSprite() {
@@ -37,11 +37,38 @@ export class CookingStation {
 				x: this.x,
 				y: this.y,
 				size: this.size,
-				anchor: [ 0, 0 ],
+				anchor: [0, 0],
 				animationName: this.action,
 			},
 			this.textureData
 		)
+	}
+
+	onPressButtonInteract(e){
+		const player = e.id === 1  ? this.game.player1 : this.game.player2;
+		const ingredient = player.ingredientHold;
+		if(player && ingredient && this.checkCanInteractWithIngredient(player,ingredient)){
+			ingredient.onInteractionCounterIn()
+			player.onPlayerInteractCounter(false)
+		}
+	}
+
+	checkCanInteractWithIngredient(player, ingredient){
+		const isEmpty = !this.player && !this.ingredient;
+
+		const overlapping = player && PixiSprite.checkOverlap(player.pixiSprite.sprite,this.pixiSprite.sprite)
+		const isNotCook = ingredient.getInCooking() === false
+			&& ingredient.getIsCooked() === false;
+
+		return ingredient && isEmpty && overlapping && isNotCook;
+	}
+
+	addInputCounterIn(){
+		const inputSet1 = this.game.player1.inputSet;
+		inputSet1.addEvent("i",this.onPressButtonInteract,this)
+
+		const inputSet2 = this.game.player2.inputSet;
+		inputSet2.addEvent("i",this.onPressButtonInteract,this)
 	}
 
 	addInteractingPlayer(player) {}

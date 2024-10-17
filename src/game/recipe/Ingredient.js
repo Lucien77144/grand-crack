@@ -68,8 +68,7 @@ export default class Ingredient {
 	updateGravity(dt) {
 		if (this.pixiSprite) {
 			this.pixiSprite.sprite.position.y += dt * this.#speed
-
-			if (this.pixiSprite.sprite.position.y > window.innerHeight) {
+			if (this.pixiSprite.sprite.position.y > window.innerHeight && this.#canMove) {
 				this.destroy()
 			}
 		}
@@ -77,16 +76,16 @@ export default class Ingredient {
 
 	addInputOnA() {
 		const inputSet1 = this.#game.player1.inputSet
-		inputSet1.addEvent("a", this.checkCanInteract, this)
+		inputSet1.addEvent("a", this.holdIngredient, this)
 
 		const inputSet2 = this.#game.player2.inputSet
-		inputSet2.addEvent("a", this.checkCanInteract, this)
+		inputSet2.addEvent("a", this.holdIngredient, this)
 	}
 
-	checkCanInteract(e) {
+	holdIngredient(e) {
 		const player = e.id === 1 ? this.#game.player1 : this.#game.player2
-		if (this.#canMove && !this.#inCooking && this.pixiSprite) {
-			if (player && PixiSprite.checkOverlap(player.pixiSprite.sprite, this.pixiSprite)) {
+		if (this.#canMove && !this.#inCooking && this.pixiSprite && this.pixiSprite.sprite) {
+			if (player && PixiSprite.checkOverlap(player.pixiSprite.sprite, this.pixiSprite.sprite)) {
 				player.holdIngredient(this)
 				console.log("overlap P1")
 			}
@@ -99,6 +98,19 @@ export default class Ingredient {
 		this.pixiSprite = null
 	}
 
+	onInteractionCounterIn(){
+		this.pixiSprite.sprite.visible = false;
+		this.setInCooking(true);
+		this.setCanMove(false);
+	}
+
+	onInteractionCounterEnd(){
+		this.pixiSprite.sprite.visible = true;
+		this.setInCooking(false);
+		this.setCanMove(true);
+		this.setIsCooked(true);
+	}
+
 	getId() {
 		return this.#id
 	}
@@ -106,6 +118,14 @@ export default class Ingredient {
 	setName(name) {
 		this.#name = name
 	}
+
+	setInCooking(inCooking) {
+		this.#inCooking = inCooking
+	}
+
+	getInCooking() {
+        return this.#inCooking
+    }
 
 	getName() {
 		return this.#name
