@@ -10,6 +10,7 @@ export default class IngredientManager {
 	#recipes
 	#ingredientsSpawned
 	#lastSpawnTime
+	dropZone = 800
 
 	constructor(recipes) {
 		this.#game = new Game()
@@ -25,7 +26,7 @@ export default class IngredientManager {
 	async spawnIngredient() {
 		const currentTime = Date.now()
 
-		if (currentTime - this.#lastSpawnTime > 2000) {
+		if (currentTime - this.#lastSpawnTime > 1000) {
 			const missingIngredients = this.getMissingIngredients()
 
 			const randomIngredient = missingIngredients[ Math.floor(Math.random() * missingIngredients.length) ]
@@ -39,11 +40,11 @@ export default class IngredientManager {
 					return ingredient.name === randomIngredient.name
 				})
 
-				const ingredient = new Ingredient(this, randomIngredient.name, ingredientRecipe.texture, ingredientRecipe.atlasData, ingredientRecipe.size, 0, ingredientRecipe.canMove, ingredientRecipe.action, ingredientRecipe.isCooked)
+				const x = window.innerWidth / 2 + Math.random() * this.dropZone - this.dropZone / 2
+
+				const ingredient = new Ingredient(this, randomIngredient.name, ingredientRecipe.size, x, ingredientRecipe.canMove, ingredientRecipe.action, ingredientRecipe.isCooked)
 
 				await ingredient.create()
-
-				console.log("Ingredient spawned:", randomIngredient.name)
 
 				this.#ingredients.push(ingredient)
 
@@ -79,9 +80,13 @@ export default class IngredientManager {
 	}
 
 	removeIngredient(ingredient) {
-		const index = this.#ingredients.indexOf(ingredient)
-		console.log(this.#ingredients)
-		if (index > -1) {
+		const id = ingredient.getId()
+
+		const index = this.#ingredients.findIndex((ingredient) => {
+			return ingredient.getId() === id
+		})
+
+		if (index !== -1) {
 			this.#ingredients.splice(index, 1)
 		}
 
@@ -95,7 +100,6 @@ export default class IngredientManager {
 		if (Object.keys(this.#ingredientsToSpawn).length > 0) {
 			if (!this.#player1HasFinishedTheRecipe || !this.#player2HasFinishedTheRecipe) {
 				this.spawnIngredient()
-				console.log("span")
 			}
 		}
 
@@ -126,6 +130,10 @@ export default class IngredientManager {
 
 	getPlayer2HasFinishedTheRecipe() {
 		return this.#player2HasFinishedTheRecipe
+	}
+
+	setIngredients(ingredients) {
+		this.#ingredients = ingredients
 	}
 
 	getIngredientsSpawned() {

@@ -9,8 +9,9 @@ export default class Ingredient {
 	#action
 	#isCooked
 	#inCooking = false
-	#speed = .5
+	#speed = .3
 	#nbOfFrames = 0
+	#game
 
 	constructor(
 		ref,
@@ -43,7 +44,7 @@ export default class Ingredient {
 		this.pixiSprite = new PixiSprite({
 			x: this.x,
 			y: 0,
-			size: 0.3,
+			size: this.size,
 			action: this.#action,
 			animationName: this.#name,
 		}, this.textureData)
@@ -70,6 +71,7 @@ export default class Ingredient {
 
 			if (this.pixiSprite.sprite.position.y > window.innerHeight) {
 				this.destroy()
+				this.ref.removeIngredient(this)
 			}
 		}
 	}
@@ -87,7 +89,6 @@ export default class Ingredient {
 		if (this.#canMove && !this.#inCooking && this.pixiSprite) {
 			if (player && PixiSprite.checkOverlap(player.pixiSprite.sprite, this.pixiSprite)) {
 				player.holdIngredient(this)
-				console.log("overlap P1")
 			}
 		}
 	}
