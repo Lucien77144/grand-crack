@@ -1,7 +1,9 @@
 <script setup>
-	import { inject, computed } from "vue"
+	import { inject, computed, onMounted, shallowRef } from "vue"
 	import Signal from "@/utils/signal"
 	import oxygenIcon from "/assets/ui/oxygen/oxygen-icon.svg"
+	import { useRaf } from "@/composables/useRaf/useRaf"
+	import { store } from "@/store"
 
 	Signal.on(":test", (payload) => {
 		console.log(payload)
@@ -16,8 +18,21 @@
 
 	const game = inject("game")
 
-	let player1Oxygen = computed(() => game?.value ? game?.value?.player1?.oxygenRef?.value : 100)
-	let player2Oxygen = computed(() => game?.value ? game?.value?.player2?.oxygenRef?.value : 100)
+	const oxygen = shallowRef()
+
+	useRaf((dt) => {
+		if (
+			store.isGameOver
+			|| !game.value
+			|| !game?.value[ `player${ props.player }` ]?.oxygen
+		) return
+		const realOxygen = game?.value[ `player${ props.player }` ]?.oxygen
+		oxygen.value = Math.round(realOxygen * 10) / 10
+
+		if ((Math.floor(realOxygen * 10) / 10) < 1) {
+			return store.isGameOver = true
+		}
+	})
 </script>
 
 <template>
@@ -33,9 +48,7 @@
 			<div
 				class="progress"
 				:style="
-					{
-						transform: 'scaleY(' + player1Oxygen / 100 + ')',
-					}
+					{ transform: 'translateY(' + (100 - oxygen) + '%)' }
 				"
 			/>
 		</div>

@@ -3,11 +3,8 @@ import InputSet from "@/game/InputSet"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import { clamp } from "@/utils/maths"
 import TextureLoader from "@/game/TextureLoader"
-import { shallowRef } from "vue"
 
 export default class Player {
-	oxygenRef = shallowRef(100)
-
 	constructor(id) {
 		this.id = id
 		this.game = new Game()
@@ -149,8 +146,6 @@ export default class Player {
 	addOxygen(value) {
 		this.oxygen += value
 		this.oxygen = clamp(this.oxygen, 0, 100)
-
-		this.oxygenRef.value = Math.round(this.oxygen * 10) / 10
 	}
 
 	// Exemple d'un autre événement
@@ -160,5 +155,18 @@ export default class Player {
 
 	setCanMove(canMove) {
 		this.canMove = canMove
+	}
+
+	reset() {
+		this.oxygen = 100
+		this.canMove = true
+		this.ingredientHold = null
+		this.distIngredient = null
+		this.allowGrab = true
+		this.acceleration = 0
+		this.joystickActive = false
+		this.pixiSprite.sprite.visible = true
+		this.pixiSprite.sprite.x = 500
+		this.pixiSprite.sprite.y = 200
 	}
 }

@@ -13,6 +13,8 @@ export class Game {
 	soundManager = null
 	existingIngredientList = {}
 	stationsList = []
+	player1 = null
+	player2 = null
 
 	constructor(canvas, size) {
 		if (Game.instance) {
@@ -62,8 +64,13 @@ export class Game {
 		if (store.isGameOver) return
 
 		InputSet.update()
+
 		if (this.player1) {
 			this.player1.update(dt, t)
+		}
+
+		if (this.player2) {
+			this.player2.update(dt, t)
 		}
 
 		if (this.ingredientManager) {
@@ -72,7 +79,9 @@ export class Game {
 	}
 
 	reset() {
-		// TODO! - Reset the game state
+		this.player1.reset()
+		this.player2.reset()
+		// this.kitchen.reset()
 	}
 
 	resize() {
