@@ -83,26 +83,31 @@ export default class Player {
 
 	updateGrab() {
 		// Gère le holding d'ingrédient
-		if (this.ingredientHold) {
-			console.log("follow")
-			this.ingredientHold.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
-			this.ingredientHold.sprite.y = this.pixiSprite.sprite.y + this.distIngredient.y
+        if (this.ingredientHold) {
+			this.ingredientHold.pixiSprite.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
+			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient.y
 		}
+	}
+
+	onPlayerInteractCounter(isOut = true){
+		this.ingredientHold = null
+		this.canMove = isOut;
+		this.pixiSprite.sprite.visible = isOut
+		this.allowGrab = isOut
 	}
 
 	holdIngredient(ingredient) {
 		if (!this.ingredientHold && this.allowGrab) {
 			this.ingredientHold = ingredient
-			const distOffset = PixiSprite.updatePositionWithOffset(this.pixiSprite.sprite, this.ingredientHold.sprite)
+			const distOffset = PixiSprite.updatePositionWithOffset(this.pixiSprite.sprite, this.ingredientHold.pixiSprite.sprite)
 			this.distIngredient = distOffset
 			ingredient.setCanMove(false)
 			this.allowGrab = false
 		}
 	}
 
-	unholdIngredient() {
-		if (this.ingredientHold) {
-			console.log("aa")
+	releaseIngredient(){
+		if(this.ingredientHold && !this.allowGrab){
 			this.ingredientHold.setCanMove(true)
 			this.ingredientHold = null
 			this.distIngredient = null
@@ -115,7 +120,7 @@ export default class Player {
 	// Ajout des listeners d'inputs
 	addInputsListener() {
 		this.inputSet.addEventJoystick(this.joystickEvent, this)
-		this.inputSet.addEvent("a", this.unholdIngredient, this)
+		this.inputSet.addEvent("a", this.releaseIngredient, this)
 		// this.inputSet.addEvent("a", this.eventInputA, this)
 	}
 
@@ -129,5 +134,9 @@ export default class Player {
 	eventInputA(e) {
 		this.addOxygen(10)
 		console.log("click")
+	}
+
+	setCanMove(canMove) {
+		this.canMove = canMove
 	}
 }
