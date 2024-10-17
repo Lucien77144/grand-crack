@@ -10,6 +10,8 @@
 
 	const $$canvasWrapper = shallowRef()
 
+	const isKitchenPlanVisible = shallowRef(true)
+
 	// Game state
 	let game = shallowRef()
 	let t = 0
@@ -39,11 +41,14 @@
 <template>
 	<!-- <RouterView /> -->
 	<main class="site-wrapper">
-		<div ref="$$canvasWrapper" />
+		<button class="debug-button" @click="isKitchenPlanVisible = !isKitchenPlanVisible">
+			Toggle Kitchen Plan DOM
+		</button>
 		<GameOver v-if="store.isGameOver" />
-		<KitchenPlan />
 		<OxygenJauge :player="1" />
 		<OxygenJauge :player="2" />
+		<KitchenPlan v-if="isKitchenPlanVisible" />
+		<div ref="$$canvasWrapper" />
 		<div class="background">
 			<img src="/assets/img/background.jpg" alt="background">
 		</div>
@@ -55,6 +60,16 @@
 		height: 100%;
 		position: relative;
 		width: 100%;
+
+		.debug-button {
+			background-color: white;
+			border: 0.1rem solid white;
+			left: 50%;
+			position: absolute;
+			top: 1rem;
+			transform: translateX(-50%);
+			z-index: 1;
+		}
 
 		.background {
 			@include inset(0, fixed);

@@ -23,6 +23,7 @@
 		align-items: center;
 		background-color: rgb(0 0 0 / 80%);
 		color: white;
+		display: none !important; // TODO! - This is for debug
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

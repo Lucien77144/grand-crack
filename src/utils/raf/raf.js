@@ -12,14 +12,14 @@
  * raf.add(tick)
  */
 
-const root = typeof window === 'undefined' ? globalThis : window;
-const _observers = [];
-const _afterObservers = [];
-const _beforeObservers = [];
-let _rafHandler = null;
-let _lastDate = null;
-let _once = false;
-let _complex = false;
+const root = typeof window === "undefined" ? globalThis : window
+const _observers = []
+const _afterObservers = []
+const _beforeObservers = []
+let _rafHandler = null
+let _lastDate = null
+let _once = false
+let _complex = false
 
 /**
   * Time elapsed between the previous and the current frame
@@ -27,7 +27,7 @@ let _complex = false;
   * @static
   * @category properties
   */
-let time;
+let time
 
 /**
   * Current delta time
@@ -35,47 +35,47 @@ let time;
   * @static
   * @category properties
   */
-let dt;
+let dt
 
 function _frame(now) {
 	// compute deltatime and time
 	// const now = performance.now();
-	if (_lastDate === null) _lastDate = now;
-	dt = now - _lastDate;
-	time += dt;
-	_lastDate = now;
+	if (_lastDate === null) _lastDate = now
+	dt = now - _lastDate
+	time += dt
+	_lastDate = now
 	// we request the frame now, allowing to cancel it from observers
-	_rafHandler = _once ? null : root.requestAnimationFrame(_frame);
-	if (_once) _once = false;
+	_rafHandler = _once ? null : root.requestAnimationFrame(_frame)
+	if (_once) _once = false
 	// call all observers
-	let i;
+	let i
 	if (_complex) {
-		for (i = 0; i < _beforeObservers.length; i++) _beforeObservers[ i ](dt);
-		for (i = 0; i < _observers.length; i++) _observers[ i ](dt);
-		for (i = 0; i < _afterObservers.length; i++) _afterObservers[ i ](dt);
+		for (i = 0; i < _beforeObservers.length; i++) _beforeObservers[ i ](dt)
+		for (i = 0; i < _observers.length; i++) _observers[ i ](dt)
+		for (i = 0; i < _afterObservers.length; i++) _afterObservers[ i ](dt)
 	} else {
-		for (i = 0; i < _observers.length; i++) _observers[ i ](dt);
+		for (i = 0; i < _observers.length; i++) _observers[ i ](dt)
 	}
 }
 
 function _swapRunner() {
-	_complex = !!(_afterObservers.length > 0 || _beforeObservers.length > 0);
+	_complex = !!(_afterObservers.length > 0 || _beforeObservers.length > 0)
 }
 
 function _addObserver(arr, fn, prepend) {
-	if (!fn || !arr) return false;
-	if (~arr.indexOf(fn)) return false;
-	prepend = !!prepend;
-	prepend ? arr.unshift(fn) : arr.push(fn);
-	return true;
+	if (!fn || !arr) return false
+	if (~arr.indexOf(fn)) return false
+	prepend = !!prepend
+	prepend ? arr.unshift(fn) : arr.push(fn)
+	return true
 }
 
 function _removeObserver(arr, fn) {
-	if (!fn) return false;
-	const index = arr.indexOf(fn);
-	if (!~index) return false;
-	arr.splice(index, 1);
-	return !!(arr.length === 0);
+	if (!fn) return false
+	const index = arr.indexOf(fn)
+	if (!~index) return false
+	arr.splice(index, 1)
+	return !!(arr.length === 0)
 }
 
 /**
@@ -87,7 +87,7 @@ function _removeObserver(arr, fn) {
   * @category methods
   */
 function addBefore(fn, prepend) {
-	_addObserver(_beforeObservers, fn, prepend) && _swapRunner();
+	_addObserver(_beforeObservers, fn, prepend) && _swapRunner()
 }
 
 /**
@@ -99,7 +99,7 @@ function addBefore(fn, prepend) {
   * @category methods
   */
 function addAfter(fn, prepend) {
-	_addObserver(_afterObservers, fn, prepend) && _swapRunner();
+	_addObserver(_afterObservers, fn, prepend) && _swapRunner()
 }
 
 /**
@@ -110,7 +110,7 @@ function addAfter(fn, prepend) {
   * @category methods
   */
 function add(fn, prepend) {
-	_addObserver(_observers, fn, prepend) && start();
+	_addObserver(_observers, fn, prepend) && start()
 }
 
 /**
@@ -121,7 +121,7 @@ function add(fn, prepend) {
   * @category methods
   */
 function removeBefore(fn) {
-	_removeObserver(_beforeObservers, fn) && _swapRunner();
+	_removeObserver(_beforeObservers, fn) && _swapRunner()
 }
 
 /**
@@ -132,7 +132,7 @@ function removeBefore(fn) {
   * @category methods
   */
 function removeAfter(fn) {
-	_removeObserver(_afterObservers, fn) && _swapRunner();
+	_removeObserver(_afterObservers, fn) && _swapRunner()
 }
 
 /**
@@ -142,7 +142,7 @@ function removeAfter(fn) {
   * @category methods
   */
 function remove(fn) {
-	_removeObserver(_observers, fn) && stop();
+	_removeObserver(_observers, fn) && stop()
 }
 
 /**
@@ -152,12 +152,12 @@ function remove(fn) {
   * @category methods
   */
 function start(instant) {
-	_once = false;
-	if (_rafHandler) return;
-	instant = !!instant;
-	_lastDate = null;
-	if (instant) _frame(performance.now());
-	else _rafHandler = root.requestAnimationFrame(_frame);
+	_once = false
+	if (_rafHandler) return
+	instant = !!instant
+	_lastDate = null
+	if (instant) _frame(performance.now())
+	else _rafHandler = root.requestAnimationFrame(_frame)
 }
 
 /**
@@ -166,10 +166,10 @@ function start(instant) {
   * @category methods
   */
 function requestOnce() {
-	if (_rafHandler) return;
-	_once = true;
-	_lastDate = null;
-	_rafHandler = root.requestAnimationFrame(_frame);
+	if (_rafHandler) return
+	_once = true
+	_lastDate = null
+	_rafHandler = root.requestAnimationFrame(_frame)
 }
 
 /**
@@ -178,9 +178,9 @@ function requestOnce() {
   * @category methods
   */
 function stop() {
-	if (!_rafHandler) return;
-	root.cancelAnimationFrame(_rafHandler);
-	_rafHandler = null;
+	if (!_rafHandler) return
+	root.cancelAnimationFrame(_rafHandler)
+	_rafHandler = null
 }
 
 /**
@@ -189,14 +189,14 @@ function stop() {
   * @category methods
   */
 function dispose() {
-	stop();
-	_observers.length = 0;
-	_afterObservers.length = 0;
-	_beforeObservers.length = 0;
-	_complex = false;
-	_lastDate = null;
-	time = 0;
-	dt = 0;
+	stop()
+	_observers.length = 0
+	_afterObservers.length = 0
+	_beforeObservers.length = 0
+	_complex = false
+	_lastDate = null
+	time = 0
+	dt = 0
 }
 
 export const raf = {
@@ -212,4 +212,4 @@ export const raf = {
 	dt: dt,
 	requestOnce: requestOnce,
 	dispose: dispose
-};
+}

@@ -5,8 +5,8 @@ export class Cutter extends CookingStation {
 	currentStep = 0
 	steps = 5 // TODO - Steps number could be assigned to the Ingredient instead ?
 
-	constructor() {
-		super()
+	constructor({ ...props }) {
+		super({ ...props })
 		this.timeLimit = 5000
 		this.action = "cut"
 	}
