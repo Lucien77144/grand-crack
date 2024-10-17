@@ -33,7 +33,7 @@ export class CookingStation {
 				x: this.x,
 				y: this.y,
 				size: this.size,
-				anchor: [ 0, 0 ],
+				anchor: [ 0.5, 0.5 ],
 				animationName: this.action,
 				zIndex: 2
 			},

@@ -100,20 +100,14 @@ export default class PixiSprite {
 
 	// Fonction pour vérifier si deux sprites se chevauchent
 	static checkOverlap(baseSprite, targetSprite) {
-		if (!baseSprite || !targetSprite) {
-			console.error("Un des sprites est invalide.")
-			return false
-		}
+		// Ajuste pour un anchor à 0.5 (le centre du sprite)
+		const halfWidth = targetSprite.width / 2
+		const halfHeight = targetSprite.height / 2
 
-		const bounds1 = baseSprite.getBounds()
-		const bounds2 = targetSprite.getBounds()
+		// Vérifie si le point est à l'intérieur des dimensions du sprite
+		const isInside = baseSprite.x >= -halfWidth + targetSprite.x && baseSprite.x <= halfWidth + targetSprite.x &&
+			baseSprite.y >= -halfHeight + targetSprite.y && baseSprite.y <= halfHeight + targetSprite.y
 
-		// Vérifie s'il y a chevauchement entre les rectangles
-		return (
-			baseSprite.x < bounds2.maxX &&
-			baseSprite.x > bounds2.minX &&
-			baseSprite.y < bounds2.maxY &&
-			baseSprite.y > bounds2.minY
-		)
+		return isInside
 	}
 }
