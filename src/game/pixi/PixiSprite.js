@@ -1,12 +1,12 @@
 import { Assets, Sprite } from "pixi.js"
 
 export default class PixiSprite {
-	constructor(src, x, y, size = 1, anchor = [ 0.5, 0.5 ]) {
-		this.src = src
-		this.x = x
-		this.y = y
-		this.size = size
-		this.anchor = anchor
+	constructor({ ...options }) {
+		this.src = options.src
+		this.x = options.x
+		this.y = options.y
+		this.size = options.size
+		this.anchor = options.anchor
 	}
 
 	async init() {
