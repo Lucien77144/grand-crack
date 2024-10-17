@@ -6,6 +6,60 @@ import { store } from "@/store"
 const OXYGEN_DECAY_RATE = 0.02
 import InputSet from "./InputSet"
 import Player from "@/game/player/Player"
+import IngredientManager from "./recipe/IngredientManager"
+
+const recipes = [
+	{
+		name: "Recipe 1",
+		ingredients: [
+			{
+				name: "ingredient 1",
+				texture: "https://pixijs.com/assets/bunny.png",
+				spawnRate: 1000,
+				spawnZone: "zone1",
+				canMove: true,
+				action: "action1",
+				isCooked: false,
+				quantity: 1
+			},
+			{
+				name: "ingredient 2",
+				texture: "https://pixijs.com/assets/bunny.png",
+				spawnRate: 3000,
+				spawnZone: "zone2",
+				canMove: true,
+				action: "action2",
+				isCooked: false,
+				quantity: 3
+			}
+		]
+	}
+	// {
+	// 	name: "Recipe 2",
+	// 	ingredients: [
+	// 		{
+	// 			name: "ingredient 3",
+	// 			texture: "https://pixijs.com/assets/bunny.png",
+	// 			spawnRate: 2000,
+	// 			spawnZone: "zone3",
+	// 			canMove: true,
+	// 			action: "action3",
+	// 			isCooked: false,
+	// 			quantity: 2
+	// 		},
+	// 		{
+	// 			name: "ingredient 4",
+	// 			texture: "https://pixijs.com/assets/bunny.png",
+	// 			spawnRate: 1000,
+	// 			spawnZone: "zone4",
+	// 			canMove: true,
+	// 			action: "action4",
+	// 			isCooked: false,
+	// 			quantity: 1
+	// 		}
+	// 	]
+	// }
+]
 
 export class Game {
 	static instance
@@ -56,6 +110,9 @@ export class Game {
 			await this.playerA.initPixiSprite()
 			this.playerA.addInputsListener()
 
+			this.ingredientManager = new IngredientManager(recipes)
+			this.ingredientManager.init()
+
 			this.kitchen = new Kitchen()
 			await this.kitchen.setup()
 		})
@@ -67,6 +124,10 @@ export class Game {
 		InputSet.update()
 		if (this.playerA) {
 			this.playerA.update(dt, t)
+		}
+
+		if (this.ingredientManager) {
+			this.ingredientManager.update(dt)
 		}
 
 		// // HACK - Mutate the ref separately and use Math.round to limit the number of computations
@@ -87,5 +148,3 @@ export class Game {
 		console.log("Game destroy")
 	}
 }
-
-
