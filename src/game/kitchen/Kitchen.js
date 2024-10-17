@@ -20,8 +20,8 @@ export class Kitchen {
 		this.game.prepareCanvas(this.game.pixiApplication).then(async () => {
 			await this.createKitchenPlan()
 			await this.createCutter()
-			await this.createMixer()
-			await this.createBaker()
+			// await this.createMixer()
+			// await this.createBaker()
 		})
 	}
 
@@ -45,11 +45,12 @@ export class Kitchen {
 
 	async createCutter() {
 		const size = this.canvas.offsetWidth * CUTTER_BASE_SIZE
-		const x = this.canvas.offsetWidth / 3.73
-		const y = this.canvas.offsetHeight * 0.9
+		const x = this.canvas.offsetWidth / 6.5
+		const y = this.canvas.offsetHeight * 0.8
 
 		this.cutter = new Cutter({
-			texture: "assets/sprites/cutter.png",
+			spritesheet: "assets/sprites/cutter/cutter.png",
+			atlasData: "assets/sprites/cutter/cutter.json",
 			x,
 			y,
 			size,
@@ -59,39 +60,39 @@ export class Kitchen {
 		this.addCookingStation(this.cutter)
 	}
 
-	async createMixer() {
-		const size = this.canvas.offsetWidth * MIXER_BASE_SIZE
-		const x = this.canvas.offsetWidth / 2
-		const y = this.canvas.offsetHeight * 0.89
+	// async createMixer() {
+	// 	const size = this.canvas.offsetWidth * MIXER_BASE_SIZE
+	// 	const x = this.canvas.offsetWidth / 2
+	// 	const y = this.canvas.offsetHeight * 0.89
 
-		this.mixer = new Mixer({
-			texture: "assets/sprites/mixer.png",
-			x,
-			y,
-			size
-		})
+	// 	this.mixer = new Mixer({
+	// 		texture: "assets/sprites/mixer.png",
+	// 		x,
+	// 		y,
+	// 		size
+	// 	})
 
-		await this.mixer.initPixiSprite()
-		this.mixer.startTimer()
-		this.addCookingStation(this.mixer)
-	}
+	// 	await this.mixer.initPixiSprite()
+	// 	this.mixer.startTimer()
+	// 	this.addCookingStation(this.mixer)
+	// }
 
-	async createBaker() {
-		const size = this.canvas.offsetWidth * BAKER_BASE_SIZE
-		const x = this.canvas.offsetWidth / 1.38
-		const y = this.canvas.offsetHeight * 0.87
+	// async createBaker() {
+	// 	const size = this.canvas.offsetWidth * BAKER_BASE_SIZE
+	// 	const x = this.canvas.offsetWidth / 1.38
+	// 	const y = this.canvas.offsetHeight * 0.87
 
-		this.baker = new Baker({
-			texture: "assets/sprites/baker.png",
-			x,
-			y,
-			size
-		})
+	// 	this.baker = new Baker({
+	// 		texture: "assets/sprites/baker.png",
+	// 		x,
+	// 		y,
+	// 		size
+	// 	})
 
-		await this.baker.initPixiSprite()
-		this.baker.startTimer()
-		this.addCookingStation(this.baker)
-	}
+	// 	await this.baker.initPixiSprite()
+	// 	this.baker.startTimer()
+	// 	this.addCookingStation(this.baker)
+	// }
 
 	update() {}
 }
