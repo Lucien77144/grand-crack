@@ -2,8 +2,7 @@ import { CookingStation } from "./CookingStation"
 
 export class Cutter extends CookingStation {
 	currentClicks = 0
-	amount = 10
-	sprite = null
+	amount = 5
 
 	constructor({ ...props }) {
 		super({ ...props })
@@ -13,14 +12,14 @@ export class Cutter extends CookingStation {
 
 	startTimer() {
 		// TODO! - Replace this by AXIS input
-		this.sprite.sprite.interactive = true
-		this.sprite.sprite.buttonMode = true
+		this.sprite.interactive = true
+		this.sprite.buttonMode = true
 
-		this.sprite.sprite.on("pointerdown", () => {
+		this.sprite.on("pointerdown", () => {
 			if (this.currentClicks >= this.amount) return
 
 			this.currentClicks++
-			console.log(this.currentClicks)
+			this.sprite.gotoAndStop(this.currentClicks)
 
 			if (this.currentClicks === this.amount) this.__success()
 		})

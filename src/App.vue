@@ -43,8 +43,11 @@
 
 	function resize() {
 		if (!game.value || !$$canvas.value) return
+
+		// Resize canvas
 		game.value.resize(size)
 
+		// Resize UI
 		const screenWidth = window.innerWidth
 		const fontSize = screenWidth / 64
 		document.documentElement.style.fontSize = `${ fontSize }px`
@@ -59,7 +62,7 @@
 		<GameOver v-if="store.isGameOver" />
 		<OxygenJauge :player="1" />
 		<OxygenJauge :player="2" />
-		<Kitchen v-if="isKitchenPlanVisible" />
+		<Kitchen v-if="isKitchenVisible" />
 		<div ref="$$canvas" />
 		<div class="background">
 			<img src="/assets/img/background.jpg" alt="background">
