@@ -1,6 +1,7 @@
 import PixiApplication from "@/game/pixi/PixiApplication"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import { Assets, Sprite, AnimatedSprite } from "pixi.js"
+import {Game} from "@/game/Game";
 
 export class CookingStation {
 	player = null
@@ -11,6 +12,7 @@ export class CookingStation {
 	atlasData = null
 	action = ""
 	anim = null
+	game
 
 	constructor({ ...props }) {
 		this.x = props.x
@@ -19,6 +21,7 @@ export class CookingStation {
 		this.spritesheet = props.spritesheet
 		this.atlasData = props.atlasData
 		this.pixiApplication = new PixiApplication()
+		this.game = new Game()
 	}
 
 	async initPixiSprite() {

@@ -11,7 +11,9 @@ export default class Player {
 		this.oxygen = 100
 		this.inputSet = new InputSet(id)
 		this.canMove = true
-		this.holder = null
+		this.ingredientHold = null
+		this.distIngredient = null
+		this.allowGrab= true;
 
 		// Variables pour l'accélération et la vélocité
 		this.acceleration = 0 // Accélération initiale
@@ -54,7 +56,12 @@ export default class Player {
 	update(dt, t) {
 		// Gestion de l'oxygène (cela reste inchangé)
 		this.addOxygen(-dt / 60)
+		this.updateSpeed()
+		this.updateGrab()
 
+	}
+
+	updateSpeed(){
 		// Si le joystick n'est pas actif, on décélère
 		if (!this.joystickActive && this.acceleration > 0) {
 			this.acceleration = Math.max(this.acceleration - this.decelerationRate, 0)
@@ -69,10 +76,43 @@ export default class Player {
 		this.joystickActive = false
 	}
 
+	updateGrab(){
+		// Gère le holding d'ingrédient
+        if (this.ingredientHold) {
+			console.log("follow")
+			this.ingredientHold.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
+			this.ingredientHold.sprite.y =  this.pixiSprite.sprite.y + this.distIngredient.y
+        }
+
+	}
+
+	holdIngredient(ingredient){
+		if(!this.ingredientHold && this.allowGrab){
+			this.ingredientHold = ingredient
+			const distOffset = PixiSprite.updatePositionWithOffset(this.pixiSprite.sprite,this.ingredientHold.sprite)
+			this.distIngredient = distOffset
+			ingredient.setCanMove(false)
+			this.allowGrab = false;
+		}
+	}
+
+	unholdIngredient(){
+		if(this.ingredientHold){
+			console.log("aa")
+			this.ingredientHold.setCanMove(true)
+			this.ingredientHold = null
+			this.distIngredient = null
+			setTimeout(() => {
+				this.allowGrab = true;
+			},1000)
+		}
+	}
+
 	// Ajout des listeners d'inputs
 	addInputsListener() {
-		this.inputSet.addEventJoystick(this.joystickEvent.bind(this), this)
-		this.inputSet.addEvent("a", this.eventInputA, this)
+		this.inputSet.addEventJoystick(this.joystickEvent, this)
+		this.inputSet.addEvent("a",this.unholdIngredient,this)
+		// this.inputSet.addEvent("a", this.eventInputA, this)
 	}
 
 	// Gère l'oxygène du joueur
