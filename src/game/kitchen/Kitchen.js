@@ -29,12 +29,12 @@ export class Kitchen {
 
 	async createKitchenPlan() {
 		const size = KITCHEN_PLAN_BASE_SIZE
-		const texture = "assets/sprites/kitchen.png"
+		const src = "assets/sprites/kitchen.png"
 		const x = this.canvas.offsetWidth / 2
 		const y = this.canvas.offsetHeight
 		const anchor = [ 0.5, 1 ]
 
-		this.kitchen = new PixiSprite(texture, x, y, size, anchor)
+		this.kitchen = new PixiSprite({ src, x, y, size, anchor })
 		await this.kitchen.init().then((sprite) => {
 			this.game.pixiApplication.appendToStage(sprite)
 		})
