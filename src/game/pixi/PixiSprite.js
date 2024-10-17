@@ -28,9 +28,9 @@ export default class PixiSprite {
 		this.sprite.position.set(nextPos.x, nextPos.y)
 	}
 
-	addVecPos(x,y){
+	addVecPos(x, y) {
 		this.sprite.x += x
-        this.sprite.y += y
+		this.sprite.y += y
 	}
 
 	setSpriteRotation(nextRotation) {

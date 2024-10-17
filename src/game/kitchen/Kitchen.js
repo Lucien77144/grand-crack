@@ -17,12 +17,10 @@ export class Kitchen {
 	}
 
 	setup() {
-		this.game.prepareCanvas(this.game.pixiApplication).then(async () => {
-			await this.createKitchenPlan()
-			await this.createCutter()
+			this.createKitchenPlan()
+			this.createCutter()
 			// await this.createMixer()
 			// await this.createBaker()
-		})
 	}
 
 	addCookingStation(cookingStation) {

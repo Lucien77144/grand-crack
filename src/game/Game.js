@@ -26,16 +26,20 @@ export class Game {
 		this.pixiApplication = new PixiApplication()
 		this.canvas = canvas
 		this.size = size
+
+		console.log(this.canvas)
 	}
 
-	async prepareCanvas(world) {
-		await world.init(this.canvas)
-		return Promise.resolve(world)
+	async prepareCanvas(pixiApplication) {
+		await pixiApplication.init(this.canvas)
+		return Promise.resolve(pixiApplication.canvas)
 	}
 
 	addExistingIngredient(ingredient) {
 		this.existingIngredientList.push(ingredient)
 	}
+
+
 
 	setup() {
 		console.log("Game setup")
@@ -44,11 +48,16 @@ export class Game {
 		InputSet.emulateGamePad()
 		InputSet.initPlayersInputs()
 
-
 		this.pixiApplication = new PixiApplication()
 
-		this.kitchen = new Kitchen()
-		this.kitchen.setup()
+		this.prepareCanvas(this.pixiApplication).then(async () => {
+			this.playerA = new Player(1, "https://pixijs.com/assets/bunny.png")
+			await this.playerA.initPixiSprite()
+			this.playerA.addInputsListener()
+
+			this.kitchen = new Kitchen()
+			this.kitchen.setup()
+		})
 	}
 
 	update(dt, t) {
