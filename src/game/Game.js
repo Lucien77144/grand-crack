@@ -43,6 +43,7 @@ export class Game {
 
 	setup() {
 		console.log("Game setup")
+
 		// Initialize InputSet
 		InputSet.emulateKeyboard()
 		InputSet.emulateGamePad()
@@ -56,7 +57,7 @@ export class Game {
 			this.playerA.addInputsListener()
 
 			this.kitchen = new Kitchen()
-			this.kitchen.setup()
+			await this.kitchen.setup()
 		})
 	}
 

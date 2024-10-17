@@ -18,7 +18,7 @@ export default class Player {
 
 	async initPixiSprite() {
 		const pixiApplication = new PixiApplication()
-		this.pixiSprite = new PixiSprite(this.texture)
+		this.pixiSprite = new PixiSprite(this.texture, 0, 0, 5, [ 0.5, 0.5 ])
 		await this.pixiSprite.init().then((sprite) => {
 			pixiApplication.appendToStage(sprite)
 		})

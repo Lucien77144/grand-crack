@@ -1,23 +1,23 @@
 import { Assets, Sprite } from "pixi.js"
 
 export default class PixiSprite {
-	constructor(src, x, y, size) {
+	constructor(src, x, y, size = 1, anchor = [ 0.5, 0.5 ]) {
 		this.src = src
 		this.x = x
 		this.y = y
 		this.size = size
+		this.anchor = anchor
 	}
 
 	async init() {
 		this.texture = await Assets.load(this.src)
 		this.sprite = new Sprite(this.texture)
 
-		this.sprite.anchor.set(0.5)
+		this.sprite.anchor.set(...this.anchor)
 		this.sprite.x = this.x
 		this.sprite.y = this.y
 
-		this.sprite.width = this.size
-		this.sprite.height = this.size * (this.texture.height / this.texture.width)
+		this.sprite.scale = this.size
 
 		return Promise.resolve(this.sprite)
 	}

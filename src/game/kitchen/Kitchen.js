@@ -4,7 +4,7 @@ import { Cutter } from "./Cutter"
 import { Mixer } from "./Mixer"
 import { Baker } from "./Baker"
 
-const KITCHEN_PLAN_BASE_SIZE = 0.7
+const KITCHEN_PLAN_BASE_SIZE = 0.23
 const CUTTER_BASE_SIZE = 0.23
 const MIXER_BASE_SIZE = 0.3
 const BAKER_BASE_SIZE = 0.26
@@ -17,10 +17,10 @@ export class Kitchen {
 	}
 
 	setup() {
-			this.createKitchenPlan()
-			this.createCutter()
-			// await this.createMixer()
-			// await this.createBaker()
+		this.createKitchenPlan()
+		this.createCutter()
+		// await this.createMixer()
+		// await this.createBaker()
 	}
 
 	addCookingStation(cookingStation) {
@@ -28,14 +28,13 @@ export class Kitchen {
 	}
 
 	async createKitchenPlan() {
-		const size = (this.canvas.offsetWidth) * KITCHEN_PLAN_BASE_SIZE
+		const size = KITCHEN_PLAN_BASE_SIZE
 		const texture = "assets/sprites/kitchen.png"
 		const x = this.canvas.offsetWidth / 2
-		const y = this.canvas.offsetHeight - (size / 11)
+		const y = this.canvas.offsetHeight
+		const anchor = [ 0.5, 1 ]
 
-		console.log("Kitchen created")
-
-		this.kitchen = new PixiSprite(texture, x, y, size)
+		this.kitchen = new PixiSprite(texture, x, y, size, anchor)
 		await this.kitchen.init().then((sprite) => {
 			this.game.pixiApplication.appendToStage(sprite)
 		})
