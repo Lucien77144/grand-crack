@@ -1,4 +1,4 @@
-import { Assets, Sprite } from "pixi.js"
+import {Assets, Point, Sprite} from "pixi.js"
 
 export default class PixiSprite {
 	constructor({ ...options }) {
@@ -70,17 +70,19 @@ export default class PixiSprite {
 		return spriteBNew;
 	}
 
-	// Fonction pour vérifier si deux sprites se chevauchent
-	static checkOverlap(baseSprite,targetSprite) {
-		const bounds1 = baseSprite.getBounds()
-		const bounds2 = targetSprite.getBounds()
+		// Fonction pour vérifier si deux sprites se chevauchent
+		static checkOverlap(baseSprite,targetSprite) {
+			const point = new Point(baseSprite.x, baseSprite.y); // Remplace mouseX et mouseY par les coordonnées du point
+			const localPoint = targetSprite.toLocal(point);
 
-		// Vérifie s'il y a chevauchement entre les rectangles
-		return (
-			bounds1.x < bounds2.x + bounds2.width &&
-			bounds1.x + bounds1.width > bounds2.x &&
-			bounds1.y < bounds2.y + bounds2.height &&
-			bounds1.y + bounds1.height > bounds2.y
-		)
-	}
+// Ajuste pour un anchor à 0.5 (le centre du sprite)
+			const halfWidth = targetSprite.width / 2;
+			const halfHeight = targetSprite.height / 2;
+
+// Vérifie si le point est à l'intérieur des dimensions du sprite
+			const isInside = localPoint.x >= -halfWidth && localPoint.x <= halfWidth &&
+				localPoint.y >= -halfHeight && localPoint.y <= halfHeight;
+
+			return isInside;
+		}
 }

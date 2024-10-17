@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from "uuid"
 import PixiApplication from "@/game/pixi/PixiApplication"
 import { Assets, AnimatedSprite } from "pixi.js"
+import {Game} from "@/game/Game";
+import PixiSprite from "@/game/pixi/PixiSprite";
 
 
 export default class Ingredient {
@@ -11,10 +13,12 @@ export default class Ingredient {
 	#game
 	#action
 	#isCooked
+	#inCooking = false
 	#nbOfFrames = 0
 
 	constructor(ref, name, spritesheet, atlasData, animationName, size, x, canMove = true, action, isCooked = false) {
 		this.ref = ref
+		this.#game = new Game()
 		this.#id = uuidv4()
 		this.#name = name
 		this.spritesheet = spritesheet
@@ -49,11 +53,14 @@ export default class Ingredient {
 		this.sprite = new AnimatedSprite(sheet.animations[ this.animationName ])
 
 		this.sprite.scale = this.size
+		this.sprite.anchor.set(0.5,0.5)
 
 		this.sprite.x = this.x
 		this.sprite.y = 0
 
 		pixiApplication.appendToStage(this.sprite)
+
+		this.addInputOnA()
 	}
 
 	async create() {
@@ -76,8 +83,12 @@ export default class Ingredient {
 		// 	}
 		// }
 
+		this.updateGravity()
+	}
+
+	updateGravity(){
 		if (this.sprite) {
-			console.log(this.sprite.position)
+			// console.log(this.sprite.position)
 			this.sprite.position.y += 1
 
 			if (this.sprite.position.y > window.innerHeight) {
@@ -86,10 +97,28 @@ export default class Ingredient {
 		}
 	}
 
+	addInputOnA(){
+		const inputSet1 = this.#game.player1.inputSet;
+		inputSet1.addEvent("a",this.checkCanInteract,this)
+
+		const inputSet2 = this.#game.player2.inputSet;
+		inputSet2.addEvent("a",this.checkCanInteract,this)
+	}
+
+	checkCanInteract(e){
+		const player = e.id === 1  ? this.#game.player1 : this.#game.player2;
+		if(this.#canMove && !this.#inCooking && this.sprite){
+			if(player && PixiSprite.checkOverlap(player.pixiSprite.sprite,this.sprite)){
+				player.holdIngredient(this)
+				console.log("overlap P1")
+			}
+		}
+	}
+
 	destroy() {
-		console.log("destroy", this)
 		this.ref.removeIngredient(this)
-		this.pixiSprite.sprite.destroy()
+		this.sprite.destroy()
+		this.sprite = null
 	}
 
 	getId() {

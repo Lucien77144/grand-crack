@@ -3,6 +3,7 @@ import InputSet from "@/game/InputSet"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import PixiApplication from "@/game/pixi/PixiApplication"
 import { clamp } from "@/utils/maths"
+import {Point} from "pixi.js";
 
 export default class Player {
 	constructor(id, texture) {
@@ -14,6 +15,7 @@ export default class Player {
 		this.ingredientHold = null
 		this.distIngredient = null
 		this.allowGrab= true;
+
 
 		// Variables pour l'accélération et la vélocité
 		this.acceleration = 0 // Accélération initiale
