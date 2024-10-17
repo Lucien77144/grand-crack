@@ -14,6 +14,8 @@ export class CookingStation {
 		this.x = props.x
 		this.y = props.y
 		this.size = props.size
+
+		console.log("CookingStation created")
 	}
 
 	async initPixiSprite() {

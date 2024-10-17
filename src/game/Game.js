@@ -14,17 +14,18 @@ export class Game {
 	// player1OxygenRef = shallowRef(100)
 	// player2OxygenRef = shallowRef(100)
 
-	constructor(canvasWrapper) {
+	constructor(canvas, size) {
 		if (Game.instance) {
 			return Game.instance
 		}
 		Game.instance = this
-		this.canvasWrapper = canvasWrapper
 		this.pixiApplication = new PixiApplication()
+		this.canvas = canvas
+		this.size = size
 	}
 
 	async prepareCanvas(world) {
-		await world.init(this.canvasWrapper)
+		await world.init(this.canvas)
 		return Promise.resolve(world)
 	}
 
@@ -52,6 +53,10 @@ export class Game {
 
 	reset() {
 		// TODO! - Reset the game state
+	}
+
+	resize() {
+		console.log(this.size)
 	}
 
 	destroy() {
