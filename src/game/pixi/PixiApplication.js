@@ -12,7 +12,6 @@ export default class PixiApplication {
 
 	async init(wrapper, color = "#da0000") {
 		this.app = new Application()
-		console.log("create")
 		await this.app.init({ backgroundAlpha: 0, resizeTo: window }).then(() => {
 			wrapper.appendChild(this.app.canvas)
 			this.canvas = this.app.canvas

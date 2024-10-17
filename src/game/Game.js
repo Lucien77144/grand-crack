@@ -63,7 +63,6 @@ export class Game {
 	update(dt, t) {
 		if (store.isGameOver) return
 
-
 		InputSet.update()
 		if (this.playerA) {
 			this.playerA.update(dt, t)
