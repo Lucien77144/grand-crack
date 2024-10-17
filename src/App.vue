@@ -1,17 +1,16 @@
 <script setup>
-	import { RouterView } from "vue-router"
 	import { onMounted, onBeforeUnmount, provide, shallowRef, watch } from "vue"
 	import { useRaf } from "@/composables/useRaf/useRaf"
 	import { useSize } from "@/composables/useSize/useSize"
 	import { Game } from "@/game/Game"
-	import KitchenPlan from "@/components/KitchenPlan/KitchenPlan.vue"
+	import Kitchen from "@/components/Kitchen/Kitchen.vue"
 	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
 	import GameOver from "@/components/GameOver/GameOver.vue"
 	import { store } from "@/store"
 
 	const $$canvas = shallowRef()
 
-	const isKitchenPlanVisible = shallowRef(true)
+	const isKitchenVisible = shallowRef(true)
 
 	const { size } = useSize({ ref: $$canvas, cb: resize })
 
@@ -53,15 +52,14 @@
 </script>
 
 <template>
-	<!-- <RouterView /> -->
 	<main class="site-wrapper">
-		<button class="debug-button" @click="isKitchenPlanVisible = !isKitchenPlanVisible">
-			Toggle Kitchen Plan DOM
+		<button class="debug-button" @click="isKitchenVisible = !isKitchenVisible">
+			Toggle Kitchen DOM
 		</button>
 		<GameOver v-if="store.isGameOver" />
 		<OxygenJauge :player="1" />
 		<OxygenJauge :player="2" />
-		<KitchenPlan v-if="isKitchenPlanVisible" />
+		<Kitchen v-if="isKitchenPlanVisible" />
 		<div ref="$$canvas" />
 		<div class="background">
 			<img src="/assets/img/background.jpg" alt="background">

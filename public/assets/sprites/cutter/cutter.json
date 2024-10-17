@@ -1,0 +1,52 @@
+{"frames": [
+
+{
+	"filename": "cutter-1.png",
+	"frame": {"x":1,"y":1,"w":1283,"h":648},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":18,"w":1283,"h":648},
+	"sourceSize": {"w":1382,"h":666}
+},
+{
+	"filename": "cutter-2.png",
+	"frame": {"x":1286,"y":1,"w":1283,"h":648},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":18,"w":1283,"h":648},
+	"sourceSize": {"w":1382,"h":666}
+},
+{
+	"filename": "cutter-3.png",
+	"frame": {"x":2571,"y":1,"w":1283,"h":648},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":18,"w":1283,"h":648},
+	"sourceSize": {"w":1382,"h":666}
+},
+{
+	"filename": "cutter-4.png",
+	"frame": {"x":1,"y":651,"w":1283,"h":648},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":18,"w":1283,"h":648},
+	"sourceSize": {"w":1382,"h":666}
+},
+{
+	"filename": "cutter-5.png",
+	"frame": {"x":1286,"y":651,"w":1283,"h":648},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":68,"y":18,"w":1283,"h":648},
+	"sourceSize": {"w":1382,"h":666}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "cut.png",
+	"format": "RGBA8888",
+	"size": {"w":3855,"h":1300},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:e0737cc4e1b1bd4400dffc3cd44c5565:49b1657c6415f52d62b20ff8d1d872fd:27371cc27620d80495923ec0cc009ab5$"
+}
+}

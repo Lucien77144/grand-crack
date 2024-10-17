@@ -7,6 +7,7 @@ export class CookingStation {
 	currentTime = 0
 	timeLimit = 0
 	texture = null
+	sprite = null
 	action = ""
 
 	constructor({ ...props }) {
@@ -20,10 +21,12 @@ export class CookingStation {
 
 	async initPixiSprite() {
 		const pixiApplication = new PixiApplication()
-		this.pixiSprite = new PixiSprite(this.texture, this.x, this.y, this.size)
-		await this.pixiSprite.init().then((sprite) => {
+		this.sprite = new PixiSprite(this.texture, this.x, this.y, this.size)
+		await this.sprite.init().then((sprite) => {
 			pixiApplication.appendToStage(sprite)
 		})
+
+		console.log("Init the PixiSprite")
 	}
 
 	addInteractingPlayer(player) {}
@@ -36,7 +39,11 @@ export class CookingStation {
 
 	__checkCanInteractWith() {}
 
-	__success() {}
+	__success() {
+		console.log("Success")
+	}
 
-	__fail() {}
+	__fail() {
+		console.log("Fail")
+	}
 }
