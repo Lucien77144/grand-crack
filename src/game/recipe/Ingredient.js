@@ -65,18 +65,7 @@ export default class Ingredient {
 	}
 
 	update(dt) {
-		// if (this.pixiSprite) {
-		// 	if (this.pixiSprite?.sprite?.position) {
-		// 		this.pixiSprite.sprite.position.y += 1
-
-		// 		if (this.pixiSprite.sprite.position.y > window.innerHeight) {
-		// 			this.destroy()
-		// 		}
-		// 	}
-		// }
-
 		if (this.sprite) {
-			console.log(this.sprite.position)
 			this.sprite.position.y += 1
 
 			if (this.sprite.position.y > window.innerHeight) {
@@ -86,7 +75,6 @@ export default class Ingredient {
 	}
 
 	destroy() {
-		console.log("destroy", this)
 		this.ref.removeIngredient(this)
 		this.pixiSprite.sprite.destroy()
 	}

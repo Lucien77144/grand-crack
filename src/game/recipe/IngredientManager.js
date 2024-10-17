@@ -21,43 +21,46 @@ export default class IngredientManager {
 		this.#player2HasFinishedTheRecipe = false
 		this.#lastSpawnTime = {}
 	}
-
 	async spawnIngredient() {
-		const ingredientNames = Object.keys(this.#ingredientsToSpawn)
-		if (ingredientNames.length > 0) {
-			const currentTime = Date.now()
-			const spawnableIngredients = ingredientNames.filter(name => {
-				const recipeIngredient = this.#recipes.flatMap(recipe => recipe.ingredients).find(ingredient => ingredient.name === name)
-				if (!recipeIngredient) {
-					return false
-				}
-				const lastSpawnTime = this.#lastSpawnTime[ name ] || 0
-				return currentTime - lastSpawnTime >= recipeIngredient.spawnRate
-			})
-
-			if (spawnableIngredients.length > 0) {
-				const randomIndex = Math.floor(Math.random() * spawnableIngredients.length)
-				const ingredientName = spawnableIngredients[ randomIndex ]
-
+		const currentTime = Date.now()
+		const ingredientsToSpawn = this.#ingredientsToSpawn
+		Object.keys(ingredientsToSpawn).forEach((ingredientName) => {
+			if (!this.#lastSpawnTime[ ingredientName ] || currentTime - this.#lastSpawnTime[ ingredientName ] >= 1000) {
 				const recipeIngredient = this.#recipes.flatMap(recipe => recipe.ingredients).find(ingredient => ingredient.name === ingredientName)
 				if (!recipeIngredient) {
 					return null
 				}
 
-				const x = Math.random() * window.innerWidth
+				const missingQuantity = ingredientsToSpawn[ ingredientName ] - (this.#ingredientsSpawned[ ingredientName ] || 0)
+				if (missingQuantity > 0) {
+					const x = Math.random() * window.innerWidth
 
-				const ingredient = new Ingredient(this, recipeIngredient.name, recipeIngredient.texture, recipeIngredient.atlasData, recipeIngredient.size, x, recipeIngredient.canMove, recipeIngredient.action, recipeIngredient.isCooked)
-				await ingredient.create()
-				this.#ingredientsSpawned[ ingredientName ] = (this.#ingredientsSpawned[ ingredientName ] || 0) + 1
-				this.#ingredientsToSpawn[ ingredientName ]--
-				this.#lastSpawnTime[ ingredientName ] = currentTime
-				if (this.#ingredientsToSpawn[ ingredientName ] !== undefined && this.#ingredientsToSpawn[ ingredientName ] === 0) {
-					delete this.#ingredientsToSpawn[ ingredientName ]
+					const ingredient = new Ingredient(this, recipeIngredient.name, recipeIngredient.texture, recipeIngredient.atlasData, recipeIngredient.size, x, recipeIngredient.canMove, recipeIngredient.action, recipeIngredient.isCooked)
+					ingredient.initPixiSprite().then(() => {
+						this.#ingredients.push(ingredient)
+					})
+					this.#ingredientsSpawned[ ingredientName ] = (this.#ingredientsSpawned[ ingredientName ] || 0) + 1
+					this.#lastSpawnTime[ ingredientName ] = currentTime
 				}
-				return ingredient
 			}
-		}
-		return null
+		})
+	}
+
+	getMissingIngredients() {
+		const missingIngredients = []
+		this.#recipes.forEach(recipe => {
+			recipe.ingredients.forEach(ingredient => {
+				const requiredQuantity = ingredient.quantity
+				const spawnedQuantity = this.#ingredientsSpawned[ ingredient.name ] || 0
+				if (spawnedQuantity < requiredQuantity) {
+					missingIngredients.push({
+						name: ingredient.name,
+						quantity: requiredQuantity - spawnedQuantity
+					})
+				}
+			})
+		})
+		return missingIngredients
 	}
 
 	init() {
@@ -77,9 +80,6 @@ export default class IngredientManager {
 		const ingredientName = ingredient.getName()
 		if (this.#ingredientsSpawned[ ingredientName ] !== undefined) {
 			this.#ingredientsSpawned[ ingredientName ]--
-			if (this.#ingredientsSpawned[ ingredientName ] === 0) {
-				delete this.#ingredientsSpawned[ ingredientName ]
-			}
 		}
 	}
 
@@ -89,6 +89,11 @@ export default class IngredientManager {
 				this.spawnIngredient()
 			}
 		}
+
+		// console.log("Ingredients spawned", this.#ingredientsSpawned)
+		// console.log("Ingredients to spawn", this.#ingredientsToSpawn)
+		console.log("Missing ingredients", this.getMissingIngredients())
+		// console.log("ingredients", this.#ingredients)
 
 		this.#ingredients.forEach((ingredient) => {
 			ingredient.update(dt)
@@ -152,11 +157,14 @@ export default class IngredientManager {
 			this.#recipes = [ this.#recipes ]
 		}
 
+		this.#ingredientsToSpawn = {}
+
 		if (this.#recipes && this.#recipes.length > 0) {
 			this.#recipes.forEach((recipe) => {
 				if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
 					recipe.ingredients.forEach((ingredient) => {
-						this.#ingredientsToSpawn[ ingredient.name ] = (this.#ingredientsToSpawn[ ingredient.name ] || 0) + ingredient.quantity * multiplier
+						const totalQuantity = ingredient.quantity * multiplier
+						this.#ingredientsToSpawn[ ingredient.name ] = Math.min(totalQuantity, this.#ingredientsToSpawn[ ingredient.name ] || totalQuantity)
 					})
 				}
 			})
