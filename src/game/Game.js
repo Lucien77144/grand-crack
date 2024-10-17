@@ -106,9 +106,13 @@ export class Game {
 		this.pixiApplication = new PixiApplication()
 
 		this.prepareCanvas(this.pixiApplication).then(async () => {
-			this.playerA = new Player(1, "https://pixijs.com/assets/bunny.png")
-			await this.playerA.initPixiSprite()
-			this.playerA.addInputsListener()
+			this.player1 = new Player(1, "https://pixijs.com/assets/bunny.png")
+			await this.player1.initPixiSprite()
+			this.player1.addInputsListener()
+
+			this.player2 = new Player(2, "https://pixijs.com/assets/bunny.png")
+			await this.player2.initPixiSprite()
+			this.player2.addInputsListener()
 
 			this.ingredientManager = new IngredientManager(recipes)
 			this.ingredientManager.init()
@@ -122,8 +126,8 @@ export class Game {
 		if (store.isGameOver) return
 
 		InputSet.update()
-		if (this.playerA) {
-			this.playerA.update(dt, t)
+		if (this.player1) {
+			this.player1.update(dt, t)
 		}
 
 		if (this.ingredientManager) {

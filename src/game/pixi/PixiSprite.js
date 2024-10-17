@@ -37,15 +37,15 @@ export default class PixiSprite {
 		this.sprite.rotation = nextRotation
 	}
 
-	checkIn(spriteOverlap) {
-		let x1 = this.sprite.position.x - (this.sprite.width / 2),
-			y1 = this.sprite.position.y - (this.sprite.height / 2),
-			w1 = this.sprite.width,
-			h1 = this.sprite.height,
-			x2 = spriteOverlap.position.x - (spriteOverlap.width / 2),
-			y2 = spriteOverlap.position.y - (spriteOverlap.height / 2),
-			w2 = spriteOverlap.width,
-			h2 = spriteOverlap.height
+	static checkIn(baseSprite,targetSprite) {
+		let x1 = baseSprite.position.x - (baseSprite.width / 2),
+			y1 = baseSprite.position.y - (baseSprite.height / 2),
+			w1 = baseSprite.width,
+			h1 = baseSprite.height,
+			x2 = targetSprite.position.x - (targetSprite.width / 2),
+			y2 = targetSprite.position.y - (targetSprite.height / 2),
+			w2 = targetSprite.width,
+			h2 = targetSprite.height
 
 		if (x1 + w1 > x2)
 			if (x1 < x2 + w2)
@@ -56,9 +56,23 @@ export default class PixiSprite {
 		return false
 	}
 
+	static updatePositionWithOffset(spriteA, spriteB) {
+		// Calculer la différence entre A et B
+		const dx = spriteB.x - spriteA.x; // Différence sur l'axe x
+		const dy = spriteB.y - spriteA.y; // Différence sur l'axe y
+
+		// Appliquer cette différence à la nouvelle position de A
+		const spriteBNew = {
+			x: dx, // Position x de B ajustée
+			y: dy  // Position y de B ajustée
+		};
+
+		return spriteBNew;
+	}
+
 	// Fonction pour vérifier si deux sprites se chevauchent
-	checkOverlap(targetSprite) {
-		const bounds1 = this.sprite.getBounds()
+	static checkOverlap(baseSprite,targetSprite) {
+		const bounds1 = baseSprite.getBounds()
 		const bounds2 = targetSprite.getBounds()
 
 		// Vérifie s'il y a chevauchement entre les rectangles
