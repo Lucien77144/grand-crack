@@ -7,59 +7,7 @@ const OXYGEN_DECAY_RATE = 0.02
 import InputSet from "./InputSet"
 import Player from "@/game/player/Player"
 import IngredientManager from "./recipe/IngredientManager"
-
-const recipes = [
-	{
-		name: "Recipe 1",
-		ingredients: [
-			{
-				name: "sardine",
-				size: .3,
-				spawnRate: 2000,
-				spawnZone: "zone1",
-				canMove: true,
-				action: "action1",
-				isCooked: false,
-				quantity: 1
-			},
-			{
-				name: "mushroom",
-				size: .1,
-				spawnRate: 3000,
-				spawnZone: "zone2",
-				canMove: true,
-				action: "action2",
-				isCooked: false,
-				quantity: 2
-			}
-		]
-	}
-	// {
-	// 	name: "Recipe 2",
-	// 	ingredients: [
-	// 		{
-	// 			name: "ingredient 3",
-	// 			texture: "https://pixijs.com/assets/bunny.png",
-	// 			spawnRate: 2000,
-	// 			spawnZone: "zone3",
-	// 			canMove: true,
-	// 			action: "action3",
-	// 			isCooked: false,
-	// 			quantity: 2
-	// 		},
-	// 		{
-	// 			name: "ingredient 4",
-	// 			texture: "https://pixijs.com/assets/bunny.png",
-	// 			spawnRate: 1000,
-	// 			spawnZone: "zone4",
-	// 			canMove: true,
-	// 			action: "action4",
-	// 			isCooked: false,
-	// 			quantity: 1
-	// 		}
-	// 	]
-	// }
-]
+import recipes from "./recipe/recipes"
 
 export class Game {
 	static instance
