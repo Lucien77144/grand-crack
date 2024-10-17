@@ -66,13 +66,13 @@ export default class Ingredient {
 	}
 
 	updateGravity(dt) {
-		// if (this.pixiSprite) {
-		// 	this.pixiSprite.position.y += dt * this.#speed
+		if (this.pixiSprite) {
+			this.pixiSprite.sprite.position.y += dt * this.#speed
 
-		// 	if (this.pixiSprite.position.y > window.innerHeight) {
-		// 		this.destroy()
-		// 	}
-		// }
+			if (this.pixiSprite.sprite.position.y > window.innerHeight) {
+				this.destroy()
+			}
+		}
 	}
 
 	addInputOnA() {
@@ -95,7 +95,7 @@ export default class Ingredient {
 
 	destroy() {
 		this.ref.removeIngredient(this)
-		this.pixiSprite.destroy()
+		this.pixiSprite.sprite.destroy()
 		this.pixiSprite = null
 	}
 
