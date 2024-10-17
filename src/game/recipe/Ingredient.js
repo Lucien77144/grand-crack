@@ -92,6 +92,8 @@ export default class Ingredient {
 		if (this.#canMove && !this.#inCooking && this.pixiSprite && this.pixiSprite.sprite) {
 			if (player && PixiSprite.checkOverlap(player.pixiSprite.sprite, this.pixiSprite.sprite)) {
 				player.holdIngredient(this)
+
+				console.log(e)
 			}
 		}
 	}

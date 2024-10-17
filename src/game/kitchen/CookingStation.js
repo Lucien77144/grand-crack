@@ -1,9 +1,6 @@
-import PixiApplication from "@/game/pixi/PixiApplication"
 import PixiSprite from "@/game/pixi/PixiSprite"
-import { Assets, Sprite, AnimatedSprite } from "pixi.js"
 import { Game } from "@/game/Game"
 import TextureLoader from "@/game/TextureLoader"
-
 
 export class CookingStation {
 	ingredient = null

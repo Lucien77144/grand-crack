@@ -8,6 +8,13 @@
 	import GameOver from "@/components/GameOver/GameOver.vue"
 	import { store } from "@/store"
 	import TextureLoader from "@/game/TextureLoader"
+	import Signal from "@/utils/signal"
+
+	onMounted(() => {
+		Signal.emit(":test", "Hello")
+
+		console.log(Signal)
+	})
 
 	const $$canvas = shallowRef()
 	const $$video = shallowRef()
