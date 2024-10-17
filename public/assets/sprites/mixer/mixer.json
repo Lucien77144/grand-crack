@@ -1,0 +1,47 @@
+{"frames": {
+
+"mixer-1.png":
+{
+	"frame": {"x":1,"y":1,"w":1551,"h":702},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":60,"w":1551,"h":702},
+	"sourceSize": {"w":1770,"h":762}
+},
+"mixer-2.png":
+{
+	"frame": {"x":1,"y":705,"w":1551,"h":702},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":60,"w":1551,"h":702},
+	"sourceSize": {"w":1770,"h":762}
+},
+"mixer-3.png":
+{
+	"frame": {"x":1554,"y":1,"w":1551,"h":702},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":60,"w":1551,"h":702},
+	"sourceSize": {"w":1770,"h":762}
+},
+"mixer-4.png":
+{
+	"frame": {"x":1554,"y":705,"w":1551,"h":702},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":102,"y":60,"w":1551,"h":702},
+	"sourceSize": {"w":1770,"h":762}
+}},
+"animations": {
+	"mixer": ["mixer-1.png","mixer-2.png","mixer-3.png","mixer-4.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "cut.png",
+	"format": "RGBA8888",
+	"size": {"w":3106,"h":1408},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c078da4e4269ad9e1acd8df8e2062800:6dac27852c0a5b1fb51133277e7d80bf:27371cc27620d80495923ec0cc009ab5$"
+}
+}
