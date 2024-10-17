@@ -7,6 +7,7 @@ const OXYGEN_DECAY_RATE = 0.02
 import InputSet from "./InputSet"
 import Player from "@/game/player/Player"
 import IngredientManager from "./recipe/IngredientManager"
+import TextureLoader from "./TextureLoader"
 
 const recipes = [
 	{
@@ -84,8 +85,6 @@ export class Game {
 		this.pixiApplication = new PixiApplication()
 		this.canvas = canvas
 		this.size = size
-
-		console.log(this.canvas)
 	}
 
 	async prepareCanvas(pixiApplication) {
@@ -96,8 +95,6 @@ export class Game {
 	addExistingIngredient(ingredient) {
 		this.existingIngredientList.push(ingredient)
 	}
-
-
 
 	setup() {
 		console.log("Game setup")
@@ -110,19 +107,17 @@ export class Game {
 		this.pixiApplication = new PixiApplication()
 
 		this.prepareCanvas(this.pixiApplication).then(async () => {
-			this.player1 = new Player(1, "https://pixijs.com/assets/bunny.png")
-			await this.player1.initPixiSprite()
+			this.player1 = new Player(1)
 			this.player1.addInputsListener()
 
-			this.player2 = new Player(2, "https://pixijs.com/assets/bunny.png")
-			await this.player2.initPixiSprite()
+			this.player2 = new Player(2)
 			this.player2.addInputsListener()
-
-			this.ingredientManager = new IngredientManager(recipes)
-			this.ingredientManager.init()
 
 			this.kitchen = new Kitchen()
 			await this.kitchen.setup()
+
+			// this.ingredientManager = new IngredientManager(recipes)
+			// this.ingredientManager.init()
 		})
 	}
 

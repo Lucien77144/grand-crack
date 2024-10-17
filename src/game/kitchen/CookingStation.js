@@ -1,7 +1,9 @@
 import PixiApplication from "@/game/pixi/PixiApplication"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import { Assets, Sprite, AnimatedSprite } from "pixi.js"
-import {Game} from "@/game/Game";
+import { Game } from "@/game/Game"
+import TextureLoader from "@/game/TextureLoader"
+
 
 export class CookingStation {
 	player = null
@@ -23,22 +25,23 @@ export class CookingStation {
 		this.atlasData = props.atlasData
 		this.pixiApplication = new PixiApplication()
 		this.game = new Game()
+		this.tl = new TextureLoader()
+		this.textureData = this.tl.assetArray[ props.action ]
+
+		this.initPixiSprite()
 	}
 
-	async initPixiSprite() {
-		const sheetTexture = await Assets.load(this.spritesheet)
-		Assets.add({
-			alias: `atlas-${ this.action }`,
-			src: this.atlasData,
-			data: { texture: sheetTexture }
-		})
-
-		const sheet = await Assets.load(`atlas-${ this.action }`)
-		this.sprite = new AnimatedSprite(sheet.animations[ this.action ])
-		this.sprite.x = this.x
-		this.sprite.y = this.y
-		this.sprite.scale = this.size
-		this.pixiApplication.app.stage.addChild(this.sprite)
+	initPixiSprite() {
+		this.pixiSprite = new PixiSprite(
+			{
+				x: this.x,
+				y: this.y,
+				size: this.size,
+				anchor: [ 0, 0 ],
+				animationName: this.action,
+			},
+			this.textureData
+		)
 	}
 
 	addInteractingPlayer(player) {}

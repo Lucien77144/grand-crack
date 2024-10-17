@@ -1,12 +1,12 @@
 import { Game } from "@/game/Game"
 import InputSet from "@/game/InputSet"
 import PixiSprite from "@/game/pixi/PixiSprite"
-import PixiApplication from "@/game/pixi/PixiApplication"
 import { clamp } from "@/utils/maths"
-import {Point} from "pixi.js";
+import { Point } from "pixi.js"
+import TextureLoader from "@/game/TextureLoader"
 
 export default class Player {
-	constructor(id, texture) {
+	constructor(id) {
 		this.id = id
 		this.game = new Game()
 		this.oxygen = 100
@@ -14,25 +14,29 @@ export default class Player {
 		this.canMove = true
 		this.ingredientHold = null
 		this.distIngredient = null
-		this.allowGrab= true;
-
+		this.allowGrab = true
+		this.tl = new TextureLoader()
+		this.textureData = this.tl.assetArray[ "player" ]
 
 		// Variables pour l'accélération et la vélocité
 		this.acceleration = 0 // Accélération initiale
 		this.maxVelocity = 5 // Vélocité maximale
 		this.maxAcceleration = 0.1 // Accélération maximale
 		this.decelerationRate = 0.05 // Taux de décélération
-		this.texture = texture
 		this.joystickActive = false // Indicateur si le joystick est en mouvement
+		this.initPixiSprite()
 	}
 
-	async initPixiSprite() {
-		const pixiApplication = new PixiApplication()
+	initPixiSprite() {
 		this.pixiSprite = new PixiSprite(
-			{ src: this.texture, x: 0, y: 0, size: 5, anchor: [ 0.5, 0.5 ] })
-		await this.pixiSprite.init().then((sprite) => {
-			pixiApplication.appendToStage(sprite)
-		})
+			{
+				x: 0,
+				y: 0,
+				size: 5,
+				anchor: [ 0.5, 0.5 ]
+			},
+			this.textureData
+		)
 	}
 
 	// Fonction appelée quand il y a un mouvement du joystick
@@ -48,8 +52,7 @@ export default class Player {
 			const x = this.acceleration * xInput
 			const y = this.acceleration * yInput
 			this.pixiSprite.addVecPos(x, -y)
-		}
-		else{
+		} else {
 			this.joystickActive = false // On active le joystick
 		}
 	}
@@ -60,10 +63,9 @@ export default class Player {
 		this.addOxygen(-dt / 60)
 		this.updateSpeed()
 		this.updateGrab()
-
 	}
 
-	updateSpeed(){
+	updateSpeed() {
 		// Si le joystick n'est pas actif, on décélère
 		if (!this.joystickActive && this.acceleration > 0) {
 			this.acceleration = Math.max(this.acceleration - this.decelerationRate, 0)
@@ -78,42 +80,41 @@ export default class Player {
 		this.joystickActive = false
 	}
 
-	updateGrab(){
+	updateGrab() {
 		// Gère le holding d'ingrédient
-        if (this.ingredientHold) {
+		if (this.ingredientHold) {
 			console.log("follow")
 			this.ingredientHold.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
-			this.ingredientHold.sprite.y =  this.pixiSprite.sprite.y + this.distIngredient.y
-        }
-
-	}
-
-	holdIngredient(ingredient){
-		if(!this.ingredientHold && this.allowGrab){
-			this.ingredientHold = ingredient
-			const distOffset = PixiSprite.updatePositionWithOffset(this.pixiSprite.sprite,this.ingredientHold.sprite)
-			this.distIngredient = distOffset
-			ingredient.setCanMove(false)
-			this.allowGrab = false;
+			this.ingredientHold.sprite.y = this.pixiSprite.sprite.y + this.distIngredient.y
 		}
 	}
 
-	unholdIngredient(){
-		if(this.ingredientHold){
+	holdIngredient(ingredient) {
+		if (!this.ingredientHold && this.allowGrab) {
+			this.ingredientHold = ingredient
+			const distOffset = PixiSprite.updatePositionWithOffset(this.pixiSprite.sprite, this.ingredientHold.sprite)
+			this.distIngredient = distOffset
+			ingredient.setCanMove(false)
+			this.allowGrab = false
+		}
+	}
+
+	unholdIngredient() {
+		if (this.ingredientHold) {
 			console.log("aa")
 			this.ingredientHold.setCanMove(true)
 			this.ingredientHold = null
 			this.distIngredient = null
 			setTimeout(() => {
-				this.allowGrab = true;
-			},1000)
+				this.allowGrab = true
+			}, 1000)
 		}
 	}
 
 	// Ajout des listeners d'inputs
 	addInputsListener() {
 		this.inputSet.addEventJoystick(this.joystickEvent, this)
-		this.inputSet.addEvent("a",this.unholdIngredient,this)
+		this.inputSet.addEvent("a", this.unholdIngredient, this)
 		// this.inputSet.addEvent("a", this.eventInputA, this)
 	}
 

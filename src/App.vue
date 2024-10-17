@@ -7,6 +7,7 @@
 	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
 	import GameOver from "@/components/GameOver/GameOver.vue"
 	import { store } from "@/store"
+	import TextureLoader from "@/game/TextureLoader"
 
 	const $$canvas = shallowRef()
 
@@ -16,6 +17,7 @@
 
 	// Game state
 	let game = shallowRef()
+	let textureLoader = shallowRef()
 	let t = 0
 	provide("game", game)
 
@@ -26,8 +28,12 @@
 	})
 
 	onMounted(() => {
-		game.value = new Game($$canvas.value, size)
-		game.value.setup()
+		textureLoader.value = new TextureLoader()
+		textureLoader.value.loadTexture().then(() => {
+			// Create game
+			game.value = new Game($$canvas.value, size)
+			game.value.setup()
+		})
 
 		watch([ () => size ], resize)
 	})
