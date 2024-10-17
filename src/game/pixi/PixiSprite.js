@@ -1,8 +1,11 @@
-import { Application, Assets, Sprite } from "pixi.js"
+import { Assets, Sprite } from "pixi.js"
 
 export default class PixiSprite {
-	constructor(src) {
+	constructor(src, x, y, size) {
 		this.src = src
+		this.x = x
+		this.y = y
+		this.size = size
 	}
 
 	async init() {
@@ -10,14 +13,18 @@ export default class PixiSprite {
 		this.sprite = new Sprite(this.texture)
 
 		this.sprite.anchor.set(0.5)
-		this.sprite.x = 200
-		this.sprite.y = 200
+		this.sprite.x = this.x
+		this.sprite.y = this.y
+
+		this.sprite.width = this.size
+		this.sprite.height = this.size * (this.texture.height / this.texture.width)
+
 		return Promise.resolve(this.sprite)
 	}
 
 	update(t) {
 		if (this.sprite)
-			this.sprite.position.x = Math.sin(t * 0.001) * 300
+			this.sprite.position.y -= Math.sin(t * 0.0001)
 	}
 
 	setSpritePos(nextPos) {

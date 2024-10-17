@@ -1,13 +1,28 @@
+import PixiApplication from "@/game/pixi/PixiApplication"
+import PixiSprite from "@/game/pixi/PixiSprite"
+
 export class CookingStation {
 	player = null
 	ingredient = null
 	currentTime = 0
 	timeLimit = 0
-	sprite = null
+	texture = null
 	action = ""
-	// TODO : add "game"
 
-	constructor() {}
+	constructor({ ...props }) {
+		this.texture = props.texture
+		this.x = props.x
+		this.y = props.y
+		this.size = props.size
+	}
+
+	async initPixiSprite() {
+		const pixiApplication = new PixiApplication()
+		this.pixiSprite = new PixiSprite(this.texture, this.x, this.y, this.size)
+		await this.pixiSprite.init().then((sprite) => {
+			pixiApplication.appendToStage(sprite)
+		})
+	}
 
 	addInteractingPlayer(player) {}
 

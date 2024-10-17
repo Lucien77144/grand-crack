@@ -10,8 +10,8 @@
 
 	const game = inject("game")
 
-	let player1Oxygen = computed(() => game.value ? game.value.player1OxygenRef.value : 100)
-	let player2Oxygen = computed(() => game.value ? game.value.player2OxygenRef.value : 100)
+	let player1Oxygen = computed(() => game.value ? game?.value?.player1OxygenRef?.value : 100)
+	let player2Oxygen = computed(() => game.value ? game?.value?.player2OxygenRef?.value : 100)
 
 	const oxygen = props.player === 1 ? player1Oxygen : player2Oxygen
 </script>
@@ -36,18 +36,18 @@
 
 <style lang="scss" scoped>
 	.oxygen-jauge {
-		border: 0.05rem solid black;
 		border-radius: 1rem;
 		height: 15rem;
+		inset: 0.05rem solid white;
 		overflow: hidden;
 		position: absolute;
 		top: 1rem;
-		width: 1.5rem;
+		width: 1.2rem;
 
 		.progress {
 			@include inset(0);
 
-			background-color: red;
+			background-color: white;
 			transform-origin: bottom;
 			transition: transform 0s;
 		}
