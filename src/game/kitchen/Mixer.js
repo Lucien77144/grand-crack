@@ -3,9 +3,10 @@ import InputSet from "@/game/InputSet"
 
 export class Mixer extends CookingStation {
 	inMixer = false
-	nbCP = [ 0, 0, 0, 0 ]
-	progress = -1
-	targetProgress = 3
+	checkpoints = [ 0, 0, 0, 0 ]
+	progress = 0
+	nbRevolution = 4
+	lastCheckPoint = 4
 
 	constructor({ ...props }) {
 		super({ ...props })
@@ -24,19 +25,51 @@ export class Mixer extends CookingStation {
 			const hasMinXIntensity = this.checkThreshold(e.position.x, .5)
 			const hasMinYIntensity = this.checkThreshold(e.position.y, .5)
 
-			console.log(this.checkCP1(xInput, yInput), hasMinYIntensity)
+			const idx = this.progress%4
+
 			//Check First checkpoint done
 			if (this.checkCP1(xInput, yInput) && hasMinYIntensity) {
-				console.log("out")
+				if( idx === 0 && this.lastCheckPoint === 4 ){
+					this.progress++
+					this.checkpoints[idx]++
+				}
+				this.lastCheckPoint = 1
+			}
+			else if(this.checkCP2(xInput, yInput) && hasMinXIntensity){
+				if( idx === 1  && this.lastCheckPoint === 1){
+					this.progress++
+					this.checkpoints[idx]++
+				}
+				this.lastCheckPoint = 2
+			}
+			else if(this.checkCP3(xInput, yInput) && hasMinYIntensity){
+				if( idx === 2  && this.lastCheckPoint === 2 ){
+					this.progress++
+					this.checkpoints[idx]++
+				}
+				this.lastCheckPoint = 3
+			}
+			else if(this.checkCP4(xInput, yInput) && hasMinXIntensity ){
+				if( idx === 3 && this.lastCheckPoint === 3 ){
+					this.progress++
+					this.checkpoints[idx]++
+				}
+				this.lastCheckPoint = 4
+			}
+
+			if(this.checkpoints.every(elt => elt >= this.nbRevolution )){
 				this.player.onPlayerInteractCounter(true)
 				this.ingredient.onInteractionCounterEnd()
 				this.inMixer = false
 				this.player = null
 				this.ingredient = null
-				this.nbCP = [ 0, 0, 0, 0 ]
+				this.progress = -1
+				this.checkpoints = [ 0, 0, 0, 0 ]
 			}
 		}
 	}
+
+
 
 	checkCP1(x, y) {
 		const xValid = !this.checkThreshold(x, .25)
@@ -82,30 +115,9 @@ export class Mixer extends CookingStation {
 		}
 	}
 
-	onPressButtonCut(e) {
-		if (this.inMixer) {
-			//Cutter
-			this.progress += 1
-			console.log(this.progress)
-			if (this.progress === this.targetProgress) {
-				console.log("out")
-				this.player.onPlayerInteractCounter(true)
-				this.ingredient.onInteractionCounterEnd()
-				this.inMixer = false
-				this.player = null
-				this.ingredient = null
-				this.progress = 0
-
-
-				this.ingredient.pixiSprite.sprite.x = this.pixiSprite.sprite.x
-			}
-		}
-	}
-
 	addInputCounterIn() {
 		const inputSet1 = this.game.player1.inputSet
 		inputSet1.addEvent("i", this.onPressButtonInteract, this)
-		inputSet1.addEvent("i", this.onPressButtonCut, this)
 		inputSet1.addEventJoystick(this.joystickEvent, this)
 
 
