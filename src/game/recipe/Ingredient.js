@@ -14,6 +14,7 @@ export default class Ingredient {
 	#action
 	#isCooked
 	#inCooking = false
+	#speed = .5
 	#nbOfFrames = 0
 
 	constructor(ref, name, spritesheet, atlasData, size, x, canMove = true, action, isCooked = false) {
@@ -82,13 +83,13 @@ export default class Ingredient {
 		// 	}
 		// }
 
-		this.updateGravity()
+		this.updateGravity(dt)
 	}
 
-	updateGravity(){
+	updateGravity(dt){
 		if (this.sprite) {
 			// console.log(this.sprite.position)
-			this.sprite.position.y += 1
+			this.sprite.position.y += dt*this.#speed
 
 			if (this.sprite.position.y > window.innerHeight) {
 				this.destroy()
