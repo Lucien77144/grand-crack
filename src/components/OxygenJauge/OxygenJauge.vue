@@ -48,7 +48,6 @@
 
 		.progress {
 			@include inset(0);
-
 			background: linear-gradient(
 				to right,
 				#7F9BFE 0%,
@@ -56,6 +55,7 @@
 			);
 			transform-origin: bottom;
 			transition: transform 0s;
+			border-radius: 1rem;
 		}
 
 		&.player-1 {
