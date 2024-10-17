@@ -60,14 +60,19 @@ export class CookingStation {
 	checkCanInteractWithIngredient(player, ingredient) {
 		const isEmpty = !this.player && !this.ingredient
 
-		const overlapping = player && PixiSprite.checkOverlap(
-			player.pixiSprite.sprite,
-			this.pixiSprite.sprite
-		)
-		const isNotCook = ingredient.getInCooking() === false
-			&& ingredient.getIsCooked() === false
+		if(player.pixiSprite && player.pixiSprite.sprite && this.pixiSprite && this.pixiSprite.sprite ){
+			const overlapping = player && PixiSprite.checkOverlap(
+				player.pixiSprite.sprite,
+				this.pixiSprite.sprite
+			)
+			const isNotCook = ingredient.getInCooking() === false
+				&& ingredient.getIsCooked() === false
 
-		return ingredient && isEmpty && overlapping && isNotCook
+			return ingredient && isEmpty && overlapping && isNotCook
+		}
+		else{
+			return false
+		}
 	}
 
 	addInputCounterIn() {
