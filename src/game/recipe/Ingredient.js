@@ -99,17 +99,17 @@ export default class Ingredient {
 		this.pixiSprite = null
 	}
 
-	onInteractionCounterIn(){
-		this.pixiSprite.sprite.visible = false;
-		this.setInCooking(true);
-		this.setCanMove(false);
+	onInteractionCounterIn() {
+		this.pixiSprite.sprite.visible = false
+		this.setInCooking(true)
+		this.setCanMove(false)
 	}
 
-	onInteractionCounterEnd(){
-		this.pixiSprite.sprite.visible = true;
-		this.setInCooking(false);
-		this.setCanMove(true);
-		this.setIsCooked(true);
+	onInteractionCounterEnd() {
+		this.pixiSprite.sprite.visible = true
+		this.setInCooking(false)
+		this.setCanMove(true)
+		this.setIsCooked(true)
 	}
 
 	getId() {
@@ -125,8 +125,8 @@ export default class Ingredient {
 	}
 
 	getInCooking() {
-        return this.#inCooking
-    }
+		return this.#inCooking
+	}
 
 	getName() {
 		return this.#name
