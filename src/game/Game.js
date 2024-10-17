@@ -1,5 +1,5 @@
 import { shallowRef } from "vue"
-import { KitchenPlan } from "./kitchen-plan/KitchenPlan"
+import { Kitchen } from "@/game/kitchen/Kitchen"
 import PixiApplication from "@/game/pixi/PixiApplication"
 import { store } from "@/store"
 
@@ -10,7 +10,7 @@ import Player from "@/game/player/Player"
 export class Game {
 	static instance
 	isPaused = false
-	kitchenPlan = null
+	kitchen = null
 	soundManager = null
 	existingIngredientList = {}
 	stationsList = []
@@ -47,8 +47,8 @@ export class Game {
 
 		this.pixiApplication = new PixiApplication()
 
-		this.kitchenPlan = new KitchenPlan()
-		this.kitchenPlan.setup()
+		this.kitchen = new Kitchen()
+		this.kitchen.setup()
 	}
 
 	update(dt, t) {

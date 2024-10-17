@@ -22,10 +22,7 @@ export default class PixiSprite {
 		return Promise.resolve(this.sprite)
 	}
 
-	update(t) {
-		if (this.sprite)
-			this.sprite.position.y -= Math.sin(t * 0.0001)
-	}
+	update(dt, t) {}
 
 	setSpritePos(nextPos) {
 		this.sprite.position.set(nextPos.x, nextPos.y)

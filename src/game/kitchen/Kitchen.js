@@ -9,7 +9,7 @@ const CUTTER_BASE_SIZE = 0.23
 const MIXER_BASE_SIZE = 0.3
 const BAKER_BASE_SIZE = 0.26
 
-export class KitchenPlan {
+export class Kitchen {
 	constructor() {
 		this.game = new Game()
 		this.canvas = this.game.canvas
@@ -25,16 +25,20 @@ export class KitchenPlan {
 		})
 	}
 
+	addCookingStation(cookingStation) {
+		this.game.stationsList.push(cookingStation)
+	}
+
 	async createKitchenPlan() {
 		const size = (this.canvas.offsetWidth) * KITCHEN_PLAN_BASE_SIZE
-		const texture = "assets/sprites/kitchen-plan.png"
+		const texture = "assets/sprites/kitchen.png"
 		const x = this.canvas.offsetWidth / 2
 		const y = this.canvas.offsetHeight - (size / 11)
 
-		console.log("KitchenPlan created")
+		console.log("Kitchen created")
 
-		this.kitchenPlan = new PixiSprite(texture, x, y, size)
-		await this.kitchenPlan.init().then((sprite) => {
+		this.kitchen = new PixiSprite(texture, x, y, size)
+		await this.kitchen.init().then((sprite) => {
 			this.game.pixiApplication.appendToStage(sprite)
 		})
 	}
@@ -50,8 +54,9 @@ export class KitchenPlan {
 			y,
 			size,
 		})
-		this.addCookingStation(this.cutter)
 		await this.cutter.initPixiSprite()
+		this.cutter.startTimer()
+		this.addCookingStation(this.cutter)
 	}
 
 	async createMixer() {
@@ -66,8 +71,9 @@ export class KitchenPlan {
 			size
 		})
 
-		this.addCookingStation(this.mixer)
 		await this.mixer.initPixiSprite()
+		this.mixer.startTimer()
+		this.addCookingStation(this.mixer)
 	}
 
 	async createBaker() {
@@ -82,12 +88,9 @@ export class KitchenPlan {
 			size
 		})
 
-		this.addCookingStation(this.baker)
 		await this.baker.initPixiSprite()
-	}
-
-	addCookingStation(cookingStation) {
-		this.game.stationsList.push(cookingStation)
+		this.baker.startTimer()
+		this.addCookingStation(this.baker)
 	}
 
 	update() {}

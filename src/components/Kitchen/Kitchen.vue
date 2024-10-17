@@ -13,7 +13,7 @@
 </script>
 
 <template>
-	<div class="kitchen-plan">
+	<div class="kitchen">
 		<div class="container">
 			<div
 				v-for="(station, i) in stations"
@@ -27,11 +27,12 @@
 </template>
 
 <style lang="scss" scoped>
-	.kitchen-plan {
+	.kitchen {
 		bottom: 0;
 		height: 8rem;
 		left: 0;
 		margin: 0 auto;
+		pointer-events: none;
 		position: absolute;
 		width: 100%;
 
