@@ -9,11 +9,11 @@
 	import GameOver from "@/components/GameOver/GameOver.vue"
 	import { store } from "@/store"
 
-	const $$canvasWrapper = shallowRef()
+	const $$canvas = shallowRef()
 
 	const isKitchenPlanVisible = shallowRef(true)
 
-	useSize({ ref: $$canvasWrapper, cb: resize })
+	const { size } = useSize({ ref: $$canvas, cb: resize })
 
 	// Game state
 	let game = shallowRef()
@@ -27,8 +27,10 @@
 	})
 
 	onMounted(() => {
-		game.value = new Game($$canvasWrapper.value)
+		game.value = new Game($$canvas.value, size)
 		game.value.setup()
+
+		watch([ () => size ], resize)
 	})
 
 	watch(() => store.isGameOver, (v) => {
@@ -41,6 +43,9 @@
 	})
 
 	function resize() {
+		if (!game.value || !$$canvas.value) return
+		game.value.resize(size)
+
 		const screenWidth = window.innerWidth
 		const fontSize = screenWidth / 64
 		document.documentElement.style.fontSize = `${ fontSize }px`
@@ -57,7 +62,7 @@
 		<OxygenJauge :player="1" />
 		<OxygenJauge :player="2" />
 		<KitchenPlan v-if="isKitchenPlanVisible" />
-		<div ref="$$canvasWrapper" />
+		<div ref="$$canvas" />
 		<div class="background">
 			<img src="/assets/img/background.jpg" alt="background">
 		</div>

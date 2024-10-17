@@ -5,14 +5,15 @@ import { Mixer } from "./Mixer"
 import { Baker } from "./Baker"
 
 const KITCHEN_PLAN_BASE_SIZE = 0.7
-const CUTTER_BASE_SIZE = 0.2
-const MIXER_BASE_SIZE = 0.2
-const BAKER_BASE_SIZE = 0.2
+const CUTTER_BASE_SIZE = 0.23
+const MIXER_BASE_SIZE = 0.3
+const BAKER_BASE_SIZE = 0.26
 
 export class KitchenPlan {
 	constructor() {
 		this.game = new Game()
-		this.canvasWrapper = this.game.canvasWrapper
+		this.canvas = this.game.canvas
+		this.size = this.game.size
 	}
 
 	setup() {
@@ -25,10 +26,12 @@ export class KitchenPlan {
 	}
 
 	async createKitchenPlan() {
-		const size = (this.canvasWrapper.offsetWidth) * KITCHEN_PLAN_BASE_SIZE
+		const size = (this.canvas.offsetWidth) * KITCHEN_PLAN_BASE_SIZE
 		const texture = "assets/sprites/kitchen-plan.png"
-		const x = this.canvasWrapper.offsetWidth / 2
-		const y = this.canvasWrapper.offsetHeight - (size / 11)
+		const x = this.canvas.offsetWidth / 2
+		const y = this.canvas.offsetHeight - (size / 11)
+
+		console.log("KitchenPlan created")
 
 		this.kitchenPlan = new PixiSprite(texture, x, y, size)
 		await this.kitchenPlan.init().then((sprite) => {
@@ -37,9 +40,9 @@ export class KitchenPlan {
 	}
 
 	async createCutter() {
-		const size = this.canvasWrapper.offsetWidth * CUTTER_BASE_SIZE
-		const x = this.canvasWrapper.offsetWidth / 2
-		const y = this.canvasWrapper.offsetHeight - (size / 5)
+		const size = this.canvas.offsetWidth * CUTTER_BASE_SIZE
+		const x = this.canvas.offsetWidth / 3.73
+		const y = this.canvas.offsetHeight * 0.9
 
 		this.cutter = new Cutter({
 			texture: "assets/sprites/cutter.png",
@@ -52,9 +55,9 @@ export class KitchenPlan {
 	}
 
 	async createMixer() {
-		const size = this.canvasWrapper.offsetWidth * MIXER_BASE_SIZE
-		const x = this.canvasWrapper.offsetWidth / 2
-		const y = this.canvasWrapper.offsetHeight - (size / 5)
+		const size = this.canvas.offsetWidth * MIXER_BASE_SIZE
+		const x = this.canvas.offsetWidth / 2
+		const y = this.canvas.offsetHeight * 0.89
 
 		this.mixer = new Mixer({
 			texture: "assets/sprites/mixer.png",
@@ -68,9 +71,9 @@ export class KitchenPlan {
 	}
 
 	async createBaker() {
-		const size = this.canvasWrapper.offsetWidth * BAKER_BASE_SIZE
-		const x = this.canvasWrapper.offsetWidth / 2
-		const y = this.canvasWrapper.offsetHeight - (size / 5)
+		const size = this.canvas.offsetWidth * BAKER_BASE_SIZE
+		const x = this.canvas.offsetWidth / 1.38
+		const y = this.canvas.offsetHeight * 0.87
 
 		this.baker = new Baker({
 			texture: "assets/sprites/baker.png",
