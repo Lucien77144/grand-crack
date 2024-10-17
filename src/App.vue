@@ -9,6 +9,7 @@
 	import { store } from "@/store"
 	import TextureLoader from "@/game/TextureLoader"
 	import Signal from "@/utils/signal"
+	import SoundManager from "@/game/SoundManager";
 
 	onMounted(() => {
 		Signal.emit(":test", "Hello")
@@ -26,6 +27,7 @@
 	// Game state
 	let game = shallowRef()
 	let textureLoader = shallowRef()
+	let soundManager = shallowRef()
 	let t = 0
 	provide("game", game)
 
@@ -42,6 +44,8 @@
 		textureLoader.value = new TextureLoader()
 		textureLoader.value.loadTexture().then(() => {
 			// Create game
+
+			soundManager.value = new SoundManager()
 			game.value = new Game($$canvas.value, size)
 			game.value.setup()
 		})

@@ -5,6 +5,7 @@ import Player from "@/game/player/Player"
 import IngredientManager from "./recipe/IngredientManager"
 import recipes from "./recipe/recipes"
 import { store } from "@/store"
+import SoundManager from "@/game/SoundManager";
 
 export class Game {
 	static instance
@@ -46,6 +47,9 @@ export class Game {
 		this.pixiApplication = new PixiApplication()
 
 		this.prepareCanvas(this.pixiApplication).then(() => {
+			this.soundManager = new SoundManager()
+			// this.soundManager.startXp("key")
+
 			this.player1 = new Player(1)
 			this.player1.addInputsListener()
 
