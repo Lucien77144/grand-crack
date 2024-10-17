@@ -1,0 +1,24 @@
+[
+	{
+		"name": "recipe1",
+    "nbOfPlayerHaveCompleted": 0,
+		"ingredients": [
+			{
+				"name": "sardine",
+				"size": 0.3,
+				"canMove": true,
+				"action": "action1",
+				"isCooked": false,
+				"quantity": 1
+			},
+			{
+				"name": "mushroom",
+				"size": 0.1,
+				"canMove": true,
+				"action": "action2",
+				"isCooked": false,
+				"quantity": 2
+			}
+		]
+	}
+]
