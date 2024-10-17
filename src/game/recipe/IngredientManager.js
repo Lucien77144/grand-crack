@@ -80,6 +80,7 @@ export default class IngredientManager {
 
 	removeIngredient(ingredient) {
 		const index = this.#ingredients.indexOf(ingredient)
+		console.log(this.#ingredients)
 		if (index > -1) {
 			this.#ingredients.splice(index, 1)
 		}
@@ -94,6 +95,7 @@ export default class IngredientManager {
 		if (Object.keys(this.#ingredientsToSpawn).length > 0) {
 			if (!this.#player1HasFinishedTheRecipe || !this.#player2HasFinishedTheRecipe) {
 				this.spawnIngredient()
+				console.log("span")
 			}
 		}
 
