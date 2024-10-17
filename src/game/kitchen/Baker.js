@@ -7,7 +7,6 @@ export class Baker extends CookingStation {
 	constructor({ ...props }) {
 		super({ ...props })
 		this.timeLimit = 5000
-		this.action = "bake"
 	}
 
 	startTimer() {

@@ -49,7 +49,7 @@
 	"sourceSize": {"w":850,"h":851}
 }},
 "animations": {
-	"sardines": ["sardines1.png","sardines2.png","sardines3.png","sardines4.png","sardines5.png","sardines6.png"]
+	"sardine": ["sardines1.png","sardines2.png","sardines3.png","sardines4.png","sardines5.png","sardines6.png"]
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",

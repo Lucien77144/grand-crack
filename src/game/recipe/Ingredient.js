@@ -16,14 +16,13 @@ export default class Ingredient {
 	#inCooking = false
 	#nbOfFrames = 0
 
-	constructor(ref, name, spritesheet, atlasData, animationName, size, x, canMove = true, action, isCooked = false) {
+	constructor(ref, name, spritesheet, atlasData, size, x, canMove = true, action, isCooked = false) {
 		this.ref = ref
 		this.#game = new Game()
 		this.#id = uuidv4()
 		this.#name = name
 		this.spritesheet = spritesheet
 		this.atlasData = atlasData
-		this.animationName = animationName
 		this.size = size
 		this.x = x
 		// this.#game = new Game()
@@ -38,7 +37,7 @@ export default class Ingredient {
 	}
 
 	async initPixiSprite() {
-		if (!this.spritesheet || !this.atlasData || !this.animationName) return
+		if (!this.spritesheet || !this.atlasData) return
 		const pixiApplication = new PixiApplication()
 
 		const sheetTexture = await Assets.load(this.spritesheet)
@@ -50,7 +49,7 @@ export default class Ingredient {
 
 		const sheet = await Assets.load(`atlas-${ this.#name }`)
 
-		this.sprite = new AnimatedSprite(sheet.animations[ this.animationName ])
+		this.sprite = new AnimatedSprite(sheet.animations[ this.#name ])
 
 		this.sprite.scale = this.size
 		this.sprite.anchor.set(0.5,0.5)

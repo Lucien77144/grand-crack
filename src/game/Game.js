@@ -16,7 +16,6 @@ const recipes = [
 				name: "sardine",
 				texture: "/assets/sprites/ingredients/sardine.png",
 				atlasData: "/assets/sprites/ingredients/sardine.json",
-				animationName: "sardines",
 				size: .3,
 				spawnRate: 1000,
 				spawnZone: "zone1",
@@ -26,14 +25,16 @@ const recipes = [
 				quantity: 1
 			},
 			{
-				name: "ingredient 2",
-				texture: "https://pixijs.com/assets/bunny.png",
+				name: "mushroom",
+				texture: "/assets/sprites/ingredients/mushroom.png",
+				atlasData: "/assets/sprites/ingredients/mushroom.json",
+				size: .1,
 				spawnRate: 3000,
 				spawnZone: "zone2",
 				canMove: true,
 				action: "action2",
 				isCooked: false,
-				quantity: 3
+				quantity: 2
 			}
 		]
 	}
