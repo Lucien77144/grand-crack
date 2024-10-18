@@ -11,19 +11,20 @@
 		game.value.reset()
 	}
 
-	onMounted(() => {
-		watch(() => game.value, (g) => {
-			if (!store.isGameOver) return
+	// TODO! - Refactor this
+	watch(() => game.value, (g) => {
+		timeout = setTimeout(() => {
+			g.player1.inputSet.addEvent("x", () => {
+				console.log("click")
 
-			timeout = setTimeout(() => {
-				g.player1.inputSet.addEvent("x", () => {
-					onReplayClick()
-				})
-				g.player2.inputSet.addEvent("x", () => {
-					onReplayClick()
-				})
-			}, 100)
-		})
+				if (!store.isGameOver) return
+				onReplayClick()
+			})
+			g.player2.inputSet.addEvent("x", () => {
+				if (!store.isGameOver) return
+				onReplayClick()
+			})
+		}, 100)
 	})
 
 	onBeforeUnmount(() => {
