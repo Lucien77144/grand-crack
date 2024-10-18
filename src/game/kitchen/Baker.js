@@ -3,7 +3,9 @@ import { wait } from "@/utils/async"
 
 export class Baker extends CookingStation {
 	inBaker = false
-	cookingTime = 10000
+	cookingTime = 3500
+	soundPlayed = false
+
 
 	constructor({ ...props }) {
 		super({ ...props })
@@ -19,6 +21,12 @@ export class Baker extends CookingStation {
 			this.player = player
 			this.ingredient = ingredient
 			this.inBaker = true
+
+			if(!this.soundPlayed){
+				this.soundPlayed = true
+				this.game.soundManager.playSingleSound("bake",1)
+				console.log("in")
+			}
 
 			// Remove the first frame
 			const anim = this.pixiSprite.textureData.sheet.animations.baker
@@ -40,6 +48,11 @@ export class Baker extends CookingStation {
 			this.player = null
 			this.ingredient = null
 			this.progress = 0
+			this.game.soundManager.stopSingleSound("mixing")
+			this.soundPlayed = false
+			console.log("out")
+
+
 
 			// Reset to default
 			this.pixiSprite.sprite.textures = anim

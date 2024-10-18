@@ -59,11 +59,6 @@ export default class Player {
 	joystickEvent(e) {
 		let xInput = e.position.x
 		let yInput = e.position.y
-		console.log(window.innerHeight)
-
-		const normalized = InputSet.normalizeJoystickInput(xInput, yInput)
-		xInput = normalized.x
-		yInput = normalized.y
 
 		if (this.pixiSprite && this.canMove && xInput !== 0 && yInput !== 0) {
 			this.joystickActive = true // On active le joystick

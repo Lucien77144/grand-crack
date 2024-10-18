@@ -7,6 +7,7 @@ export class Mixer extends CookingStation {
 	progress = 0
 	nbRevolution = 4
 	lastCheckPoint = 4
+	soundPlayed = false
 
 	constructor({ ...props }) {
 		super({ ...props })
@@ -17,11 +18,11 @@ export class Mixer extends CookingStation {
 		if (this.inMixer && this.player && this.ingredient) {
 			let xInput = e.position.x
 			let yInput = e.position.y
-			const normalized = InputSet.normalizeJoystickInput(xInput, yInput)
 
-			xInput = normalized.x
-			yInput = normalized.y
-			console.log(xInput, yInput)
+			if(!this.soundPlayed){
+				this.soundPlayed = true
+				this.game.soundManager.playSingleSound("mixing",1)
+			}
 
 			const hasMinXIntensity = this.checkThreshold(e.position.x, .5)
 			const hasMinYIntensity = this.checkThreshold(e.position.y, .5)
@@ -65,6 +66,9 @@ export class Mixer extends CookingStation {
 				this.ingredient.pixiSprite.sprite.gotoAndStop(
 					this.ingredient.pixiSprite.sprite.totalFrames - 1
 				)
+
+				this.game.soundManager.stopSingleSound("mixing")
+				this.soundPlayed = false
 
 				this.inMixer = false
 				this.player = null
