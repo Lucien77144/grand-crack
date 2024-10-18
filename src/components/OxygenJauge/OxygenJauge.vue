@@ -34,7 +34,7 @@
 		oxygen.value = Math.round(realOxygen * 10) / 10
 
 		if ((Math.floor(realOxygen * 10) / 10) < 1) {
-			return store.isGameOver = true
+			// return store.isGameOver = true
 		}
 	})
 </script>

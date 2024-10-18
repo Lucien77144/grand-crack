@@ -5,7 +5,7 @@
     "score": 200,
 		"ingredients": [
 			{
-				"name": "sardine",
+				"name": "banana",
 				"size": 0.3,
 				"canMove": true,
 				"action": "cutter",
@@ -13,12 +13,20 @@
 				"quantity": 1
 			},
 			{
-				"name": "mushroom",
-				"size": 0.1,
+				"name": "flour",
+				"size": 0.2,
 				"canMove": true,
 				"action": "mixer",
 				"isCooked": false,
-				"quantity": 2
+				"quantity": 1
+			},
+      {
+				"name": "cheese",
+				"size": 0.2,
+				"canMove": true,
+				"action": "baker",
+				"isCooked": false,
+				"quantity": 1
 			}
 		]
 	}

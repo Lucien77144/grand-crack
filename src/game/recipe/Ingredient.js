@@ -51,7 +51,7 @@ export default class Ingredient {
 	initPixiSprite() {
 		this.pixiSprite = new PixiSprite({
 			x: this.x,
-			y: 0,
+			y: -this.canvas.offsetWidth * 0.05,
 			size: this.size * this.canvas.offsetWidth * 0.00075,
 			action: this.#action,
 			animationName: this.#name,
@@ -76,10 +76,10 @@ export default class Ingredient {
 
 	updateGravity(dt) {
 		if (this.pixiSprite && this.#canMove && !this.#isCooked && !this.#inCooking) {
-			this.pixiSprite.sprite.position.y += dt * this.#speed
-			this.pixiSprite.sprite.rotation += 0.001 * dt * this.#speed * this.#rotation
+			this.pixiSprite.sprite.position.y += dt * this.#speed * window.innerWidth * 0.00025
+			this.pixiSprite.sprite.rotation += 0.001 * dt * this.#speed * this.#rotation * window.innerWidth * 0.00025
 
-			if (this.pixiSprite.sprite.position.y > window.innerHeight ) {
+			if (this.pixiSprite.sprite.position.y > window.innerHeight) {
 				this.destroy()
 				this.ref.removeIngredient(this)
 			}
@@ -103,7 +103,6 @@ export default class Ingredient {
 				store.players[ e.id - 1 ].action = this.#action
 			} else {
 				store.players[ e.id - 1 ].action = null
-
 			}
 		}
 	}
@@ -159,7 +158,7 @@ export default class Ingredient {
 		this.#action = action
 	}
 
-	getOnPlate(){
+	getOnPlate() {
 		return this.#onPlate
 	}
 

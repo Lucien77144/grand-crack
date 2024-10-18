@@ -1,0 +1,47 @@
+{"frames": {
+
+"fromage-1.png":
+{
+	"frame": {"x":1,"y":1,"w":732,"h":483},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":51,"y":197,"w":732,"h":483},
+	"sourceSize": {"w":850,"h":850}
+},
+"fromage-2.png":
+{
+	"frame": {"x":735,"y":334,"w":291,"h":90},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":271,"y":448,"w":291,"h":90},
+	"sourceSize": {"w":850,"h":850}
+},
+"fromage-3.png":
+{
+	"frame": {"x":1393,"y":1,"w":500,"h":271},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":184,"y":287,"w":500,"h":271},
+	"sourceSize": {"w":850,"h":850}
+},
+"fromage-4.png":
+{
+	"frame": {"x":735,"y":1,"w":656,"h":331},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":91,"y":261,"w":656,"h":331},
+	"sourceSize": {"w":850,"h":850}
+}},
+"animations": {
+	"cheese": ["fromage-1.png","fromage-2.png","fromage-3.png","fromage-4.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.1",
+	"image": "cut.png",
+	"format": "RGBA8888",
+	"size": {"w":1894,"h":485},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:6707e6bd47f8bb19f816d13f1427d4b1:cc99df1e5314b19e88861119779b18e5:27371cc27620d80495923ec0cc009ab5$"
+}
+}

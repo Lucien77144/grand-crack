@@ -1,6 +1,8 @@
 import { Game } from "../Game.js"
 import Ingredient from "./Ingredient.js"
 
+const FREQUENCY = 5000
+
 export default class IngredientManager {
 	#ingredients = []
 	#ingredientsToSpawn = {}
@@ -17,7 +19,7 @@ export default class IngredientManager {
 	async spawnIngredient() {
 		const currentTime = Date.now()
 
-		if (currentTime - this.#lastSpawnTime > 3000) {
+		if (currentTime - this.#lastSpawnTime > FREQUENCY) {
 			const missingIngredients = this.getMissingIngredients()
 
 			if (missingIngredients.length > 0) {

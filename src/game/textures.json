@@ -39,6 +39,21 @@
       "name": "sardine",
       "src": "/assets/sprites/ingredients/sardine.png",
       "atlasData": "/assets/sprites/ingredients/sardine.json"
+    },
+    {
+      "name": "banana",
+      "src": "/assets/sprites/ingredients/banana.png",
+      "atlasData": "/assets/sprites/ingredients/banana.json"
+    },
+    {
+      "name": "cheese",
+      "src": "/assets/sprites/ingredients/cheese.png",
+      "atlasData": "/assets/sprites/ingredients/cheese.json"
+    },
+    {
+      "name": "flour",
+      "src": "/assets/sprites/ingredients/flour.png",
+      "atlasData": "/assets/sprites/ingredients/flour.json"
     }
   ]
 }
