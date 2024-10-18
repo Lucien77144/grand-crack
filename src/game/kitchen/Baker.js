@@ -16,6 +16,7 @@ export class Baker extends CookingStation {
 		const player = e.id === 1 ? this.game.player1 : this.game.player2
 		const ingredient = player.ingredientHold
 		if (player && ingredient && this.checkCanInteractWithIngredient(player, ingredient) && !this.inMixer) {
+			player.updateSpriteFrame(false)
 			ingredient.onInteractionCounterIn()
 			player.onPlayerInteractCounter(false)
 			this.player = player

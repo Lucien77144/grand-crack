@@ -26,6 +26,7 @@ export class Composer extends CookingStation {
 	onPressButtonInteract(e) {
 		const ingredient = this.playerAssign.ingredientHold
 		if (this.playerAssign && ingredient && this.checkCanInteractWithIngredient(this.playerAssign, ingredient)) {
+			this.playerAssign.updateSpriteFrame(false)
 			this.game.soundManager.playSingleSound("hold", .25)
 			ingredient.setOnPlate(true)
 			ingredient.setCanMove(false)

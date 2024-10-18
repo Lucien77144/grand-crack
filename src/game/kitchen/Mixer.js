@@ -125,6 +125,8 @@ export class Mixer extends CookingStation {
 		if (player && ingredient && this.checkCanInteractWithIngredient(player, ingredient) && !this.inMixer) {
 			ingredient.onInteractionCounterIn()
 			player.onPlayerInteractCounter(false)
+			player.updateSpriteFrame(false)
+
 			this.player = player
 			this.ingredient = ingredient
 			this.inMixer = true
