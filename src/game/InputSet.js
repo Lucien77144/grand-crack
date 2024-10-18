@@ -1,4 +1,5 @@
 import Axis from "axis-api"
+
 export default class InputSet {
 	constructor(idPlayer) {
 		this.idPlayer = idPlayer
@@ -70,17 +71,17 @@ export default class InputSet {
 
 	static normalizeJoystickInput(x, y) {
 		// Calculer la magnitude
-		const magnitude = Math.sqrt(x * x + y * y);
+		const magnitude = Math.sqrt(x * x + y * y)
 
 		// Vérifier si la magnitude est supérieure à 0 pour éviter de diviser par 0
 		if (magnitude > 0) {
 			return {
 				x: x / magnitude,
 				y: y / magnitude
-			};
+			}
 		} else {
 			// Si magnitude est 0, on retourne un vecteur nul
-			return { x: 0, y: 0 };
+			return { x: 0, y: 0 }
 		}
 	}
 

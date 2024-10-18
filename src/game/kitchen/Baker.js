@@ -19,12 +19,20 @@ export class Baker extends CookingStation {
 			this.player = player
 			this.ingredient = ingredient
 			this.inBaker = true
-			console.log("dans le baker")
 
+			// Remove the first frame
+			const anim = this.pixiSprite.textureData.sheet.animations.baker
+			const newAnim = anim.slice(1)
+
+			this.pixiSprite.sprite.textures = newAnim
 			this.pixiSprite.sprite.animationSpeed = 0.1
 			this.pixiSprite.sprite.play()
 
 			await wait(this.cookingTime)
+
+			this.ingredient.pixiSprite.sprite.gotoAndStop(
+				this.ingredient.pixiSprite.sprite.totalFrames - 1
+			)
 
 			this.player.onPlayerInteractCounter(true)
 			this.ingredient.onInteractionCounterEnd()
@@ -33,9 +41,11 @@ export class Baker extends CookingStation {
 			this.ingredient = null
 			this.progress = 0
 
-			this.success()
-
+			// Reset to default
+			this.pixiSprite.sprite.textures = anim
 			this.pixiSprite.sprite.gotoAndStop(0)
+
+			this.success()
 		}
 	}
 

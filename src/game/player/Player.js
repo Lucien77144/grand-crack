@@ -5,7 +5,7 @@ import { clamp } from "@/utils/maths"
 import TextureLoader from "@/game/TextureLoader"
 
 const CURSOR_BASE_SIZE = 0.7
-import recipes from "@/game/recipe/recipes.json";
+import recipes from "@/game/recipe/recipes.json"
 
 export default class Player {
 	constructor(id) {
@@ -33,9 +33,9 @@ export default class Player {
 		this.setRandomRecipe()
 	}
 
-	setRandomRecipe(){
+	setRandomRecipe() {
 		const randomIndex = Math.floor(Math.random() * recipes.length)
-		this.recipe = recipes[randomIndex]
+		this.recipe = recipes[ randomIndex ]
 		return this.recipe
 	}
 
@@ -115,8 +115,9 @@ export default class Player {
 	holdIngredient(ingredient) {
 		if (!this.ingredientHold && this.allowGrab) {
 			this.ingredientHold = ingredient
-			console.log(this.ingredientHold,this.id)
-			const distOffset = PixiSprite.updatePositionWithOffset(this.pixiSprite.sprite, this.ingredientHold.pixiSprite.sprite)
+			const distOffset = PixiSprite.updatePositionWithOffset(
+				this.pixiSprite.sprite, this.ingredientHold.pixiSprite.sprite
+			)
 			this.distIngredient = distOffset
 			ingredient.setCanMove(false)
 			this.allowGrab = false

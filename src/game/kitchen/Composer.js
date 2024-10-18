@@ -1,8 +1,7 @@
 import { CookingStation } from "./CookingStation"
-import recipes from "../recipe/recipes.json"
-import PixiSprite from "@/game/pixi/PixiSprite";
-import {store} from "@/store";
-import TextureLoader from "@/game/TextureLoader";
+import PixiSprite from "@/game/pixi/PixiSprite"
+import { store } from "@/store"
+import TextureLoader from "@/game/TextureLoader"
 
 export class Composer extends CookingStation {
 	playerAssign = 0
@@ -14,11 +13,9 @@ export class Composer extends CookingStation {
 	constructor({ ...props }) {
 		super({ ...props })
 		this.tl = new TextureLoader()
-
 	}
 
-
-	assignPlayer(player){
+	assignPlayer(player) {
 		this.playerAssign = player
 		this.targetIngredients = player.recipe.ingredients.map(ingredient => ingredient.name)
 		this.recipe = player.recipe
@@ -35,8 +32,8 @@ export class Composer extends CookingStation {
 
 			this.addIngredient(ingredient)
 
-			if(this.checkIsFinished()){
-				store.players[ this.playerAssign.id - 1].score += this.recipe.score
+			if (this.checkIsFinished()) {
+				store.players[ this.playerAssign.id - 1 ].score += this.recipe.score
 				const recipe = this.playerAssign.setRandomRecipe()
 				this.recipe = recipe
 				this.removeIngredients()
@@ -46,31 +43,31 @@ export class Composer extends CookingStation {
 		}
 	}
 
-	addIngredient(ingredient){
-		this.ingredients[ingredient.getName()] = ingredient
+	addIngredient(ingredient) {
+		this.ingredients[ ingredient.getName() ] = ingredient
 		console.log(this.ingredients)
 	}
 
-	removeIngredients(){
-		Object.keys(this.ingredients).forEach(ingredient => this.ingredients[ingredient].destroy())
+	removeIngredients() {
+		Object.keys(this.ingredients).forEach(ingredient => this.ingredients[ ingredient ].destroy())
 		this.ingredients = {}
 	}
 
-	addPlate(){
+	addPlate() {
 		this.textureData = this.tl.assetArray[ this.recipe.name ]
 		this.plate = new PixiSprite(
-            {
-                x: this.pixiSprite.sprite.x,
-                y: this.pixiSprite.sprite.y,
-                size: this.recipe.size,
-                anchor: [ 0.5, 0.5 ],
-            },
-            this.textureData
-        )
+			{
+				x: this.pixiSprite.sprite.x,
+				y: this.pixiSprite.sprite.y,
+				size: this.recipe.size,
+				anchor: [ 0.5, 0.5 ],
+			},
+			this.textureData
+		)
 		setTimeout(() => {
 			this.plate.sprite.destroy()
 			this.plate = null
-		},5000)
+		}, 5000)
 	}
 
 	checkCanInteractWithIngredient(player, ingredient) {
@@ -98,20 +95,20 @@ export class Composer extends CookingStation {
 		}
 	}
 
-	checkIsFinished(){
+	checkIsFinished() {
 		return this.targetIngredients.every(ingredient => this.ingredients.hasOwnProperty(ingredient))
 	}
 
-	initPlaceholder(){
+	initPlaceholder() {
 		const spriteX = this.pixiSprite.sprite.x
 		const spriteY = this.pixiSprite.sprite.y
 		const width = this.pixiSprite.sprite.width
 		const height = this.pixiSprite.sprite.height
-		this.targetIngredients.forEach((ingredient,i) => {
-			const sign = i%2 === 0 ? -1 : 1;
+		this.targetIngredients.forEach((ingredient, i) => {
+			const sign = i % 2 === 0 ? -1 : 1
 			const x = spriteX + Math.random() * width
 			const y = spriteY + Math.random() * height - sign
-			this.placeholders.push({x,y})
+			this.placeholders.push({ x, y })
 		})
 	}
 

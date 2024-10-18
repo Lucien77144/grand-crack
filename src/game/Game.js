@@ -5,7 +5,7 @@ import Player from "@/game/player/Player"
 import IngredientManager from "./recipe/IngredientManager"
 import recipes from "./recipe/recipes"
 import { store } from "@/store"
-import SoundManager from "@/game/SoundManager";
+import SoundManager from "@/game/SoundManager"
 
 export class Game {
 	static instance
@@ -85,7 +85,8 @@ export class Game {
 	reset() {
 		this.player1.reset()
 		this.player2.reset()
-		// this.kitchen.reset()
+
+		// TODO!! - Reset the kitchen, cooking stations, composer
 	}
 
 	resize() {

@@ -3,19 +3,16 @@
 	import { useRaf } from "@/composables/useRaf/useRaf"
 	import { useSize } from "@/composables/useSize/useSize"
 	import { Game } from "@/game/Game"
-	import Kitchen from "@/components/Kitchen/Kitchen.vue"
 	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
 	import GameOver from "@/components/GameOver/GameOver.vue"
 	import CookingInstruction from "@/components/CookingInstruction/CookingInstruction.vue"
-	import { store } from "@/store"
 	import TextureLoader from "@/game/TextureLoader"
 	import Signal from "@/utils/signal"
-	import SoundManager from "@/game/SoundManager";
+	import SoundManager from "@/game/SoundManager"
+	import { store } from "@/store"
 
 	const $$canvas = shallowRef()
 	const $$video = shallowRef()
-
-	const isKitchenVisible = shallowRef(false)
 
 	const { size } = useSize({ ref: $$canvas, cb: resize })
 
@@ -26,10 +23,22 @@
 	let t = 0
 	provide("game", game)
 
+	const isPanic = shallowRef(false)
+
 	useRaf((dt) => {
 		if (!game.value) return
 		t += dt
 		game.value.update(dt, t)
+
+		if (!game?.value?.player1?.oxygen || !game?.value?.player2?.oxygen) {
+			return
+		}
+
+		if (game?.value?.player1?.oxygen <= 40 || game?.value?.player2?.oxygen <= 40) {
+			isPanic.value = true
+		} else {
+			isPanic.value = false
+		}
 	})
 
 	onMounted(() => {
@@ -56,11 +65,6 @@
 		})
 	})
 
-	watch(() => store.isGameOver, (v) => {
-		if (v) return
-		game.value.reset()
-	})
-
 	onBeforeUnmount(() => {
 		game.value.destroy()
 	})
@@ -80,13 +84,19 @@
 
 <template>
 	<main class="site-wrapper">
-		<button class="debug-button" @click="isKitchenVisible = !isKitchenVisible">
-			Toggle Kitchen DOM
-		</button>
-		<GameOver v-if="store.isGameOver" />
+		<div
+			class="overlay"
+			:class="{
+				'is-panic': isPanic
+			}"
+		/>
+		<GameOver
+			:class="{
+				'is-visible': store.isGameOver
+			}"
+		/>
 		<OxygenJauge :player="1" />
 		<OxygenJauge :player="2" />
-		<Kitchen v-if="isKitchenVisible" />
 		<div ref="$$canvas" />
 		<div class="background">
 			<video
@@ -106,6 +116,33 @@
 		height: 100%;
 		position: relative;
 		width: 100%;
+
+		.overlay {
+			background-color: rgb(255 0 0 / 0%);
+			z-index: 1;
+			@include inset(0, fixed);
+
+			&::after {
+				@include inset(0, absolute);
+
+				background:
+					radial-gradient(
+						circle,
+						rgb(255 0 0 / 0%) 0%,
+						rgb(255 0 0 / 15%) 50%,
+						rgb(255 0 0 / 30%) 100%
+					);
+				content: "";
+				opacity: 0;
+				transition: opacity 5s cubic-bezier(0.215, 0.61, 0.355, 1);
+			}
+
+			&.is-panic {
+				&::after {
+					opacity: 1;
+				}
+			}
+		}
 
 		.debug-button {
 			background-color: white;

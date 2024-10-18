@@ -45,9 +45,7 @@
 	>
 		<div
 			class="oxygen-jauge"
-			:class="
-				'player-' + player
-			"
+			:class="'player-' + player"
 		>
 			<div
 				class="progress"
@@ -56,7 +54,6 @@
 				"
 			/>
 		</div>
-
 		<img
 			class="oxygen-icon"
 			:src="oxygenIcon"

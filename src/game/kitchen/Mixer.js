@@ -67,11 +67,19 @@ export class Mixer extends CookingStation {
 				this.progress = 0
 				this.lastCheckPoint = 4
 				this.checkpoints = [ 0, 0, 0, 0 ]
+
+				this.ingredient.pixiSprite.sprite.gotoAndStop(
+					this.ingredient.pixiSprite.sprite.totalFrames - 1
+				)
+
+				// Reset to default
+				this.pixiSprite.sprite.textures = this.ogAnim
+				this.pixiSprite.sprite.gotoAndStop(0)
+
+				this.success()
 			}
 		}
 	}
-
-
 
 	checkCP1(x, y) {
 		const xValid = !this.checkThreshold(x, .25)
@@ -115,7 +123,11 @@ export class Mixer extends CookingStation {
 			this.inMixer = true
 			console.log("dans le mixer")
 
-			this.ingredient.pixiSprite.sprite.visible = false
+			// Remove the first frame
+			this.ogAnim = this.pixiSprite.textureData.sheet.animations.mixer
+			const newAnim = this.ogAnim.slice(1)
+
+			this.pixiSprite.sprite.textures = newAnim
 		}
 	}
 

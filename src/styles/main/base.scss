@@ -16,6 +16,9 @@ html {
 body {
 	@include inset(0, fixed);
 
+	font-family: Gaegu, sans-serif;
+	font-style: normal;
+	font-weight: 400;
 	overflow: hidden;
 	user-select: none;
 }
