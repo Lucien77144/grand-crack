@@ -137,8 +137,8 @@
 					radial-gradient(
 						circle,
 						rgb(255 0 0 / 0%) 0%,
-						rgb(255 0 0 / 15%) 50%,
-						rgb(255 0 0 / 30%) 100%
+						rgb(255 0 0 / 25%) 50%,
+						rgb(255 0 0 / 50%) 100%
 					);
 				content: "";
 				opacity: 0;
