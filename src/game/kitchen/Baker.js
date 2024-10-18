@@ -34,6 +34,8 @@ export class Baker extends CookingStation {
 			this.progress = 0
 
 			this.success()
+
+			this.pixiSprite.sprite.gotoAndStop(0)
 		}
 	}
 

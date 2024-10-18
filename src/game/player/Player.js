@@ -4,6 +4,8 @@ import PixiSprite from "@/game/pixi/PixiSprite"
 import { clamp } from "@/utils/maths"
 import TextureLoader from "@/game/TextureLoader"
 
+const CURSOR_BASE_SIZE = 0.7
+
 export default class Player {
 	constructor(id) {
 		this.id = id
@@ -23,6 +25,9 @@ export default class Player {
 		this.maxAcceleration = 0.1 // Accélération maximale
 		this.decelerationRate = 0.05 // Taux de décélération
 		this.joystickActive = false // Indicateur si le joystick est en mouvement
+
+		this.canvas = this.game.canvas
+
 		this.initPixiSprite()
 	}
 
@@ -31,9 +36,9 @@ export default class Player {
 			{
 				x: 500,
 				y: 200,
-				size: 1,
+				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.00075,
 				anchor: [ 0.5, 0.5 ],
-				zIndex: 3
+				zIndex: 4
 			},
 			this.textureData
 		)

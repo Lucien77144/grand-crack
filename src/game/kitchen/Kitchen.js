@@ -8,7 +8,7 @@ import TextureLoader from "@/game/TextureLoader"
 const KITCHEN_PLAN_BASE_SIZE = 0.23
 const CUTTER_BASE_SIZE = 0.23
 const MIXER_BASE_SIZE = 0.23
-const BAKER_BASE_SIZE = 0.23
+const BAKER_BASE_SIZE = 0.25
 
 export class Kitchen {
 	constructor() {
@@ -72,9 +72,9 @@ export class Kitchen {
 	}
 
 	createBaker() {
-		const size = BAKER_BASE_SIZE * (this.canvas.offsetWidth * 0.00076)
-		const x = this.canvas.offsetWidth / 1.37
-		const y = this.canvas.offsetHeight * 0.77
+		const size = BAKER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
+		const x = this.canvas.offsetWidth / 1.38
+		const y = this.canvas.offsetHeight * 0.76
 
 		this.baker = new Baker({
 			x,

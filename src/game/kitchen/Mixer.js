@@ -113,6 +113,9 @@ export class Mixer extends CookingStation {
 			this.ingredient = ingredient
 			this.inMixer = true
 			console.log("dans le mixer")
+
+			this.pixiSprite.sprite.animationSpeed = 0.1
+			this.pixiSprite.sprite.play()
 		}
 	}
 
