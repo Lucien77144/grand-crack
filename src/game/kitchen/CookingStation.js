@@ -18,8 +18,6 @@ export class CookingStation {
 		this.y = props.y
 		this.action = props.action
 		this.size = props.size
-		this.spritesheet = props.spritesheet
-		this.atlasData = props.atlasData
 		this.game = new Game()
 		this.tl = new TextureLoader()
 		this.textureData = this.tl.assetArray[ props.action ]

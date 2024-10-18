@@ -25,39 +25,40 @@ export class Mixer extends CookingStation {
 			const hasMinXIntensity = this.checkThreshold(e.position.x, .5)
 			const hasMinYIntensity = this.checkThreshold(e.position.y, .5)
 
-			const idx = this.progress%4
+			const idx = this.progress % 4
 
 			//Check First checkpoint done
 			if (this.checkCP1(xInput, yInput) && hasMinYIntensity) {
-				if( idx === 0 && this.lastCheckPoint === 4 ){
+				if (idx === 0 && this.lastCheckPoint === 4) {
 					this.progress++
-					this.checkpoints[idx]++
+					this.checkpoints[ idx ]++
 				}
 				this.lastCheckPoint = 1
-			}
-			else if(this.checkCP2(xInput, yInput) && hasMinXIntensity){
-				if( idx === 1  && this.lastCheckPoint === 1){
+				this.pixiSprite.sprite.gotoAndStop(1)
+			} else if (this.checkCP2(xInput, yInput) && hasMinXIntensity) {
+				if (idx === 1 && this.lastCheckPoint === 1) {
 					this.progress++
-					this.checkpoints[idx]++
+					this.checkpoints[ idx ]++
 				}
 				this.lastCheckPoint = 2
-			}
-			else if(this.checkCP3(xInput, yInput) && hasMinYIntensity){
-				if( idx === 2  && this.lastCheckPoint === 2 ){
+				this.pixiSprite.sprite.gotoAndStop(2)
+			} else if (this.checkCP3(xInput, yInput) && hasMinYIntensity) {
+				if (idx === 2 && this.lastCheckPoint === 2) {
 					this.progress++
-					this.checkpoints[idx]++
+					this.checkpoints[ idx ]++
 				}
 				this.lastCheckPoint = 3
-			}
-			else if(this.checkCP4(xInput, yInput) && hasMinXIntensity ){
-				if( idx === 3 && this.lastCheckPoint === 3 ){
+				this.pixiSprite.sprite.gotoAndStop(3)
+			} else if (this.checkCP4(xInput, yInput) && hasMinXIntensity) {
+				if (idx === 3 && this.lastCheckPoint === 3) {
 					this.progress++
-					this.checkpoints[idx]++
+					this.checkpoints[ idx ]++
 				}
 				this.lastCheckPoint = 4
+				this.pixiSprite.sprite.gotoAndStop(4)
 			}
 
-			if(this.checkpoints.every(elt => elt >= this.nbRevolution )){
+			if (this.checkpoints.every(elt => elt >= this.nbRevolution)) {
 				this.player.onPlayerInteractCounter(true)
 				this.ingredient.onInteractionCounterEnd()
 				this.inMixer = false

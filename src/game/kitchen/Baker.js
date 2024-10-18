@@ -1,16 +1,16 @@
 import { CookingStation } from "./CookingStation"
+import { wait } from "@/utils/async"
 
 export class Baker extends CookingStation {
+	inBaker = false
 	cookingTime = 10000
-	overcookTreshold = 5000
 
 	constructor({ ...props }) {
 		super({ ...props })
-		this.timeLimit = 5000
 		this.addInputCounterIn()
 	}
 
-	onPressButtonInteract(e) {
+	async onPressButtonInteract(e) {
 		const player = e.id === 1 ? this.game.player1 : this.game.player2
 		const ingredient = player.ingredientHold
 		if (player && ingredient && this.checkCanInteractWithIngredient(player, ingredient) && !this.inMixer) {
@@ -18,37 +18,30 @@ export class Baker extends CookingStation {
 			player.onPlayerInteractCounter(false)
 			this.player = player
 			this.ingredient = ingredient
-			this.inCutter = true
+			this.inBaker = true
 			console.log("dans le baker")
-		}
-	}
 
-	onPressButtonCut(e) {
-		if (this.inCutter) {
-			//Cutter
-			this.progress += 1
-			if (this.progress === this.ingredient.pixiSprite.sprite.totalFrames) {
-				console.log("leaving the station")
+			this.pixiSprite.sprite.animationSpeed = 0.1
+			this.pixiSprite.sprite.play()
 
-				this.player.onPlayerInteractCounter(true)
-				this.ingredient.onInteractionCounterEnd()
-				this.inCutter = false
-				this.player = null
-				this.ingredient = null
-				this.progress = 0
+			await wait(this.cookingTime)
 
-				// this.ingredient.pixiSprite.sprite.x = this.pixiSprite.sprite.x
-			}
+			this.player.onPlayerInteractCounter(true)
+			this.ingredient.onInteractionCounterEnd()
+			this.inBaker = false
+			this.player = null
+			this.ingredient = null
+			this.progress = 0
+
+			this.success()
 		}
 	}
 
 	addInputCounterIn() {
 		const inputSet1 = this.game.player1.inputSet
 		inputSet1.addEvent("i", this.onPressButtonInteract, this)
-		inputSet1.addEvent("i", this.onPressButtonCut, this)
 
 		const inputSet2 = this.game.player2.inputSet
 		inputSet2.addEvent("i", this.onPressButtonInteract, this)
-		inputSet2.addEvent("i", this.onPressButtonCut, this)
 	}
 }

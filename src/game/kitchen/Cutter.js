@@ -1,13 +1,12 @@
 import { CookingStation } from "./CookingStation"
 
 export class Cutter extends CookingStation {
-	currentClicks = 0
-	progress = -1
 	inCutter = false
+	progress = -1
+	currentClicks = 0
 
 	constructor({ ...props }) {
 		super({ ...props })
-		this.timeLimit = 5000
 		this.addInputCounterIn()
 	}
 
