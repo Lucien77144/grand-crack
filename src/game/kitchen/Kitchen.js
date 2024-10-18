@@ -8,6 +8,7 @@ import {Composer} from "@/game/kitchen/Composer";
 
 const KITCHEN_PLAN_BASE_SIZE = 0.23
 const CUTTER_BASE_SIZE = 0.23
+const COMPOSER_BASE_SIZE = 0.3
 const MIXER_BASE_SIZE = 0.23
 const BAKER_BASE_SIZE = 0.25
 
@@ -89,9 +90,9 @@ export class Kitchen {
 	}
 
 	createComposer(){
-		const size = CUTTER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
-		const x = 50
-		const y = this.canvas.offsetHeight /2
+		const size = COMPOSER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
+		const x = 100
+		const y = this.canvas.offsetHeight - 100
 
 		const player1 = this.game.player1
 		this.composer1 = new Composer(
@@ -105,9 +106,9 @@ export class Kitchen {
 		this.composer1.assignPlayer(player1)
 
 
-		const size2 = CUTTER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
+		const size2 = COMPOSER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
 		const x2 = this.canvas.offsetWidth - 80
-		const y2 = this.canvas.offsetHeight /2
+		const y2 = this.canvas.offsetHeight - 100
 
 		const player2 = this.game.player2
 		this.composer2 = new Composer(

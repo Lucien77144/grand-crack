@@ -38,7 +38,7 @@ export class Composer extends CookingStation {
 				this.recipe = recipe
 				this.removeIngredients()
 				this.targetIngredients = recipe.ingredients.map(ingredient => ingredient.name)
-				// this.addPlate()
+				this.addPlate()
 			}
 		}
 	}
@@ -59,11 +59,12 @@ export class Composer extends CookingStation {
 			{
 				x: this.pixiSprite.sprite.x,
 				y: this.pixiSprite.sprite.y,
-				size: this.recipe.size,
+				size: .25,
 				anchor: [ 0.5, 0.5 ],
 			},
 			this.textureData
 		)
+		this.plate.sprite.zIndex = 4
 		setTimeout(() => {
 			this.plate.sprite.destroy()
 			this.plate = null

@@ -61,6 +61,10 @@ export class Mixer extends CookingStation {
 			if (this.checkpoints.every(elt => elt >= this.nbRevolution)) {
 				this.player.onPlayerInteractCounter(true)
 				this.ingredient.onInteractionCounterEnd()
+				this.ingredient.pixiSprite.sprite.gotoAndStop(
+					this.ingredient.pixiSprite.sprite.totalFrames - 1
+				)
+
 				this.inMixer = false
 				this.player = null
 				this.ingredient = null
@@ -68,9 +72,7 @@ export class Mixer extends CookingStation {
 				this.lastCheckPoint = 4
 				this.checkpoints = [ 0, 0, 0, 0 ]
 
-				this.ingredient.pixiSprite.sprite.gotoAndStop(
-					this.ingredient.pixiSprite.sprite.totalFrames - 1
-				)
+
 
 				// Reset to default
 				this.pixiSprite.sprite.textures = this.ogAnim

@@ -22,7 +22,7 @@ export default class Player {
 
 		// Variables pour l'accélération et la vélocité
 		this.acceleration = 0 // Accélération initiale
-		this.maxVelocity = 5 // Vélocité maximale
+		this.maxVelocity = 15 // Vélocité maximale
 		this.maxAcceleration = 0.1 // Accélération maximale
 		this.decelerationRate = 0.05 // Taux de décélération
 		this.joystickActive = false // Indicateur si le joystick est en mouvement
@@ -77,7 +77,7 @@ export default class Player {
 	// Mise à jour régulière
 	update(dt, t) {
 		// Gestion de l'oxygène (cela reste inchangé)
-		this.addOxygen(-dt * 0.005)
+		this.addOxygen(-dt * 0.0025)
 		this.updateSpeed()
 		this.updateGrab()
 	}
@@ -142,9 +142,9 @@ export default class Player {
 		this.inputSet.addEvent("w", this.gainOxygen, this)
 
 		// HACK - Just for debug with keyboard
-		this.inputSet.addEvent("x", this.eventInputX, this)
-		this.inputSet.addEvent("i", this.eventInputI, this)
-		this.inputSet.addEvent("s", this.eventInputS, this)
+		// this.inputSet.addEvent("x", this.eventInputX, this)
+		// this.inputSet.addEvent("i", this.eventInputI, this)
+		// this.inputSet.addEvent("s", this.eventInputS, this)
 	}
 
 	eventInputX(e) {

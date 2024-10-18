@@ -36,6 +36,10 @@
       "src": "/assets/sprites/composer/composerP2.png"
     },
     {
+      "name":  "recipe1",
+      "src" : "/assets/sprites/recipe/recipe1.png"
+    },
+    {
       "name": "sardine",
       "src": "/assets/sprites/ingredients/sardine.png",
       "atlasData": "/assets/sprites/ingredients/sardine.json"
