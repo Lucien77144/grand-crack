@@ -13,13 +13,15 @@
 	// TODO! - Refactor this
 	watch(() => game.value, (g) => {
 		timeout = setTimeout(() => {
-			g.player1.inputSet.addEvent("w", () => {
+			g.player1.inputSet.addEvent("x", () => {
 				if (!store.isSplashScreen) return
 				onStartClick()
+				game.value.soundManager.startXp("music", .25)
 			})
-			g.player2.inputSet.addEvent("w", () => {
+			g.player2.inputSet.addEvent("x", () => {
 				if (!store.isSplashScreen) return
 				onStartClick()
+				game.value.soundManager.startXp("music", .25)
 			})
 		}, 100)
 	})

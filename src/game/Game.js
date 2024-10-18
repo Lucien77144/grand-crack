@@ -46,11 +46,6 @@ export class Game {
 
 		this.pixiApplication = new PixiApplication()
 
-		document.addEventListener("click", () => {
-			this.soundManager.startXp("music",.25)
-
-		})
-
 		this.prepareCanvas(this.pixiApplication).then(() => {
 			this.soundManager = new SoundManager()
 
