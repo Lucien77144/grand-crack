@@ -1,33 +1,8 @@
 <script setup>
-	import { inject, watch, onBeforeUnmount } from "vue"
+	import { inject, watch, onMounted, onBeforeUnmount } from "vue"
 	import { store } from "@/store"
 
 	const game = inject("game")
-
-	let timeout = null
-
-	function onReplayClick() {
-		store.isGameOver = false
-		game.value.reset()
-	}
-
-	// TODO! - Refactor this
-	watch(() => game.value, (g) => {
-		timeout = setTimeout(() => {
-			g.player1.inputSet.addEvent("w", () => {
-				if (!store.isGameOver) return
-				onReplayClick()
-			})
-			g.player2.inputSet.addEvent("w", () => {
-				if (!store.isGameOver) return
-				onReplayClick()
-			})
-		}, 100)
-	})
-
-	onBeforeUnmount(() => {
-		clearTimeout(timeout)
-	})
 </script>
 
 <template>

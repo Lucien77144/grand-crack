@@ -142,6 +142,17 @@ export default class Player {
 		this.inputSet.addEvent("a", this.releaseIngredient, this)
 		this.inputSet.addEvent("w", this.gainOxygen, this)
 
+		this.inputSet.addEvent("a", () => {
+			if (store.isSplashScreen) {
+				store.isSplashScreen = false
+				this.game.soundManager.startXp("music", .25)
+			}
+
+			if (store.isGameOver) {
+				store.isGameOver = false
+			}
+		})
+
 		// HACK - Just for debug with keyboard
 		// this.inputSet.addEvent("x", this.eventInputX, this)
 		// this.inputSet.addEvent("i", this.eventInputI, this)
