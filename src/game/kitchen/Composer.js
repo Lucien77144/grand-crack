@@ -63,7 +63,7 @@ export class Composer extends CookingStation {
 			{
 				x: this.pixiSprite.sprite.x,
 				y: this.pixiSprite.sprite.y,
-				size: .25,
+				size: .45,
 				anchor: [ 0.5, 0.5 ],
 			},
 			this.textureData
