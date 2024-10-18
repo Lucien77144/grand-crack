@@ -64,7 +64,7 @@ export default class Player {
 	// Mise à jour régulière
 	update(dt, t) {
 		// Gestion de l'oxygène (cela reste inchangé)
-		this.addOxygen(-dt / 60)
+		this.addOxygen(-dt * 0.005)
 		this.updateSpeed()
 		this.updateGrab()
 	}

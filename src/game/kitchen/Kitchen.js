@@ -43,8 +43,8 @@ export class Kitchen {
 
 	createCutter() {
 		const size = CUTTER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
-		const x = this.canvas.offsetWidth / 6.8
-		const y = this.canvas.offsetHeight * 0.79
+		const x = this.canvas.offsetWidth / 3.8
+		const y = this.canvas.offsetHeight * 0.9
 
 		this.cutter = new Cutter({
 			x,
@@ -58,8 +58,8 @@ export class Kitchen {
 
 	createMixer() {
 		const size = MIXER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
-		const x = this.canvas.offsetWidth / 2.9
-		const y = this.canvas.offsetHeight * 0.762
+		const x = this.canvas.offsetWidth / 2
+		const y = this.canvas.offsetHeight * 0.88
 
 		this.mixer = new Mixer({
 			x,
@@ -73,8 +73,8 @@ export class Kitchen {
 
 	createBaker() {
 		const size = BAKER_BASE_SIZE * (this.canvas.offsetWidth * 0.00076)
-		const x = this.canvas.offsetWidth / 1.7
-		const y = this.canvas.offsetHeight * 0.72
+		const x = this.canvas.offsetWidth / 1.38
+		const y = this.canvas.offsetHeight * 0.86
 
 		this.baker = new Baker({
 			x,
