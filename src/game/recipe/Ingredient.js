@@ -13,6 +13,7 @@ export default class Ingredient {
 	#action
 	#isCooked
 	#inCooking = false
+	#onPlate = false
 	#speed = .05
 	#nbOfFrames = 0
 	#game
@@ -74,11 +75,11 @@ export default class Ingredient {
 	}
 
 	updateGravity(dt) {
-		if (this.pixiSprite) {
+		if (this.pixiSprite && this.#canMove && !this.#isCooked && !this.#inCooking) {
 			this.pixiSprite.sprite.position.y += dt * this.#speed
 			this.pixiSprite.sprite.rotation += 0.001 * dt * this.#speed * this.#rotation
 
-			if (this.pixiSprite.sprite.position.y > window.innerHeight && this.#canMove) {
+			if (this.pixiSprite.sprite.position.y > window.innerHeight ) {
 				this.destroy()
 				this.ref.removeIngredient(this)
 			}
@@ -95,15 +96,14 @@ export default class Ingredient {
 
 	holdIngredient(e) {
 		const player = e.id === 1 ? this.#game.player1 : this.#game.player2
-		if (this.#canMove && !this.#inCooking && this.pixiSprite && this.pixiSprite.sprite) {
+		if (this.#canMove && !this.#inCooking && !this.#onPlate && this.pixiSprite && this.pixiSprite.sprite) {
 			if (player && PixiSprite.checkOverlap(player.pixiSprite.sprite, this.pixiSprite.sprite)) {
 				player.holdIngredient(this)
-
 				this.pixiSprite.sprite.zIndex = 3
-
 				store.players[ e.id - 1 ].action = this.#action
 			} else {
 				store.players[ e.id - 1 ].action = null
+
 			}
 		}
 	}
@@ -157,6 +157,14 @@ export default class Ingredient {
 
 	setAction(action) {
 		this.#action = action
+	}
+
+	getOnPlate(){
+		return this.#onPlate
+	}
+
+	setOnPlate(onPlate) {
+		this.#onPlate = onPlate
 	}
 
 	getAction() {
