@@ -1,5 +1,5 @@
 <script setup>
-	import { inject, watch, onBeforeUnmount } from "vue"
+	import { inject, watch, onMounted, onBeforeUnmount } from "vue"
 	import { store } from "@/store"
 
 	const game = inject("game")
@@ -11,15 +11,19 @@
 		game.value.reset()
 	}
 
-	watch(() => game.value, (g) => {
-		timeout = setTimeout(() => {
-			g.player1.inputSet.addEvent("x", () => {
-				onReplayClick()
-			})
-			g.player2.inputSet.addEvent("x", () => {
-				onReplayClick()
-			})
-		}, 100)
+	onMounted(() => {
+		watch(() => game.value, (g) => {
+			if (!store.isGameOver) return
+
+			timeout = setTimeout(() => {
+				g.player1.inputSet.addEvent("x", () => {
+					onReplayClick()
+				})
+				g.player2.inputSet.addEvent("x", () => {
+					onReplayClick()
+				})
+			}, 100)
+		})
 	})
 
 	onBeforeUnmount(() => {
