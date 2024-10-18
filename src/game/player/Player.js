@@ -3,6 +3,7 @@ import InputSet from "@/game/InputSet"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import { clamp } from "@/utils/maths"
 import TextureLoader from "@/game/TextureLoader"
+import { store } from "@/store"
 
 const CURSOR_BASE_SIZE = 0.7
 import recipes from "@/game/recipe/recipes.json"
@@ -20,7 +21,7 @@ export default class Player {
 		this.distIngredient = null
 		this.allowGrab = true
 		this.tl = new TextureLoader()
-		this.textureData = this.tl.assetArray[ "cursor" ]
+		this.textureData = this.tl.assetArray[ `cursor${ id }` ]
 
 		// Variables pour l'accélération et la vélocité
 		this.acceleration = 0 // Accélération initiale
@@ -44,9 +45,10 @@ export default class Player {
 	initPixiSprite() {
 		this.pixiSprite = new PixiSprite(
 			{
-				x: 500,
+				x: this.id === 1 ? this.canvas.offsetWidth / 2 - this.canvas.offsetWidth * 0.1 : this.canvas.offsetWidth / 2 + this.canvas.offsetWidth * 0.1,
 				y: 200,
-				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.00075,
+				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.000075,
+				animationName: `cursor${ this.id }`,
 				anchor: [ 0.5, 0.5 ],
 				zIndex: 4
 			},
@@ -58,7 +60,6 @@ export default class Player {
 	joystickEvent(e) {
 		let xInput = e.position.x
 		let yInput = e.position.y
-		console.log(window.innerHeight )
 
 		const normalized = InputSet.normalizeJoystickInput(xInput, yInput)
 		xInput = normalized.x
@@ -84,6 +85,7 @@ export default class Player {
 		this.addOxygen(-dt * 0.0025)
 		this.updateSpeed()
 		this.updateGrab()
+		this.updateAction()
 	}
 
 	updateSpeed() {
@@ -108,6 +110,31 @@ export default class Player {
 		if (this.ingredientHold) {
 			this.ingredientHold.pixiSprite.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
 			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient.y
+		}
+	}
+
+	updateSpriteFrame() {
+		if (this.action !== null && this.pixiSprite) {
+			console.log("Action:", this.action)
+			if (this.action) {
+				if (this.pixiSprite.sprite.currentFrame !== 1) {
+					this.pixiSprite.sprite.gotoAndStop(1)
+				}
+			} else {
+				if (this.pixiSprite.sprite.currentFrame !== 0) {
+					this.pixiSprite.sprite.gotoAndStop(0)
+				}
+			}
+		}
+	}
+
+	updateAction() {
+		if (store.players && store.players[ this.id - 1 ]) {
+			if (store.players[ this.id - 1 ].action !== this.action) {
+				this.action = store.players[ this.id - 1 ].action
+
+				this.updateSpriteFrame()
+			}
 		}
 	}
 
@@ -148,9 +175,9 @@ export default class Player {
 		this.inputSet.addEvent("w", this.gainOxygen, this)
 
 		// HACK - Just for debug with keyboard
-		// this.inputSet.addEvent("x", this.eventInputX, this)
-		// this.inputSet.addEvent("i", this.eventInputI, this)
-		// this.inputSet.addEvent("s", this.eventInputS, this)
+		this.inputSet.addEvent("x", this.eventInputX, this)
+		this.inputSet.addEvent("i", this.eventInputI, this)
+		this.inputSet.addEvent("s", this.eventInputS, this)
 	}
 
 	eventInputX(e) {

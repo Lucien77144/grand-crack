@@ -5,6 +5,16 @@
       "src": "/assets/sprites/cursor/cursor.png"
     },
     {
+      "name": "cursor1",
+      "src": "/assets/sprites/cursor1/cursor1.png",
+      "atlasData": "/assets/sprites/cursor1/cursor1.json"
+    },
+    {
+      "name": "cursor2",
+      "src": "/assets/sprites/cursor2/cursor2.png",
+      "atlasData": "/assets/sprites/cursor2/cursor2.json"
+    },
+    {
       "name": "kitchen",
       "src": "/assets/sprites/kitchen/kitchen.png"
     },
