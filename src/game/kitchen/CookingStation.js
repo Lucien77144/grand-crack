@@ -59,7 +59,9 @@ export class CookingStation {
 			const isNotCook = ingredient.getInCooking() === false
 				&& ingredient.getIsCooked() === false
 
-			return ingredient && isEmpty && overlapping && isNotCook
+			const correspondingAction = ingredient.getAction() === this.action
+
+			return ingredient && isEmpty && overlapping && isNotCook && correspondingAction
 		} else {
 			return false
 		}

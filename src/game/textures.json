@@ -28,6 +28,14 @@
       "atlasData": "/assets/sprites/ingredients/mushroom.json"
     },
     {
+      "name": "composerP1",
+      "src": "/assets/sprites/composer/composerP1.png"
+    },
+    {
+      "name": "composerP2",
+      "src": "/assets/sprites/composer/composerP2.png"
+    },
+    {
       "name": "sardine",
       "src": "/assets/sprites/ingredients/sardine.png",
       "atlasData": "/assets/sprites/ingredients/sardine.json"

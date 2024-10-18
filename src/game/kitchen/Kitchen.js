@@ -4,6 +4,7 @@ import { Cutter } from "./Cutter"
 import { Mixer } from "./Mixer"
 import { Baker } from "./Baker"
 import TextureLoader from "@/game/TextureLoader"
+import {Composer} from "@/game/kitchen/Composer";
 
 const KITCHEN_PLAN_BASE_SIZE = 0.23
 const CUTTER_BASE_SIZE = 0.23
@@ -25,6 +26,7 @@ export class Kitchen {
 		this.createCutter()
 		this.createMixer()
 		this.createBaker()
+		this.createComposer()
 	}
 
 	addCookingStation(cookingStation) {
@@ -84,6 +86,41 @@ export class Kitchen {
 		})
 
 		this.addCookingStation(this.baker)
+	}
+
+	createComposer(){
+		const size = CUTTER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
+		const x = 50
+		const y = this.canvas.offsetHeight /2
+
+		const player1 = this.game.player1
+		this.composer1 = new Composer(
+			{
+				x,
+				y,
+				size,
+				action: "composerP1"
+			}
+		)
+		this.composer1.assignPlayer(player1)
+
+
+		const size2 = CUTTER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
+		const x2 = this.canvas.offsetWidth - 80
+		const y2 = this.canvas.offsetHeight /2
+
+		const player2 = this.game.player2
+		this.composer2 = new Composer(
+			{
+				x:x2,
+				y:y2,
+				size:size2,
+				action: "composerP2"
+			}
+		)
+		this.composer2.assignPlayer(player2)
+
+		 console.log(this.composer1 === this.composer2)
 	}
 
 	update() {}

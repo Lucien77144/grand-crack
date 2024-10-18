@@ -64,7 +64,8 @@ export class Mixer extends CookingStation {
 				this.inMixer = false
 				this.player = null
 				this.ingredient = null
-				this.progress = -1
+				this.progress = 0
+				this.lastCheckPoint = 4
 				this.checkpoints = [ 0, 0, 0, 0 ]
 			}
 		}
