@@ -1,11 +1,15 @@
 <script setup>
 	import { inject, computed, onMounted, shallowRef } from "vue"
-	import Signal from "@/utils/signal"
-	import oxygenIcon from "/assets/ui/oxygen/oxygen-icon.svg"
 	import { useRaf } from "@/composables/useRaf/useRaf"
 	import { store } from "@/store"
+	import Signal from "@/utils/signal"
+	import oxygenIcon from "/assets/ui/oxygen/oxygen-icon.svg"
 
-	Signal.on(":test", (payload) => {
+	Signal.on(":actionPlayer1", (payload) => {
+		console.log(payload)
+	})
+
+	Signal.on(":actionPlayer2", (payload) => {
 		console.log(payload)
 	})
 

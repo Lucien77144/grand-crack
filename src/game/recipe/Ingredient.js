@@ -2,6 +2,10 @@ import { v4 as uuidv4 } from "uuid"
 import { Game } from "@/game/Game"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import TextureLoader from "@/game/TextureLoader"
+import Signal from "@/utils/signal"
+import { store } from "@/store"
+
+
 export default class Ingredient {
 	#id
 	#name
@@ -93,7 +97,9 @@ export default class Ingredient {
 			if (player && PixiSprite.checkOverlap(player.pixiSprite.sprite, this.pixiSprite.sprite)) {
 				player.holdIngredient(this)
 
-				console.log(e)
+				store.players[ e.id - 1 ].action = this.#action
+			} else {
+				store.players[ e.id - 1 ].action = null
 			}
 		}
 	}
