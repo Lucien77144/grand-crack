@@ -45,6 +45,7 @@ export class Cutter extends CookingStation {
 			if (this.progress === this.ingredient.pixiSprite.sprite.totalFrames - 1) {
 				console.log("leaving the station")
 
+				this.ingredient.animOut()
 				this.player.onPlayerInteractCounter(true)
 				this.ingredient.onInteractionCounterEnd()
 				this.inCutter = false
