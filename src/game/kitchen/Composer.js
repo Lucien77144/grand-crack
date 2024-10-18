@@ -79,13 +79,18 @@ export class Composer extends CookingStation {
 				player.pixiSprite.sprite,
 				this.pixiSprite.sprite
 			)
+			// console.log("overlapping",overlapping)
 
 			const isCook = ingredient.getInCooking() === false
 				&& ingredient.getIsCooked() === true && !ingredient.getOnPlate()
+			// console.log("isCook",isCook)
 
 			const inRecipe = this.targetIngredients.includes(ingredient.getName())
+			// console.log("inRecipe",inRecipe)
 
 			const notAlreadyIn = !this.ingredients.hasOwnProperty(ingredient.getName())
+			// console.log("notAlreadyIn",notAlreadyIn)
+
 
 			return ingredient && overlapping && isCook && inRecipe && notAlreadyIn
 		} else {

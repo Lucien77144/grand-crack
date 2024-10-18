@@ -1,4 +1,5 @@
 import { CookingStation } from "./CookingStation"
+import {clamp} from "@/utils/maths";
 
 export class Cutter extends CookingStation {
 	inCutter = false
@@ -14,7 +15,8 @@ export class Cutter extends CookingStation {
 		const player = e.id === 1 ? this.game.player1 : this.game.player2
 		const ingredient = player.ingredientHold
 		if (player && ingredient && this.checkCanInteractWithIngredient(player, ingredient) && !this.inMixer) {
-			ingredient.onInteractionCounterIn()
+			ingredient.setInCooking(true)
+			ingredient.setCanMove(false)
 			player.onPlayerInteractCounter(false)
 			this.player = player
 			this.ingredient = ingredient
@@ -27,11 +29,12 @@ export class Cutter extends CookingStation {
 		if (this.inCutter) {
 			//Cutter
 			this.progress += 1
+			this.progress = clamp(this.progress,0,this.ingredient.pixiSprite.sprite.totalFrames - 1)
 			this.ingredient.pixiSprite.sprite.gotoAndStop(this.progress)
 
 			console.log(this.progress + "/" + this.ingredient.pixiSprite.sprite.totalFrames)
 
-			if (this.progress === this.ingredient.pixiSprite.sprite.totalFrames) {
+			if (this.progress === this.ingredient.pixiSprite.sprite.totalFrames-1) {
 				console.log("leaving the station")
 
 				this.player.onPlayerInteractCounter(true)
