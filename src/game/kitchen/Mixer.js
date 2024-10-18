@@ -21,6 +21,7 @@ export class Mixer extends CookingStation {
 
 			xInput = normalized.x
 			yInput = normalized.y
+			console.log(xInput, yInput)
 
 			const hasMinXIntensity = this.checkThreshold(e.position.x, .5)
 			const hasMinYIntensity = this.checkThreshold(e.position.y, .5)

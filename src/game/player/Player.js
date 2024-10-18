@@ -8,6 +8,8 @@ const CURSOR_BASE_SIZE = 0.7
 import recipes from "@/game/recipe/recipes.json"
 
 export default class Player {
+	xDif = 0
+	yDif = 0
 	constructor(id) {
 		this.id = id
 		this.game = new Game()
@@ -23,7 +25,7 @@ export default class Player {
 		// Variables pour l'accélération et la vélocité
 		this.acceleration = 0 // Accélération initiale
 		this.maxVelocity = 10 * window.innerWidth * 0.00075 // Vélocité maximale
-		this.maxAcceleration = 0.1 * window.innerWidth * 0.00075 // Accélération maximale
+		this.maxAcceleration = 0.5 * window.innerWidth * 0.00075 // Accélération maximale
 		this.decelerationRate = 0.05 // Taux de décélération
 		this.joystickActive = false // Indicateur si le joystick est en mouvement
 
@@ -67,11 +69,12 @@ export default class Player {
 			// Applique l'accélération tant que le joystick est en mouvement
 			this.acceleration = Math.min(this.acceleration + this.maxAcceleration, this.maxVelocity)
 
-			const x = this.acceleration * xInput
-			const y = this.acceleration * yInput
-			this.pixiSprite.addVecPos(x, -y)
+			this.xDif = this.acceleration * xInput
+			this.yDif = this.acceleration * yInput
 		} else {
 			this.joystickActive = false // On active le joystick
+			this.xDif = 0
+			this.yDif =0
 		}
 	}
 
@@ -96,6 +99,8 @@ export default class Player {
 
 		// On remet l'indicateur à false pour le prochain cycle
 		this.joystickActive = false
+		this.pixiSprite.addVecPos(this.xDif, -this.yDif)
+
 	}
 
 	updateGrab() {
