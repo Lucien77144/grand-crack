@@ -6,16 +6,11 @@
 	import Kitchen from "@/components/Kitchen/Kitchen.vue"
 	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
 	import GameOver from "@/components/GameOver/GameOver.vue"
+	import CookingInstruction from "@/components/CookingInstruction/CookingInstruction.vue"
 	import { store } from "@/store"
 	import TextureLoader from "@/game/TextureLoader"
 	import Signal from "@/utils/signal"
 	import SoundManager from "@/game/SoundManager";
-
-	onMounted(() => {
-		Signal.emit(":test", "Hello")
-
-		console.log(Signal)
-	})
 
 	const $$canvas = shallowRef()
 	const $$video = shallowRef()
@@ -51,6 +46,14 @@
 		})
 
 		watch([ () => size ], resize)
+
+		watch(() => store.players[ 0 ].action, (action) => {
+			Signal.emit(":actionPlayer1", action)
+		})
+
+		watch(() => store.players[ 1 ].action, (action) => {
+			Signal.emit(":actionPlayer2", action)
+		})
 	})
 
 	watch(() => store.isGameOver, (v) => {
@@ -93,6 +96,8 @@
 				loop
 			/>
 		</div>
+		<CookingInstruction :player="1" />
+		<CookingInstruction :player="2" />
 	</main>
 </template>
 

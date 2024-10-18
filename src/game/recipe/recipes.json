@@ -7,7 +7,7 @@
 				"name": "sardine",
 				"size": 0.3,
 				"canMove": true,
-				"action": "action1",
+				"action": "cutter",
 				"isCooked": false,
 				"quantity": 1
 			},
@@ -15,7 +15,7 @@
 				"name": "mushroom",
 				"size": 0.1,
 				"canMove": true,
-				"action": "action2",
+				"action": "mixer",
 				"isCooked": false,
 				"quantity": 2
 			}
