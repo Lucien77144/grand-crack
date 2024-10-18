@@ -2,6 +2,7 @@ import { CookingStation } from "./CookingStation"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import { store } from "@/store"
 import TextureLoader from "@/game/TextureLoader"
+import {gsap} from "gsap"
 
 export class Composer extends CookingStation {
 	playerAssign = 0
@@ -62,12 +63,19 @@ export class Composer extends CookingStation {
 			{
 				x: this.pixiSprite.sprite.x,
 				y: this.pixiSprite.sprite.y,
-				size: .25,
+				size: .45,
 				anchor: [ 0.5, 0.5 ],
 			},
 			this.textureData
 		)
 		this.plate.sprite.zIndex = 4
+		const orientation = this.playerAssign.id === 1 ? -1 : 1
+		gsap.to(this.plate.sprite,{
+			x: this.plate.sprite.x + 300 * orientation,
+			ease: "power2.in",
+			duration: 0.5,
+			delay: 1.5
+		})
 		setTimeout(() => {
 			this.plate.sprite.destroy()
 			this.plate = null

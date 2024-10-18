@@ -66,6 +66,7 @@ export class Mixer extends CookingStation {
 				this.ingredient.pixiSprite.sprite.gotoAndStop(
 					this.ingredient.pixiSprite.sprite.totalFrames - 1
 				)
+				this.ingredient.animOut()
 
 				this.game.soundManager.stopSingleSound("mixing")
 				this.soundPlayed = false

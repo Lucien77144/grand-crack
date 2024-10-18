@@ -43,6 +43,7 @@ export class Baker extends CookingStation {
 				this.ingredient.pixiSprite.sprite.totalFrames - 1
 			)
 
+			this.ingredient.animOut()
 			this.player.onPlayerInteractCounter(true)
 			this.ingredient.onInteractionCounterEnd()
 			this.inBaker = false
@@ -51,6 +52,7 @@ export class Baker extends CookingStation {
 			this.progress = 0
 			this.game.soundManager.stopSingleSound("mixing")
 			this.soundPlayed = false
+
 			console.log("out")
 
 

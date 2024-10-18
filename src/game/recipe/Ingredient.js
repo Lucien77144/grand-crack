@@ -3,6 +3,7 @@ import { Game } from "@/game/Game"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import TextureLoader from "@/game/TextureLoader"
 import { store } from "@/store"
+import {gsap} from "gsap"
 
 export default class Ingredient {
 	#id
@@ -104,6 +105,14 @@ export default class Ingredient {
 				store.players[ e.id - 1 ].action = null
 			}
 		}
+	}
+
+	animOut(){
+		gsap.to(this.pixiSprite.sprite,{
+			y: this.pixiSprite.sprite.y - 100,
+			ease: "back.out(4)",
+			duration: 1
+		})
 	}
 
 	destroy() {
