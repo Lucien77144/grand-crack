@@ -32,30 +32,30 @@ export class Mixer extends CookingStation {
 				if (idx === 0 && this.lastCheckPoint === 4) {
 					this.progress++
 					this.checkpoints[ idx ]++
+					this.pixiSprite.sprite.gotoAndStop(1)
 				}
 				this.lastCheckPoint = 1
-				this.pixiSprite.sprite.gotoAndStop(1)
 			} else if (this.checkCP2(xInput, yInput) && hasMinXIntensity) {
 				if (idx === 1 && this.lastCheckPoint === 1) {
 					this.progress++
 					this.checkpoints[ idx ]++
+					this.pixiSprite.sprite.gotoAndStop(2)
 				}
 				this.lastCheckPoint = 2
-				this.pixiSprite.sprite.gotoAndStop(2)
 			} else if (this.checkCP3(xInput, yInput) && hasMinYIntensity) {
 				if (idx === 2 && this.lastCheckPoint === 2) {
 					this.progress++
 					this.checkpoints[ idx ]++
+					this.pixiSprite.sprite.gotoAndStop(3)
 				}
 				this.lastCheckPoint = 3
-				this.pixiSprite.sprite.gotoAndStop(3)
 			} else if (this.checkCP4(xInput, yInput) && hasMinXIntensity) {
 				if (idx === 3 && this.lastCheckPoint === 3) {
 					this.progress++
 					this.checkpoints[ idx ]++
+					this.pixiSprite.sprite.gotoAndStop(4)
 				}
 				this.lastCheckPoint = 4
-				this.pixiSprite.sprite.gotoAndStop(4)
 			}
 
 			if (this.checkpoints.every(elt => elt >= this.nbRevolution)) {
@@ -113,6 +113,8 @@ export class Mixer extends CookingStation {
 			this.ingredient = ingredient
 			this.inMixer = true
 			console.log("dans le mixer")
+
+			this.ingredient.pixiSprite.sprite.visible = false
 
 			this.pixiSprite.sprite.animationSpeed = 0.1
 			this.pixiSprite.sprite.play()

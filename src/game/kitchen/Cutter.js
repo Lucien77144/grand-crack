@@ -27,6 +27,10 @@ export class Cutter extends CookingStation {
 		if (this.inCutter) {
 			//Cutter
 			this.progress += 1
+			this.ingredient.pixiSprite.sprite.gotoAndStop(this.progress)
+
+			console.log(this.progress + "/" + this.ingredient.pixiSprite.sprite.totalFrames)
+
 			if (this.progress === this.ingredient.pixiSprite.sprite.totalFrames) {
 				console.log("leaving the station")
 
@@ -36,8 +40,6 @@ export class Cutter extends CookingStation {
 				this.player = null
 				this.ingredient = null
 				this.progress = 0
-
-				// this.ingredient.pixiSprite.sprite.x = this.pixiSprite.sprite.x
 			}
 		}
 	}

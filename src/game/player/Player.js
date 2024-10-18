@@ -138,15 +138,15 @@ export default class Player {
 	}
 
 	eventInputX(e) {
-		this.pixiSprite.sprite.x -= 50
+		this.pixiSprite.sprite.x -= 100
 	}
 
 	eventInputI(e) {
-		this.pixiSprite.sprite.x += 50
+		this.pixiSprite.sprite.x += 100
 	}
 
 	eventInputS(e) {
-		this.pixiSprite.sprite.y += 50
+		this.pixiSprite.sprite.y += 100
 	}
 
 	// Gère l'oxygène du joueur
