@@ -184,8 +184,11 @@ export default class Player {
 			}
 
 			if (store.isGameOver) {
-				store.isGameOver = false
-				console.log(store.isGameOver)
+				setTimeout(() => {
+					window.location.reload()
+				}, 1000)
+				// store.isGameOver = false
+				// console.log(store.isGameOver)
 			}
 		})
 
