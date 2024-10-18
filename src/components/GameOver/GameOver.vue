@@ -6,25 +6,25 @@
 
 	let timeout = null
 
-	watch(() => game.value, (g) => {
-		// console.log("ouais")
+	function onReplayClick() {
+		store.isGameOver = false
+		game.value.reset()
+	}
 
-		// timeout = setTimeout(() => {
-		// 	g.player1.inputSet.addEvent("i", onReplayClick)
-		// 	g.player2.inputSet.addEvent("i", onReplayClick)
-		// }, 1000)
+	watch(() => game.value, (g) => {
+		timeout = setTimeout(() => {
+			g.player1.inputSet.addEvent("i", () => {
+				onReplayClick()
+			})
+			g.player2.inputSet.addEvent("i", () => {
+				onReplayClick()
+			})
+		}, 100)
 	})
 
 	onBeforeUnmount(() => {
 		clearTimeout(timeout)
-	}),
-
-	function onReplayClick() {
-		console.log("replay")
-
-		store.isGameOver = false
-		game.value.reset()
-	}
+	})
 </script>
 
 <template>
