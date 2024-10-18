@@ -124,7 +124,9 @@ export default class Player {
 	addInputsListener() {
 		this.inputSet.addEventJoystick(this.joystickEvent, this)
 		this.inputSet.addEvent("a", this.releaseIngredient, this)
+		this.inputSet.addEvent("w", this.gainOxygen, this)
 
+		// HACK - Just for debug with keyboard
 		this.inputSet.addEvent("x", this.eventInputX, this)
 		this.inputSet.addEvent("i", this.eventInputI, this)
 		this.inputSet.addEvent("s", this.eventInputS, this)
@@ -149,8 +151,8 @@ export default class Player {
 	}
 
 	// Exemple d'un autre événement
-	eventInputA(e) {
-		this.addOxygen(10)
+	gainOxygen() {
+		this.addOxygen(5)
 	}
 
 	setCanMove(canMove) {
