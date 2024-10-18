@@ -22,8 +22,8 @@ export default class Player {
 
 		// Variables pour l'accélération et la vélocité
 		this.acceleration = 0 // Accélération initiale
-		this.maxVelocity = 15 // Vélocité maximale
-		this.maxAcceleration = 0.1 // Accélération maximale
+		this.maxVelocity = 10 * window.innerWidth * 0.00075 // Vélocité maximale
+		this.maxAcceleration = 0.1 * window.innerWidth * 0.00075 // Accélération maximale
 		this.decelerationRate = 0.05 // Taux de décélération
 		this.joystickActive = false // Indicateur si le joystick est en mouvement
 
@@ -56,6 +56,7 @@ export default class Player {
 	joystickEvent(e) {
 		let xInput = e.position.x
 		let yInput = e.position.y
+		console.log(window.innerHeight )
 
 		const normalized = InputSet.normalizeJoystickInput(xInput, yInput)
 		xInput = normalized.x
