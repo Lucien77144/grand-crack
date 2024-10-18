@@ -5,7 +5,7 @@ import { clamp } from "@/utils/maths"
 import TextureLoader from "@/game/TextureLoader"
 import { store } from "@/store"
 
-const CURSOR_BASE_SIZE = 0.7
+const CURSOR_BASE_SIZE = 0.4
 import recipes from "@/game/recipe/recipes.json"
 
 export default class Player {
@@ -85,7 +85,7 @@ export default class Player {
 		this.addOxygen(-dt * 0.0025)
 		this.updateSpeed()
 		this.updateGrab()
-		this.updateAction()
+		// this.updateAction()
 	}
 
 	updateSpeed() {
@@ -112,9 +112,9 @@ export default class Player {
 		}
 	}
 
-	updateSpriteFrame() {
+	updateSpriteFrame(isGrab) {
 		if (this.pixiSprite) {
-			if (this.action !== null) {
+			if (isGrab) {
 				if (this.pixiSprite.sprite.currentFrame !== 1) {
 					this.pixiSprite.sprite.gotoAndStop(1)
 				}
@@ -149,6 +149,8 @@ export default class Player {
 			const distOffset = PixiSprite.updatePositionWithOffset(
 				this.pixiSprite.sprite, this.ingredientHold.pixiSprite.sprite
 			)
+			this.updateSpriteFrame(true)
+
 			this.distIngredient = distOffset
 			ingredient.setCanMove(false)
 			this.allowGrab = false
@@ -160,6 +162,7 @@ export default class Player {
 			this.ingredientHold.setCanMove(true)
 			this.ingredientHold = null
 			this.distIngredient = null
+			this.updateSpriteFrame(false)
 			setTimeout(() => {
 				this.allowGrab = true
 			}, 1000)
