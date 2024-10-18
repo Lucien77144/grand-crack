@@ -1,5 +1,5 @@
 <script setup>
-	import { inject, watch, onBeforeUnmount } from "vue"
+	import { inject, watch, onMounted, onBeforeUnmount } from "vue"
 	import { store } from "@/store"
 
 	const game = inject("game")
@@ -11,6 +11,7 @@
 		game.value.reset()
 	}
 
+	// TODO! - Refactor this
 	watch(() => game.value, (g) => {
 		timeout = setTimeout(() => {
 			g.player1.inputSet.addEvent("i", () => {
