@@ -183,9 +183,9 @@ export default class Player {
 		})
 
 		// HACK - Just for debug with keyboard
-		this.inputSet.addEvent("x", this.eventInputX, this)
-		this.inputSet.addEvent("i", this.eventInputI, this)
-		this.inputSet.addEvent("s", this.eventInputS, this)
+		// this.inputSet.addEvent("x", this.eventInputX, this)
+		// this.inputSet.addEvent("i", this.eventInputI, this)
+		// this.inputSet.addEvent("s", this.eventInputS, this)
 	}
 
 	eventInputX(e) {
