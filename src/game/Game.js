@@ -65,7 +65,7 @@ export class Game {
 	}
 
 	update(dt, t) {
-		if (store.isGameOver) return
+		if (store.isSplashScreen || store.isGameOver) return
 
 		InputSet.update()
 

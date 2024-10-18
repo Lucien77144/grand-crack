@@ -2,25 +2,24 @@
 	import { inject, watch, onBeforeUnmount } from "vue"
 	import { store } from "@/store"
 
+	function onStartClick() {
+		store.isSplashScreen = false
+	}
+
 	const game = inject("game")
 
 	let timeout = null
-
-	function onReplayClick() {
-		store.isGameOver = false
-		game.value.reset()
-	}
 
 	// TODO! - Refactor this
 	watch(() => game.value, (g) => {
 		timeout = setTimeout(() => {
 			g.player1.inputSet.addEvent("w", () => {
-				if (!store.isGameOver) return
-				onReplayClick()
+				if (!store.isSplashScreen) return
+				onStartClick()
 			})
 			g.player2.inputSet.addEvent("w", () => {
-				if (!store.isGameOver) return
-				onReplayClick()
+				if (!store.isSplashScreen) return
+				onStartClick()
 			})
 		}, 100)
 	})
@@ -31,22 +30,22 @@
 </script>
 
 <template>
-	<div class="game-over">
-		<div class="leaderboard">
-			<img src="/assets/ui/game-over/leaderboard.svg">
+	<div class="splash-screen">
+		<div class="logo">
+			<img src="/assets/ui/splash-screen/logo.svg">
 		</div>
-		<div class="play-again">
-			<img src="/assets/ui/game-over/play-again-button.svg">
+		<div class="start-button">
+			<img src="/assets/ui/splash-screen/start-button.svg">
 		</div>
 	</div>
 </template>
 
 <style lang="scss" scoped>
-	.game-over {
+	.splash-screen {
 		@include inset(0, fixed);
 
 		align-items: center;
-		background-color: rgb(0 0 0 / 80%);
+		background: rgb(0 0 0 / 60%);
 		color: white;
 		display: flex;
 		flex-direction: column;
@@ -61,11 +60,11 @@
 			pointer-events: all;
 		}
 
-		.leaderboard {
-			width: 50rem;
+		.logo {
+			width: 30rem;
 		}
 
-		.play-again {
+		.start-button {
 			cursor: pointer;
 			margin-top: 2rem;
 			width: 10rem;

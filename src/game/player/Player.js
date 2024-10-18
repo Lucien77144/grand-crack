@@ -3,6 +3,7 @@ import InputSet from "@/game/InputSet"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import { clamp } from "@/utils/maths"
 import TextureLoader from "@/game/TextureLoader"
+import { store } from "@/store"
 
 const CURSOR_BASE_SIZE = 0.7
 import recipes from "@/game/recipe/recipes.json"
@@ -58,7 +59,7 @@ export default class Player {
 	joystickEvent(e) {
 		let xInput = e.position.x
 		let yInput = e.position.y
-		console.log(window.innerHeight )
+		console.log(window.innerHeight)
 
 		const normalized = InputSet.normalizeJoystickInput(xInput, yInput)
 		xInput = normalized.x
@@ -74,14 +75,14 @@ export default class Player {
 		} else {
 			this.joystickActive = false // On active le joystick
 			this.xDif = 0
-			this.yDif =0
+			this.yDif = 0
 		}
 	}
 
 	// Mise à jour régulière
 	update(dt, t) {
 		// Gestion de l'oxygène (cela reste inchangé)
-		this.addOxygen(-dt * 0.0025)
+		this.addOxygen(-dt * 0.005)
 		this.updateSpeed()
 		this.updateGrab()
 	}
@@ -100,7 +101,6 @@ export default class Player {
 		// On remet l'indicateur à false pour le prochain cycle
 		this.joystickActive = false
 		this.pixiSprite.addVecPos(this.xDif, -this.yDif)
-
 	}
 
 	updateGrab() {

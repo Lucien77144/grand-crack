@@ -2,6 +2,7 @@ import { computed, reactive } from "vue"
 
 export const store = reactive({
 	isPaused: false,
+	isSplashScreen: true,
 	players: [
 		{
 			id: 1,

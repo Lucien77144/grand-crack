@@ -5,14 +5,6 @@
 	import Signal from "@/utils/signal"
 	import oxygenIcon from "/assets/ui/oxygen/oxygen-icon.svg"
 
-	Signal.on(":actionPlayer1", (payload) => {
-		console.log(payload)
-	})
-
-	Signal.on(":actionPlayer2", (payload) => {
-		console.log(payload)
-	})
-
 	const props = defineProps({
 		player: {
 			type: Number,
@@ -42,7 +34,7 @@
 <template>
 	<div
 		class="oxygen-container"
-		:class="'player-' + player"
+		:class="['player-' + player, { 'is-visible': !store.isSplashScreen }]"
 	>
 		<div
 			class="oxygen-jauge"
@@ -66,6 +58,12 @@
 	.oxygen-container {
 		position: absolute;
 		top: 1rem;
+		opacity: 0;
+		transition: opacity 0.5s;
+
+		&.is-visible {
+			opacity: 1;
+		}
 
 		&.player-1 {
 			left: 1rem;
