@@ -35,6 +35,9 @@ export class Cutter extends CookingStation {
 			this.progress += 1
 			this.progress = clamp(this.progress, 0, this.ingredient.pixiSprite.sprite.totalFrames - 1)
 			this.ingredient.pixiSprite.sprite.gotoAndStop(this.progress)
+			const rand =  Math.floor(Math.random() * 3)
+			this.game.soundManager.playSingleSound(`cutting${rand}`,.5 )
+
 
 			console.log(this.progress + "/" + this.ingredient.pixiSprite.sprite.totalFrames)
 

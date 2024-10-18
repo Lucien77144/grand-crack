@@ -13,10 +13,10 @@
 
 	watch(() => game.value, (g) => {
 		timeout = setTimeout(() => {
-			g.player1.inputSet.addEvent("x", () => {
+			g.player1.inputSet.addEvent("i", () => {
 				onReplayClick()
 			})
-			g.player2.inputSet.addEvent("x", () => {
+			g.player2.inputSet.addEvent("i", () => {
 				onReplayClick()
 			})
 		}, 100)

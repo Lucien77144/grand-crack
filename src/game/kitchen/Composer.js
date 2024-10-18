@@ -26,6 +26,8 @@ export class Composer extends CookingStation {
 	onPressButtonInteract(e) {
 		const ingredient = this.playerAssign.ingredientHold
 		if (this.playerAssign && ingredient && this.checkCanInteractWithIngredient(this.playerAssign, ingredient)) {
+
+			this.game.soundManager.playSingleSound("hold",.25 )
 			ingredient.setOnPlate(true)
 			ingredient.setCanMove(false)
 			this.playerAssign.onPlayerInteractCounter(true)
@@ -33,6 +35,7 @@ export class Composer extends CookingStation {
 			this.addIngredient(ingredient)
 
 			if (this.checkIsFinished()) {
+				this.game.soundManager.playSingleSound("recipeComplete",1)
 				store.players[ this.playerAssign.id - 1 ].score += this.recipe.score
 				const recipe = this.playerAssign.setRandomRecipe()
 				this.recipe = recipe
