@@ -19,9 +19,9 @@ export class Mixer extends CookingStation {
 			let xInput = e.position.x
 			let yInput = e.position.y
 
-			if(!this.soundPlayed){
+			if (!this.soundPlayed) {
 				this.soundPlayed = true
-				this.game.soundManager.playSingleSound("mixing",1)
+				this.game.soundManager.playSingleSound("mixing", 1)
 			}
 
 			const hasMinXIntensity = this.checkThreshold(e.position.x, .5)
@@ -90,12 +90,12 @@ export class Mixer extends CookingStation {
 
 	checkCP1(x, y) {
 		const xValid = !this.checkThreshold(x, .25)
-		const yValid = y > 0.9
+		const yValid = y > 0.75
 		return xValid && yValid
 	}
 
 	checkCP2(x, y) {
-		const xValid = x > 0.9
+		const xValid = x > 0.75
 		const yValid = !this.checkThreshold(y, .25)
 
 		return xValid && yValid
@@ -103,13 +103,13 @@ export class Mixer extends CookingStation {
 
 	checkCP3(x, y) {
 		const xValid = !this.checkThreshold(x, .25)
-		const yValid = y < -0.9
+		const yValid = y < -0.75
 
 		return xValid && yValid
 	}
 
 	checkCP4(x, y) {
-		const xValid = x < -0.9
+		const xValid = x < -0.75
 		const yValid = !this.checkThreshold(y, .25)
 
 		return xValid && yValid

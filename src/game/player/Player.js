@@ -81,6 +81,12 @@ export default class Player {
 		this.addOxygen(-dt * 0.007)
 		this.updateSpeed()
 		this.updateGrab()
+
+		if (this.oxygen <= 1) {
+			store.isGameOver = true
+			this.oxygen = 100
+		}
+
 		// this.updateAction()
 	}
 
@@ -179,6 +185,7 @@ export default class Player {
 
 			if (store.isGameOver) {
 				store.isGameOver = false
+				console.log(store.isGameOver)
 			}
 		})
 

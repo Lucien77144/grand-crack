@@ -1,8 +1,6 @@
 <script setup>
 	import { inject, watch, onMounted, onBeforeUnmount } from "vue"
 	import { store } from "@/store"
-
-	const game = inject("game")
 </script>
 
 <template>

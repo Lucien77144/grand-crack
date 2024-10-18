@@ -21,12 +21,9 @@
 			|| !game.value
 			|| !game?.value[ `player${ props.player }` ]?.oxygen
 		) return
+
 		const realOxygen = game?.value[ `player${ props.player }` ]?.oxygen
 		oxygen.value = Math.round(realOxygen * 10) / 10
-
-		if ((Math.floor(realOxygen * 10) / 10) < 1) {
-			return store.isGameOver = true
-		}
 	})
 </script>
 
