@@ -11,22 +11,27 @@ export default class SoundManager {
 		if (SoundManager.instance) {
 			return SoundManager.instance;
 		}
-		this.hasStarted = true;
+		this.hasStarted = false;
 		const snds = this.loadSounds();
 
 		SoundManager.instance = this;
 	}
 
-	async startXp(key, animationStart = null) {
+	async startXp(key,volume = 0.5, animationStart = null) {
 		// Définit l'état des sons
-		this.soundsList[key].volume(0);
-		this.soundsList[key].play();
-		this.soundsList[key].fade(0, 0.2, 500);
-		this.currentSound = this.soundsList[key];
-		this.isPlaying = true;
-		if (animationStart) {
-			animationStart();
+		if(!this.hasStarted){
+			this.hasStarted = true;
+			this.soundsList[key].volume(0);
+			this.soundsList[key].play();
+			this.soundsList[key].fade(0, volume, 500);
+			console.log(this.soundsList[key],"start")
+			this.currentSound = this.soundsList[key];
+			this.isPlaying = true;
+			if (animationStart) {
+				animationStart();
+			}
 		}
+
 	}
 
 	transitionMusic(room) {
@@ -62,7 +67,8 @@ export default class SoundManager {
 	}
 
 	playSingleSound(sound, volume = 0.15) {
-		if (this.soundsList && this.isPlaying && this.soundsList[sound]) {
+		if (this.soundsList && this.isPlaying && this.soundsList[sound]){
+			console.log(sound,"test")
 			this.soundsList[sound].volume(volume);
 			this.soundsList[sound].play();
 		}
@@ -85,7 +91,17 @@ export default class SoundManager {
 			});
 		};
 
-		await Promise.all([loadAudio("global", "/sounds/Musique.mp3", 0, true)]);
+		await Promise.all([
+			loadAudio("music", "/assets/sounds/music.mp3", 0, true),
+			loadAudio("cutting0", "/assets/sounds/cutting01.mp3", 0, false),
+			loadAudio("cutting1", "/assets/sounds/cutting02.mp3", 0, false),
+			loadAudio("cutting2", "/assets/sounds/cutting03.mp3", 0, false),
+			loadAudio("hold", "/assets/sounds/hold.mp3", 0, false),
+			loadAudio("mixing", "/assets/sounds/mixing.mp3", 0, true),
+			loadAudio("bake", "/assets/sounds/bake.mp3", 0, false),
+			loadAudio("recipeComplete", "/assets/sounds/recipeComplete.mp3", 0, false),
+
+		]);
 
 		this.soundsList = tmp;
 	}

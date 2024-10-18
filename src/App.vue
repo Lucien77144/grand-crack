@@ -8,7 +8,9 @@
 	import CookingInstruction from "@/components/CookingInstruction/CookingInstruction.vue"
 	import TextureLoader from "@/game/TextureLoader"
 	import Signal from "@/utils/signal"
+	import SplashScreen from "@/components/SplashScreen/SplashScreen.vue"
 	import SoundManager from "@/game/SoundManager"
+	// import GameScore from "@/game/GameScore/GameScore"
 	import { store } from "@/store"
 
 	const $$canvas = shallowRef()
@@ -48,7 +50,6 @@
 		textureLoader.value = new TextureLoader()
 		textureLoader.value.loadTexture().then(() => {
 			// Create game
-
 			soundManager.value = new SoundManager()
 			game.value = new Game($$canvas.value, size)
 			game.value.setup()
@@ -88,6 +89,13 @@
 			class="overlay"
 			:class="{
 				'is-panic': isPanic
+			}"
+		/>
+		<!-- <GameScore :score="store.players[1].score" />
+		<GameScore :score="store.players[1].score" /> -->
+		<SplashScreen
+			:class="{
+				'is-visible': store.isSplashScreen
 			}"
 		/>
 		<GameOver

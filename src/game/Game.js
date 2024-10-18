@@ -48,7 +48,6 @@ export class Game {
 
 		this.prepareCanvas(this.pixiApplication).then(() => {
 			this.soundManager = new SoundManager()
-			// this.soundManager.startXp("key")
 
 			this.player1 = new Player(1)
 			this.player1.addInputsListener()
@@ -65,7 +64,7 @@ export class Game {
 	}
 
 	update(dt, t) {
-		if (store.isGameOver) return
+		if (store.isSplashScreen || store.isGameOver) return
 
 		InputSet.update()
 

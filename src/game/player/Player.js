@@ -61,10 +61,6 @@ export default class Player {
 		let xInput = e.position.x
 		let yInput = e.position.y
 
-		const normalized = InputSet.normalizeJoystickInput(xInput, yInput)
-		xInput = normalized.x
-		yInput = normalized.y
-
 		if (this.pixiSprite && this.canMove && xInput !== 0 && yInput !== 0) {
 			this.joystickActive = true // On active le joystick
 			// Applique l'accélération tant que le joystick est en mouvement
@@ -82,7 +78,7 @@ export default class Player {
 	// Mise à jour régulière
 	update(dt, t) {
 		// Gestion de l'oxygène (cela reste inchangé)
-		this.addOxygen(-dt * 0.0025)
+		this.addOxygen(-dt * 0.005)
 		this.updateSpeed()
 		this.updateGrab()
 		// this.updateAction()
@@ -174,6 +170,17 @@ export default class Player {
 		this.inputSet.addEventJoystick(this.joystickEvent, this)
 		this.inputSet.addEvent("a", this.releaseIngredient, this)
 		this.inputSet.addEvent("w", this.gainOxygen, this)
+
+		this.inputSet.addEvent("a", () => {
+			if (store.isSplashScreen) {
+				store.isSplashScreen = false
+				this.game.soundManager.startXp("music", .25)
+			}
+
+			if (store.isGameOver) {
+				store.isGameOver = false
+			}
+		})
 
 		// HACK - Just for debug with keyboard
 		this.inputSet.addEvent("x", this.eventInputX, this)
