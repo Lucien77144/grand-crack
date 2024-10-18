@@ -2,7 +2,6 @@
 	import { inject, computed, onMounted, shallowRef } from "vue"
 	import { useRaf } from "@/composables/useRaf/useRaf"
 	import { store } from "@/store"
-	import Signal from "@/utils/signal"
 	import oxygenIcon from "/assets/ui/oxygen/oxygen-icon.svg"
 
 	const props = defineProps({
