@@ -115,6 +115,6 @@ export class Composer extends CookingStation {
 
 	addInputCounterIn(player) {
 		const inputSet = player.inputSet
-		inputSet.addEvent("i", this.onPressButtonInteract, this)
+		inputSet.addEvent("x", this.onPressButtonInteract, this)
 	}
 }

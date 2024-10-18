@@ -136,12 +136,12 @@ export class Mixer extends CookingStation {
 
 	addInputCounterIn() {
 		const inputSet1 = this.game.player1.inputSet
-		inputSet1.addEvent("i", this.onPressButtonInteract, this)
+		inputSet1.addEvent("x", this.onPressButtonInteract, this)
 		inputSet1.addEventJoystick(this.joystickEvent, this)
 
 
 		const inputSet2 = this.game.player2.inputSet
-		inputSet2.addEvent("i", this.onPressButtonInteract, this)
+		inputSet2.addEvent("x", this.onPressButtonInteract, this)
 		inputSet2.addEventJoystick(this.joystickEvent, this)
 	}
 }
