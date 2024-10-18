@@ -47,7 +47,7 @@ export default class Player {
 			{
 				x: this.id === 1 ? this.canvas.offsetWidth / 2 - this.canvas.offsetWidth * 0.1 : this.canvas.offsetWidth / 2 + this.canvas.offsetWidth * 0.1,
 				y: 200,
-				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.000075,
+				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.0005,
 				animationName: `cursor${ this.id }`,
 				anchor: [ 0.5, 0.5 ],
 				zIndex: 4
@@ -75,7 +75,7 @@ export default class Player {
 		} else {
 			this.joystickActive = false // On active le joystick
 			this.xDif = 0
-			this.yDif =0
+			this.yDif = 0
 		}
 	}
 
@@ -102,7 +102,6 @@ export default class Player {
 		// On remet l'indicateur à false pour le prochain cycle
 		this.joystickActive = false
 		this.pixiSprite.addVecPos(this.xDif, -this.yDif)
-
 	}
 
 	updateGrab() {
@@ -114,9 +113,8 @@ export default class Player {
 	}
 
 	updateSpriteFrame() {
-		if (this.action !== null && this.pixiSprite) {
-			console.log("Action:", this.action)
-			if (this.action) {
+		if (this.pixiSprite) {
+			if (this.action !== null) {
 				if (this.pixiSprite.sprite.currentFrame !== 1) {
 					this.pixiSprite.sprite.gotoAndStop(1)
 				}

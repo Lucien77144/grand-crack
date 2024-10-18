@@ -1,55 +1,31 @@
 {"frames": {
 
-"cursor1-0.png":
+"cursor1_idle.png":
 {
-	"frame": {"x":1346,"y":2519,"w":1265,"h":758},
+	"frame": {"x":219,"y":1,"w":222,"h":303},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":88,"y":726,"w":1265,"h":758},
-	"sourceSize": {"w":1412,"h":1484}
+	"spriteSourceSize": {"x":265,"y":177,"w":222,"h":303},
+	"sourceSize": {"w":751,"h":751}
 },
-"cursor1-1.png":
+"cursor1_used.png":
 {
-	"frame": {"x":1346,"y":1,"w":1343,"h":1361},
+	"frame": {"x":1,"y":1,"w":216,"h":305},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":6,"y":123,"w":1343,"h":1361},
-	"sourceSize": {"w":1412,"h":1484}
-},
-"cursor1-2.png":
-{
-	"frame": {"x":1,"y":1,"w":1343,"h":1478},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":6,"y":6,"w":1343,"h":1478},
-	"sourceSize": {"w":1412,"h":1484}
-},
-"cursor1-3.png":
-{
-	"frame": {"x":1,"y":1481,"w":1343,"h":1366},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":6,"y":118,"w":1343,"h":1366},
-	"sourceSize": {"w":1412,"h":1484}
-},
-"cursor1-4.png":
-{
-	"frame": {"x":1346,"y":1364,"w":1343,"h":1153},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":9,"y":331,"w":1343,"h":1153},
-	"sourceSize": {"w":1412,"h":1484}
+	"spriteSourceSize": {"x":267,"y":175,"w":216,"h":305},
+	"sourceSize": {"w":751,"h":751}
 }},
 "animations": {
-	"cursor1": ["cursor1-0.png","cursor1-1.png","cursor1-2.png","cursor1-3.png","cursor1-4.png"]
+	"cursor1": ["cursor1_idle.png","cursor1_used.png"]
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.1",
-	"image": "cut.png",
+	"image": "cursor1.png",
 	"format": "RGBA8888",
-	"size": {"w":2690,"h":3278},
+	"size": {"w":442,"h":307},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:83ce386ef72f3bb78a6daceb5c3dbea2:42ed4983e1e5cbd800744a5359683312:27371cc27620d80495923ec0cc009ab5$"
+	"smartupdate": "$TexturePacker:SmartUpdate:532082f33a908d4fd02a62b33c6858aa:fcae7b17c4afb628ca2f52fbfff4e97e:7f1f3282cf8f8e52acd61d2657519e8c$"
 }
 }

@@ -1,55 +1,31 @@
 {"frames": {
 
-"cursor2-0.png":
+"cursor2_idle.png":
 {
-	"frame": {"x":1346,"y":2519,"w":1265,"h":758},
+	"frame": {"x":1,"y":1,"w":222,"h":303},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":88,"y":726,"w":1265,"h":758},
-	"sourceSize": {"w":1412,"h":1484}
+	"spriteSourceSize": {"x":265,"y":177,"w":222,"h":303},
+	"sourceSize": {"w":751,"h":751}
 },
-"cursor2-1.png":
+"cursor2_used.png":
 {
-	"frame": {"x":1346,"y":1,"w":1343,"h":1361},
+	"frame": {"x":1,"y":306,"w":216,"h":243},
 	"rotated": false,
 	"trimmed": true,
-	"spriteSourceSize": {"x":6,"y":123,"w":1343,"h":1361},
-	"sourceSize": {"w":1412,"h":1484}
-},
-"cursor2-2.png":
-{
-	"frame": {"x":1,"y":1,"w":1343,"h":1478},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":6,"y":6,"w":1343,"h":1478},
-	"sourceSize": {"w":1412,"h":1484}
-},
-"cursor2-3.png":
-{
-	"frame": {"x":1,"y":1481,"w":1343,"h":1366},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":6,"y":118,"w":1343,"h":1366},
-	"sourceSize": {"w":1412,"h":1484}
-},
-"cursor2-4.png":
-{
-	"frame": {"x":1346,"y":1364,"w":1343,"h":1153},
-	"rotated": false,
-	"trimmed": true,
-	"spriteSourceSize": {"x":9,"y":331,"w":1343,"h":1153},
-	"sourceSize": {"w":1412,"h":1484}
+	"spriteSourceSize": {"x":267,"y":237,"w":216,"h":243},
+	"sourceSize": {"w":751,"h":751}
 }},
 "animations": {
-	"cursor2": ["cursor2-0.png","cursor2-1.png","cursor2-2.png","cursor2-3.png","cursor2-4.png"]
+  "cursor2": ["cursor2_idle.png","cursor2_used.png"]
 },
 "meta": {
 	"app": "https://www.codeandweb.com/texturepacker",
 	"version": "1.1",
-	"image": "cut.png",
+	"image": "cursor2.png",
 	"format": "RGBA8888",
-	"size": {"w":2690,"h":3278},
+	"size": {"w":224,"h":550},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:83ce386ef72f3bb78a6daceb5c3dbea2:42ed4983e1e5cbd800744a5359683312:27371cc27620d80495923ec0cc009ab5$"
+	"smartupdate": "$TexturePacker:SmartUpdate:2fbaa738d37290c47ca385377a6f8acd:6fcff02385512930f3c0467798ae271a:a0126ab902020ba53bfb53dc09719774$"
 }
 }
