@@ -42,10 +42,10 @@
 <template>
 	<div
 		class="oxygen-container"
+		:class="'player-' + player"
 	>
 		<div
 			class="oxygen-jauge"
-			:class="'player-' + player"
 		>
 			<div
 				class="progress"
@@ -67,11 +67,11 @@
 		position: absolute;
 		top: 1rem;
 
-		&:has(.player-1) {
+		&.player-1 {
 			left: 1rem;
 		}
 
-		&:has(.player-2) {
+		&.player-2 {
 			right: 1rem;
 		}
 
@@ -84,7 +84,6 @@
 			margin: 0 auto;
 			overflow: hidden;
 			position: relative;
-			top: 1rem;
 			width: 1.2rem;
 
 			.progress {
