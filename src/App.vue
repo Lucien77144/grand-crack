@@ -10,6 +10,7 @@
 	import Signal from "@/utils/signal"
 	import SplashScreen from "@/components/SplashScreen/SplashScreen.vue"
 	import SoundManager from "@/game/SoundManager"
+	// import GameScore from "@/game/GameScore/GameScore"
 	import { store } from "@/store"
 
 	const $$canvas = shallowRef()
@@ -90,6 +91,8 @@
 				'is-panic': isPanic
 			}"
 		/>
+		<!-- <GameScore :score="store.players[1].score" />
+		<GameScore :score="store.players[1].score" /> -->
 		<SplashScreen
 			:class="{
 				'is-visible': store.isSplashScreen

@@ -2,26 +2,26 @@
 	import { inject, watch, onBeforeUnmount } from "vue"
 	import { store } from "@/store"
 
+	const game = inject("game")
+
 	function onStartClick() {
+		console.log("start")
+		game.value.soundManager.startXp("music", .25)
 		store.isSplashScreen = false
 	}
-
-	const game = inject("game")
 
 	let timeout = null
 
 	// TODO! - Refactor this
 	watch(() => game.value, (g) => {
 		timeout = setTimeout(() => {
-			g.player1.inputSet.addEvent("x", () => {
+			g.player1.inputSet.addEvent("w", () => {
 				if (!store.isSplashScreen) return
 				onStartClick()
-				game.value.soundManager.startXp("music", .25)
 			})
-			g.player2.inputSet.addEvent("x", () => {
+			g.player2.inputSet.addEvent("w", () => {
 				if (!store.isSplashScreen) return
 				onStartClick()
-				game.value.soundManager.startXp("music", .25)
 			})
 		}, 100)
 	})
