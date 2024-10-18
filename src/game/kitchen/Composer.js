@@ -52,7 +52,7 @@ export class Composer extends CookingStation {
 	}
 
 	removeIngredients(){
-		this.ingredients.forEach(ingredient => ingredient.destroy())
+		Object.keys(this.ingredients).forEach(ingredient => this.ingredients[ingredient].destroy())
 		this.ingredients = {}
 	}
 
