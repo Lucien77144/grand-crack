@@ -141,6 +141,6 @@ export class Mixer extends CookingStation {
 
 		const inputSet2 = this.game.player2.inputSet
 		inputSet2.addEvent("i", this.onPressButtonInteract, this)
-		inputSet1.addEventJoystick(this.joystickEvent, this)
+		inputSet2.addEventJoystick(this.joystickEvent, this)
 	}
 }
