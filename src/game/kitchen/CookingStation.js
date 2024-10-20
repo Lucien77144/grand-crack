@@ -5,12 +5,8 @@ import TextureLoader from "@/game/TextureLoader"
 export class CookingStation {
 	ingredient = null
 	player = null
-	currentTime = 0
-	timeLimit = 0
-	spritesheet = null
 	atlasData = null
 	action = ""
-	anim = null
 	game
 
 	constructor({ ...props }) {

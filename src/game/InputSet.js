@@ -69,22 +69,6 @@ export default class InputSet {
 		})
 	}
 
-	static normalizeJoystickInput(x, y) {
-		// Calculer la magnitude
-		const magnitude = Math.sqrt(x * x + y * y)
-
-		// Vérifier si la magnitude est supérieure à 0 pour éviter de diviser par 0
-		if (magnitude > 0) {
-			return {
-				x: x / magnitude,
-				y: y / magnitude
-			}
-		} else {
-			// Si magnitude est 0, on retourne un vecteur nul
-			return { x: 0, y: 0 }
-		}
-	}
-
 	static update() {
 		if (InputSet.gamepadEmulatorPlayer1) {
 			InputSet.gamepadEmulatorPlayer1.update()

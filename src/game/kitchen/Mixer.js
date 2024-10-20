@@ -61,8 +61,10 @@ export class Mixer extends CookingStation {
 			}
 
 			if (this.checkpoints.every(elt => elt >= this.nbRevolution)) {
+
 				this.player.onPlayerInteractCounter(true)
 				this.ingredient.onInteractionCounterEnd()
+
 				this.ingredient.pixiSprite.sprite.gotoAndStop(
 					this.ingredient.pixiSprite.sprite.totalFrames - 1
 				)
@@ -71,14 +73,7 @@ export class Mixer extends CookingStation {
 				this.game.soundManager.stopSingleSound("mixing")
 				this.soundPlayed = false
 
-				this.inMixer = false
-				this.player = null
-				this.ingredient = null
-				this.progress = 0
-				this.lastCheckPoint = 4
-				this.checkpoints = [ 0, 0, 0, 0 ]
-
-
+				this.resetMixer()
 
 				// Reset to default
 				this.pixiSprite.sprite.textures = this.ogAnim
@@ -87,6 +82,15 @@ export class Mixer extends CookingStation {
 				this.success()
 			}
 		}
+	}
+
+	resetMixer(){
+		this.inMixer = false
+		this.player = null
+		this.ingredient = null
+		this.progress = 0
+		this.lastCheckPoint = 4
+		this.checkpoints = [ 0, 0, 0, 0 ]
 	}
 
 	checkCP1(x, y) {

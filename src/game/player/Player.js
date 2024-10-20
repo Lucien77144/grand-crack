@@ -9,26 +9,30 @@ const CURSOR_BASE_SIZE = 0.4
 import recipes from "@/game/recipe/recipes.json"
 
 export default class Player {
-	xDif = 0
-	yDif = 0
+
 	constructor(id) {
+		//Global
 		this.id = id
+		this.tl = new TextureLoader()
+		this.textureData = this.tl.assetArray[ `cursor${ id }` ]
 		this.game = new Game()
-		this.oxygen = 100
-		this.inputSet = new InputSet(id)
+
+		//Behaviours
 		this.canMove = true
 		this.ingredientHold = null
 		this.distIngredient = null
 		this.allowGrab = true
-		this.tl = new TextureLoader()
-		this.textureData = this.tl.assetArray[ `cursor${ id }` ]
+		this.oxygen = 100
 
 		// Variables pour l'accélération et la vélocité
+		this.inputSet = new InputSet(id)
 		this.acceleration = 0 // Accélération initiale
 		this.maxVelocity = 10 * window.innerWidth * 0.00075 // Vélocité maximale
 		this.maxAcceleration = 0.5 * window.innerWidth * 0.00075 // Accélération maximale
 		this.decelerationRate = 0.05 // Taux de décélération
 		this.joystickActive = false // Indicateur si le joystick est en mouvement
+		this.xDif = 0
+		this.yDif = 0
 
 		this.canvas = this.game.canvas
 
@@ -86,8 +90,6 @@ export default class Player {
 			store.isGameOver = true
 			this.oxygen = 100
 		}
-
-		// this.updateAction()
 	}
 
 	updateSpeed() {

@@ -11,6 +11,7 @@ export class Cutter extends CookingStation {
 		this.addInputCounterIn()
 	}
 
+	//Fonction d'entrer dans le cutter
 	onPressButtonInteract(e) {
 		const player = e.id === 1 ? this.game.player1 : this.game.player2
 		const ingredient = player.ingredientHold

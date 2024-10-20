@@ -7,7 +7,6 @@ import {gsap} from "gsap"
 export class Composer extends CookingStation {
 	playerAssign = 0
 	targetIngredients = []
-	placeholders = []
 	ingredients = {}
 	plate = null
 
@@ -109,19 +108,6 @@ export class Composer extends CookingStation {
 
 	checkIsFinished() {
 		return this.targetIngredients.every(ingredient => this.ingredients.hasOwnProperty(ingredient))
-	}
-
-	initPlaceholder() {
-		const spriteX = this.pixiSprite.sprite.x
-		const spriteY = this.pixiSprite.sprite.y
-		const width = this.pixiSprite.sprite.width
-		const height = this.pixiSprite.sprite.height
-		this.targetIngredients.forEach((ingredient, i) => {
-			const sign = i % 2 === 0 ? -1 : 1
-			const x = spriteX + Math.random() * width
-			const y = spriteY + Math.random() * height - sign
-			this.placeholders.push({ x, y })
-		})
 	}
 
 	addInputCounterIn(player) {
