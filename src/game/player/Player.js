@@ -62,10 +62,10 @@ export default class Player {
 	}
 
 	joystickEvent(e) {
+		if (e.id !== this.id) return
 		// Gestion des événements de joystick
 		let xInput = e.position.x
 		let yInput = e.position.y
-		console.log(e.position)
 
 		if (this.pixiSprite && this.canMove && xInput !== 0 && yInput !== 0) {
 			this.joystickActive = true // Active le joystick
@@ -84,7 +84,7 @@ export default class Player {
 
 	update(dt, t) {
 		// Mise à jour principale du joueur (appelée à chaque frame)
-		this.addOxygen(-dt * 0.007) // Réduit l'oxygène au fil du temps
+		// this.addOxygen(-dt * 0.007) // Réduit l'oxygène au fil du temps
 		this.updateSpeed() // Met à jour la vitesse et la position du joueur
 		this.updateGrab() // Met à jour la position de l'ingrédient tenu
 

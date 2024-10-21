@@ -47,21 +47,82 @@ export default class InputSet {
 	 * @param {Object} context - Le contexte dans lequel la fonction callback est appelée.
 	 */
 	addEventJoystick(callback, context) {
+		this.leftJoystickPosition = { x: 0, y: 0}
+		this.rightJoystickPosition = { x: 0, y: 0}
+		addEventListener("keydown", (event) => {
+			//arrow keys
+			if (event.key === "z") {
+				this.leftJoystickPosition.y = 1
+				this.leftJoystickPosition.x = 10e-10
+			}
+			if (event.key === "s") {
+				this.leftJoystickPosition.y = -1
+				this.leftJoystickPosition.x = 10e-10
+			}
+			if (event.key === "q") {
+				this.leftJoystickPosition.x = -1
+				this.leftJoystickPosition.y = this.leftJoystickPosition.y || 10e-10
+			}
+			if (event.key === "d") {
+				this.leftJoystickPosition.x = 1
+				this.leftJoystickPosition.y = this.leftJoystickPosition.y || 10e-10
+			}
+			callback.bind(context)({position: this.leftJoystickPosition, id: 1})
+
+			if (event.key === "ArrowUp") {
+				this.rightJoystickPosition.y = 1
+				this.rightJoystickPosition.x = 10e-10
+			}
+			if (event.key === "ArrowDown") {
+				this.rightJoystickPosition.y = -1
+				this.rightJoystickPosition.x = 10e-10
+			}
+			if (event.key === "ArrowLeft") {
+				this.rightJoystickPosition.x = -1
+				this.rightJoystickPosition.y = this.rightJoystickPosition.y || 10e-10
+			}
+			if (event.key === "ArrowRight") {
+				this.rightJoystickPosition.x = 1
+				this.rightJoystickPosition.y = this.rightJoystickPosition.y || 10e-10
+			}
+			callback.bind(context)({position: this.rightJoystickPosition, id: 2})
+		})
+
+		addEventListener("keyup", (event) => {
+
+			if (event.key === "z" || event.key === "s") {
+				this.leftJoystickPosition.y = 0
+			}
+			if (event.key === "q" || event.key === "d") {
+				this.leftJoystickPosition.x = 0
+			}
+			callback.bind(context)({position: this.leftJoystickPosition, id: 1})
+
+			if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+				this.rightJoystickPosition.y = 0
+			}
+			if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+				this.rightJoystickPosition.x = 0
+			}
+			callback.bind(context)({position: this.rightJoystickPosition, id: 2})
+		})
+
+
 		this.currentPlayer.addEventListener("joystick:move", callback.bind(context)) // Écoute les mouvements du joystick.
 	}
 
 	static emulateKeyboard() {
-		Axis.registerKeys("a", "a", 1)
-		Axis.registerKeys("z", "x", 1)
-		Axis.registerKeys("e", "i", 1)
-		Axis.registerKeys("r", "s", 1)
-		Axis.registerKeys("t", "w", 1)
+		Axis.registerKeys("w", "a", 1)
+		Axis.registerKeys("x", "x", 1)
+		Axis.registerKeys("c", "i", 1)
+		Axis.registerKeys("v", "s", 1)
+		Axis.registerKeys("b", "w", 1)
 
-		Axis.registerKeys("u", "a", 2)
-		Axis.registerKeys("i", "x", 2)
-		Axis.registerKeys("o", "i", 2)
-		Axis.registerKeys("p", "s", 2)
-		Axis.registerKeys("^", "w", 2)
+		Axis.registerKeys("n", "a", 2)
+		Axis.registerKeys(",", "x", 2)
+		Axis.registerKeys(";", "i", 2)
+		Axis.registerKeys(":", "s", 2)
+		Axis.registerKeys("=", "w", 2)
 	}
 
 	static emulateGamePad() {
