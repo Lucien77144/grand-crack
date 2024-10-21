@@ -1,21 +1,21 @@
-import { Assets, Sprite, Point, AnimatedSprite } from "pixi.js"
-import { v4 as uuidv4 } from "uuid"
-import PixiApplication from "@/game/pixi/PixiApplication"
+import { Assets, Sprite, Point, AnimatedSprite } from "pixi.js" // Import des classes nécessaires de Pixi.js
+import { v4 as uuidv4 } from "uuid" // Import pour générer des identifiants uniques
+import PixiApplication from "@/game/pixi/PixiApplication" // Import de l'application Pixi
 
 export default class PixiSprite {
 	constructor({
-		x = 0,
-		y = 0,
-		size = 1,
-		anchor = [ 0.5, 0.5 ],
-		animationName = "",
-		zIndex = 0
-	} = {},
-	textureData
-	) {
-		this.textureData = textureData
-		this.atlasId = uuidv4()
+					x = 0,
+					y = 0,
+					size = 1,
+					anchor = [0.5, 0.5],
+					animationName = "",
+					zIndex = 0
+				} = {},
+				textureData) {
+		this.textureData = textureData // Données de texture pour le sprite
+		this.atlasId = uuidv4() // Identifiant unique pour le sprite
 
+		// Propriétés de position, taille, ancre, animation, et zIndex
 		this.x = x
 		this.y = y
 		this.size = size
@@ -23,84 +23,68 @@ export default class PixiSprite {
 		this.animationName = animationName
 		this.zIndex = zIndex
 
-		this.init()
+		this.init() // Appel de la méthode d'initialisation
 	}
 
 	init() {
-		const pixiApplication = new PixiApplication()
+		const pixiApplication = new PixiApplication() // Crée une nouvelle instance de PixiApplication
 
-		// Create a spritesheet if there is an atlasData
+		// Crée un AnimatedSprite si des données d'atlas sont fournies
 		if (this.textureData.sheet) {
 			this.sprite = new AnimatedSprite(
-				this.textureData.sheet.animations[ this.animationName ]
+				this.textureData.sheet.animations[this.animationName]
 			)
-
-			// Otherwise, create a sprite
 		} else {
+			// Sinon, crée un Sprite simple
 			this.sprite = new Sprite(this.textureData.texture)
 		}
 
+		// Définit l'ancre, la position, l'échelle et le zIndex
 		this.sprite.anchor.set(...this.anchor)
 		this.sprite.x = this.x
 		this.sprite.y = this.y
 		this.sprite.scale = this.size
-		this.sprite.layer = this.layer
 		this.sprite.zIndex = this.zIndex
 
-		pixiApplication.appendToStage(this.sprite)
+		pixiApplication.appendToStage(this.sprite) // Ajoute le sprite à la scène Pixi
 	}
 
-	update(dt, t) { }
+	update(dt, t) {
+		// Méthode pour mettre à jour le sprite à chaque frame (vide ici, à personnaliser)
+	}
 
 	setSpritePos(nextPos) {
+		// Définit la position du sprite
 		this.sprite.position.set(nextPos.x, nextPos.y)
 	}
 
 	addVecPos(x, y) {
+		// Ajoute un vecteur à la position actuelle du sprite
 		this.sprite.x += x
 		this.sprite.y += y
 	}
 
 	setSpriteRotation(nextRotation) {
+		// Définit la rotation du sprite
 		this.sprite.rotation = nextRotation
 	}
 
-	static checkIn(baseSprite, targetSprite) {
-		let x1 = baseSprite.position.x - (baseSprite.width / 2),
-			y1 = baseSprite.position.y - (baseSprite.height / 2),
-			w1 = baseSprite.width,
-			h1 = baseSprite.height,
-			x2 = targetSprite.position.x - (targetSprite.width / 2),
-			y2 = targetSprite.position.y - (targetSprite.height / 2),
-			w2 = targetSprite.width,
-			h2 = targetSprite.height
-
-		if (x1 + w1 > x2)
-			if (x1 < x2 + w2)
-				if (y1 + h1 > y2)
-					if (y1 < y2 + h2)
-						return true
-
-		return false
-	}
-
+	// Met à jour la position d'un sprite par rapport à un autre avec un offset
 	static updatePositionWithOffset(spriteA, spriteB) {
-		// Calculer la différence entre A et B
 		const dx = spriteB.x - spriteA.x // Différence sur l'axe x
 		const dy = spriteB.y - spriteA.y // Différence sur l'axe y
 
-		// Appliquer cette différence à la nouvelle position de A
+		// Retourne la nouvelle position ajustée
 		const spriteBNew = {
-			x: dx, // Position x de B ajustée
-			y: dy // Position y de B ajustée
+			x: dx,
+			y: dy
 		}
 
 		return spriteBNew
 	}
 
-	// Fonction pour vérifier si deux sprites se chevauchent
+	// Vérifie si deux sprites se chevauchent
 	static checkOverlap(baseSprite, targetSprite) {
-		// Ajuste pour un anchor à 0.5 (le centre du sprite)
 		const halfWidth = targetSprite.width / 2
 		const halfHeight = targetSprite.height / 2
 
@@ -108,6 +92,6 @@ export default class PixiSprite {
 		const isInside = baseSprite.x >= -halfWidth + targetSprite.x && baseSprite.x <= halfWidth + targetSprite.x &&
 			baseSprite.y >= -halfHeight + targetSprite.y && baseSprite.y <= halfHeight + targetSprite.y
 
-		return isInside
+		return isInside // Retourne true si overlap, false sinon
 	}
 }

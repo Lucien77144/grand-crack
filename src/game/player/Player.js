@@ -10,107 +10,109 @@ import recipes from "@/game/recipe/recipes.json"
 
 export default class Player {
 	constructor(id) {
-		//Global
+		// Initialisation du joueur avec son identifiant
 		this.id = id
-		this.tl = new TextureLoader()
-		this.textureData = this.tl.assetArray[ `cursor${ id }` ]
-		this.game = new Game()
+		this.tl = new TextureLoader() // Charge les textures du joueur
+		this.textureData = this.tl.assetArray[ `cursor${ id }` ] // Récupère la texture spécifique au joueur
+		this.game = new Game() // Instance du jeu associée au joueur
 
-		//Behaviours
-		this.canMove = true
-		this.ingredientHold = null
-		this.distIngredient = null
-		this.allowGrab = true
-		this.oxygen = 100
+		// Comportements par défaut du joueur
+		this.canMove = true // Le joueur peut se déplacer
+		this.ingredientHold = null // L'ingrédient actuellement tenu par le joueur
+		this.distIngredient = null // Distance relative de l'ingrédient tenu
+		this.allowGrab = true // Le joueur peut attraper des objets
+		this.oxygen = 100 // Niveau d'oxygène du joueur
 
-		// Variables pour l'accélération et la vélocité
-		this.inputSet = new InputSet(id)
-		this.acceleration = 0 // Accélération initiale
-		this.maxVelocity = 10 * window.innerWidth * 0.00075 // Vélocité maximale
+		// Variables liées à la physique du joueur (accélération et vélocité)
+		this.inputSet = new InputSet(id) // Système d'input (manette, clavier)
+		this.acceleration = 0 // Accélération initiale du joueur
+		this.maxVelocity = 10 * window.innerWidth * 0.00075 // Vélocité maximale en fonction de la largeur de l'écran
 		this.maxAcceleration = 0.5 * window.innerWidth * 0.00075 // Accélération maximale
-		this.decelerationRate = 0.05 // Taux de décélération
-		this.joystickActive = false // Indicateur si le joystick est en mouvement
-		this.xDif = 0
-		this.yDif = 0
+		this.decelerationRate = 0.05 // Taux de décélération lorsque le joueur arrête de se déplacer
+		this.joystickActive = false // Indique si le joystick est en mouvement
+		this.xDif = 0 // Différence en X calculée pour le mouvement
+		this.yDif = 0 // Différence en Y calculée pour le mouvement
 
-		this.canvas = this.game.canvas
+		this.canvas = this.game.canvas // Accès au canvas du jeu
 
-		this.initPixiSprite()
-		this.setRandomRecipe()
+		this.initPixiSprite() // Initialisation du sprite Pixi.js associé au joueur
+		this.setRandomRecipe() // Attribution d'une recette aléatoire au joueur
 	}
 
 	setRandomRecipe() {
+		// Sélectionne une recette aléatoire pour le joueur
 		const randomIndex = Math.floor(Math.random() * recipes.length)
-		this.recipe = recipes[ randomIndex ]
+		this.recipe = recipes[randomIndex]
 		return this.recipe
 	}
 
 	initPixiSprite() {
+		// Initialisation du sprite Pixi.js avec sa position, taille et animation
 		this.pixiSprite = new PixiSprite(
 			{
+				//TODO: Faire en sorte que la position des joueurs soit défini à des positions de départ fixe
 				x: this.id === 1 ? this.canvas.offsetWidth / 2 - this.canvas.offsetWidth * 0.1 : this.canvas.offsetWidth / 2 + this.canvas.offsetWidth * 0.1,
 				y: 200,
-				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.0005,
-				animationName: `cursor${ this.id }`,
-				anchor: [ 0.5, 0.5 ],
-				zIndex: 4
+				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.0005, // Taille du sprite ajustée selon la largeur de l'écran
+				animationName: `cursor${ this.id }`, // Animation liée à l'id du joueur
+				anchor: [0.5, 0.5], // Centre le sprite
+				zIndex: 4 // Assure que le sprite est au-dessus des autres éléments
 			},
-			this.textureData
+			this.textureData // Texture chargée pour le sprite
 		)
 	}
 
-	// Fonction appelée quand il y a un mouvement du joystick
 	joystickEvent(e) {
+		// Gestion des événements de joystick
 		let xInput = e.position.x
 		let yInput = e.position.y
 		console.log(e.position)
 
-
 		if (this.pixiSprite && this.canMove && xInput !== 0 && yInput !== 0) {
-			this.joystickActive = true // On active le joystick
-			// Applique l'accélération tant que le joystick est en mouvement
+			this.joystickActive = true // Active le joystick
+			// Augmente l'accélération tant que le joystick est actif
 			this.acceleration = Math.min(this.acceleration + this.maxAcceleration, this.maxVelocity)
 
+			// Calcule les différences en X et Y selon l'accélération et l'input du joystick
 			this.xDif = this.acceleration * xInput
 			this.yDif = this.acceleration * yInput
 		} else {
-			this.joystickActive = false // On active le joystick
+			this.joystickActive = false // Désactive le joystick si aucun mouvement
 			this.xDif = 0
 			this.yDif = 0
 		}
 	}
 
-	// Mise à jour régulière
 	update(dt, t) {
-		// Gestion de l'oxygène (cela reste inchangé)
-		this.addOxygen(-dt * 0.007)
-		this.updateSpeed()
-		this.updateGrab()
+		// Mise à jour principale du joueur (appelée à chaque frame)
+		this.addOxygen(-dt * 0.007) // Réduit l'oxygène au fil du temps
+		this.updateSpeed() // Met à jour la vitesse et la position du joueur
+		this.updateGrab() // Met à jour la position de l'ingrédient tenu
 
 		if (this.oxygen <= 1) {
+			// Si l'oxygène atteint 0, le jeu se termine
 			store.isGameOver = true
-			this.oxygen = 100
+			this.oxygen = 100 // Remise à 100 pour une potentielle réinitialisation
 		}
 	}
 
 	updateSpeed() {
-		// Si le joystick n'est pas actif, on décélère
+		// Gestion de la décélération lorsque le joystick n'est plus actif
 		if (!this.joystickActive && this.acceleration > 0) {
-			this.acceleration = Math.max(this.acceleration - this.decelerationRate, 0)
+			this.acceleration = Math.max(this.acceleration - this.decelerationRate, 0) // Réduit l'accélération progressivement
 		}
 
-		// Quand le joystick est relâché (position neutre), on arrête la vélocité
+		// Gestion de la vélocité quand le joystick est relâché
 		if (this.joystickActive && this.acceleration === 0) {
-			this.velocity = 0
+			this.velocity = 0 // Vélocité à zéro quand le joystick est inactif
 		}
 
-		// On remet l'indicateur à false pour le prochain cycle
-		this.joystickActive = false
+		// Ajoute la différence de position calculée au sprite
 		this.pixiSprite.addVecPos(this.xDif, -this.yDif)
 	}
 
 	updateGrab() {
-		// Gère le holding d'ingrédient
+		// Mise à jour de la position de l'ingrédient si un ingrédient est tenu
 		if (this.ingredientHold) {
 			this.ingredientHold.pixiSprite.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
 			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient.y
@@ -118,67 +120,71 @@ export default class Player {
 	}
 
 	updateSpriteFrame(isGrab) {
+		// Met à jour l'animation du sprite selon si un ingrédient est attrapé ou non
 		if (this.pixiSprite) {
 			if (isGrab) {
 				if (this.pixiSprite.sprite.currentFrame !== 1) {
-					this.pixiSprite.sprite.gotoAndStop(1)
+					this.pixiSprite.sprite.gotoAndStop(1) // Change l'animation en mode 'grab'
 				}
 			} else {
 				if (this.pixiSprite.sprite.currentFrame !== 0) {
-					this.pixiSprite.sprite.gotoAndStop(0)
+					this.pixiSprite.sprite.gotoAndStop(0) // Retourne à l'animation par défaut
 				}
 			}
 		}
 	}
 
 	updateAction() {
-		if (store.players && store.players[ this.id - 1 ]) {
-			if (store.players[ this.id - 1 ].action !== this.action) {
-				this.action = store.players[ this.id - 1 ].action
-
-				this.updateSpriteFrame()
+		// Vérifie et met à jour l'action du joueur
+		if (store.players && store.players[this.id - 1]) {
+			if (store.players[this.id - 1].action !== this.action) {
+				this.action = store.players[this.id - 1].action
+				this.updateSpriteFrame() // Met à jour le sprite selon la nouvelle action
 			}
 		}
 	}
 
 	onPlayerInteractCounter(isOut = true) {
+		// Gère l'interaction du joueur avec un compteur (par ex., pour déposer des ingrédients)
 		this.ingredientHold = null
 		this.canMove = isOut
-		this.pixiSprite.sprite.visible = isOut
-		this.allowGrab = isOut
+		this.pixiSprite.sprite.visible = isOut // Cache ou montre le sprite selon l'état
+		this.allowGrab = isOut // Désactive ou active la capacité d'attraper
 	}
 
 	holdIngredient(ingredient) {
+		// Attrape un ingrédient si aucun n'est déjà tenu
 		if (!this.ingredientHold && this.allowGrab) {
 			this.ingredientHold = ingredient
 			const distOffset = PixiSprite.updatePositionWithOffset(
 				this.pixiSprite.sprite, this.ingredientHold.pixiSprite.sprite
 			)
-			this.updateSpriteFrame(true)
-
+			this.updateSpriteFrame(true) // Passe à l'animation 'grab'
 			this.distIngredient = distOffset
-			ingredient.setCanMove(false)
-			this.allowGrab = false
+			ingredient.setCanMove(false) // Désactive le mouvement de l'ingrédient
+			this.allowGrab = false // Empêche d'attraper d'autres ingrédients immédiatement
 		}
 	}
 
 	releaseIngredient() {
+		// Libère l'ingrédient actuellement tenu
 		if (this.ingredientHold && !this.allowGrab) {
-			this.ingredientHold.setCanMove(true)
+			this.ingredientHold.setCanMove(true) // Permet à l'ingrédient de bouger de nouveau
 			this.ingredientHold = null
 			this.distIngredient = null
-			this.updateSpriteFrame(false)
+			this.updateSpriteFrame(false) // Revient à l'animation par défaut
 			setTimeout(() => {
-				this.allowGrab = true
+				this.allowGrab = true // Permet de reprendre un ingrédient après une seconde
 			}, 1000)
 		}
 	}
 
-	// Ajout des listeners d'inputs
+	// Ajout des listeners pour gérer les inputs du joueur
 	addInputsListener() {
-		this.inputSet.addEventJoystick(this.joystickEvent, this)
-		this.inputSet.addEvent("a", this.releaseIngredient, this)
-		this.inputSet.addEvent("w", this.gainOxygen, this)
+		this.inputSet.addEventJoystick(this.joystickEvent, this) // Associe le joystick aux mouvements
+		this.inputSet.addEvent("a", this.releaseIngredient, this) // 'a' pour relâcher un ingrédient
+		this.inputSet.addEvent("w", this.gainOxygen, this) // 'w' pour gagner de l'oxygen
+
 
 		this.inputSet.addEvent("a", () => {
 			if (store.isSplashScreen) {
@@ -228,6 +234,7 @@ export default class Player {
 		this.canMove = canMove
 	}
 
+	//Permet de réinitialisé le joueur au début du jeu
 	reset() {
 		this.oxygen = 100
 		this.canMove = true

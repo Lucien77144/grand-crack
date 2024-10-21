@@ -6,27 +6,31 @@ import { store } from "@/store"
 import { gsap } from "gsap"
 
 export default class Ingredient {
-	#id
-	#name
-	#canMove
-	#action
-	#isCooked
-	#inCooking = false
-	#onPlate = false
-	#speed = .05
-	#nbOfFrames = 0
-	#game
-	#rotation = (Math.random() * 2) - 1
+	// Membres privés
+	#id               // Identifiant unique de l'ingrédient, généré via uuidv4.
+	#name             // Nom de l'ingrédient (lié à sa texture ou animation).
+	#canMove          // Indique si l'ingrédient peut se déplacer.
+	#action           // Action associée à l'ingrédient (peut changer en fonction de l'état).
+	#isCooked         // Indique si l'ingrédient est cuit.
+	#inCooking = false // Indique si l'ingrédient est en cours de cuisson.
+	#onPlate = false   // Indique si l'ingrédient est sur une assiette.
+	#speed = .05       // Vitesse de chute de l'ingrédient sous l'effet de la gravité.
+	#nbOfFrames = 0    // Nombre de frames de l'animation.
+	#game             // Référence au jeu actuel.
+	#rotation = (Math.random() * 2) - 1 // Rotation aléatoire de l'ingrédient pour une animation plus réaliste.
 
-	constructor(
-		ref,
-		name,
-		size,
-		x,
-		canMove = true,
-		action,
-		isCooked = false
-	) {
+	/**
+	 * Constructeur de la classe Ingredient
+	 *
+	 * @param {Object} ref - Référence au conteneur qui gère l'ingrédient.
+	 * @param {String} name - Nom de l'ingrédient (lié à sa texture ou son animation).
+	 * @param {Number} size - Taille de l'ingrédient.
+	 * @param {Number} x - Position initiale en X de l'ingrédient.
+	 * @param {Boolean} canMove - Définit si l'ingrédient peut se déplacer (par défaut true).
+	 * @param {String} action - Action associée à l'ingrédient.
+	 * @param {Boolean} isCooked - Indique si l'ingrédient est déjà cuit (par défaut false).
+	 */
+	constructor(ref, name, size, x, canMove = true, action, isCooked = false) {
 		this.#game = new Game()
 		this.#id = uuidv4()
 		this.#name = name
@@ -43,12 +47,18 @@ export default class Ingredient {
 		this.canvas = this.#game.canvas
 	}
 
-	// Sert à changer la frame de l'animation
+	/**
+	 * Définit la frame spécifique de l'animation de l'ingrédient.
+	 *
+	 * @param {Number} frame - La frame à afficher.
+	 */
 	setAnimatedSpriteFrame(frame) {
 		this.pixiSprite.gotoAndStop(frame)
 	}
 
-	// Initialise le sprite de l'ingrédient
+	/**
+	 * Initialise le sprite de l'ingrédient avec PixiSprite.
+	 */
 	initPixiSprite() {
 		this.pixiSprite = new PixiSprite({
 			x: this.x,
@@ -62,7 +72,9 @@ export default class Ingredient {
 		this.addInputOnA()
 	}
 
-	// Crée l'ingrédient
+	/**
+	 * Crée l'ingrédient en l'ajoutant à sa référence parent.
+	 */
 	create() {
 		try {
 			this.ref.addIngredient(this)
@@ -72,12 +84,20 @@ export default class Ingredient {
 		}
 	}
 
-	// Met à jour l'ingrédient
+	/**
+	 * Met à jour la logique de l'ingrédient (ex: gravité).
+	 *
+	 * @param {Number} dt - Délai entre les mises à jour.
+	 */
 	update(dt) {
 		this.updateGravity(dt)
 	}
 
-	// Met à jour la gravité de l'ingrédient (le fait tomber)
+	/**
+	 * Gère la gravité de l'ingrédient en simulant une chute verticale.
+	 *
+	 * @param {Number} dt - Délai entre les mises à jour.
+	 */
 	updateGravity(dt) {
 		if (this.pixiSprite && this.#canMove && !this.#isCooked && !this.#inCooking) {
 			this.pixiSprite.sprite.position.y += dt * this.#speed * window.innerWidth * 0.00025
@@ -90,7 +110,9 @@ export default class Ingredient {
 		}
 	}
 
-	// Ajoute un input sur la touche A quand on tient l'ingrédient
+	/**
+	 * Ajoute un événement d'input sur la touche 'A' lorsque l'ingrédient est tenu par un joueur.
+	 */
 	addInputOnA() {
 		const inputSet1 = this.#game.player1.inputSet
 		inputSet1.addEvent("a", this.holdIngredient, this)
@@ -99,7 +121,11 @@ export default class Ingredient {
 		inputSet2.addEvent("a", this.holdIngredient, this)
 	}
 
-	// Permet de tenir l'ingrédient
+	/**
+	 * Permet à un joueur de tenir l'ingrédient si les conditions sont remplies.
+	 *
+	 * @param {Object} e - Événement déclenché par un joueur (ex: touche pressée).
+	 */
 	holdIngredient(e) {
 		const player = e.id === 1 ? this.#game.player1 : this.#game.player2
 		if (this.#canMove && !this.#inCooking && !this.#onPlate && this.pixiSprite && this.pixiSprite.sprite) {
@@ -114,7 +140,9 @@ export default class Ingredient {
 		}
 	}
 
-	// Permet de lancer l'animation de sortie d'un ingrédient d'une machine
+	/**
+	 * Lance une animation de sortie de l'ingrédient d'une machine, en le faisant sortir avec une translation vers le haut.
+	 */
 	animOut() {
 		gsap.to(this.pixiSprite.sprite, {
 			y: this.pixiSprite.sprite.y - 100,
@@ -123,27 +151,35 @@ export default class Ingredient {
 		})
 	}
 
-	// Permet de détruire l'ingrédient
+	/**
+	 * Détruit l'ingrédient et supprime son sprite de l'écran.
+	 */
 	destroy() {
 		this.ref.removeIngredient(this)
 		this.pixiSprite.sprite.destroy()
 		this.pixiSprite = null
 	}
 
-	// Permet de gérer l'ingrédient lorsqu'il est sur une machine
+	/**
+	 * Indique que l'ingrédient est en interaction avec une machine (ex: en cours de cuisson).
+	 */
 	onInteractionCounterIn() {
 		this.pixiSprite.sprite.visible = false
 		this.setInCooking(true)
 		this.setCanMove(false)
 	}
 
-	// Permet de gérer l'ingrédient lorsqu'il est sur une machine et que la cuisson est terminée
+	/**
+	 * Indique que l'interaction avec une machine est terminée et remet l'ingrédient en état normal.
+	 */
 	onInteractionCounterEnd() {
 		this.pixiSprite.sprite.visible = true
 		this.setInCooking(false)
 		this.setCanMove(true)
 		this.setIsCooked(true)
 	}
+
+	// Getters et Setters pour manipuler les membres privés
 
 	getId() {
 		return this.#id
