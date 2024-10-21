@@ -1,27 +1,23 @@
-import { Howl } from "howler";
+import { Howl } from "howler"
 
 /**
  * Classe SoundManager - Gère les sons du jeu avec la bibliothèque Howler.
  */
 export default class SoundManager {
-	static instance;
-	isPlaying = null; // Indique si un son est en cours de lecture.
-	hasStarted = null; // Indique si la lecture des sons a commencé.
-	soundsList = null; // Contient la liste des sons chargés.
-	currentSound = null; // Référence au son actuellement en cours de lecture.
+	static instance
+	isPlaying = null
+	hasStarted = null
+	soundsList = null
+	currentSound = null
 
-	/**
-	 * Constructeur de la classe SoundManager.
-	 * Utilise un singleton pour s'assurer qu'une seule instance de SoundManager existe.
-	 */
 	constructor() {
 		if (SoundManager.instance) {
-			return SoundManager.instance; // Retourne l'instance existante si elle a déjà été créée.
+			return SoundManager.instance
 		}
-		this.hasStarted = false;
-		const snds = this.loadSounds(); // Charge les sons dans la liste.
+		this.hasStarted = false
+		this.loadSounds()
 
-		SoundManager.instance = this; // Définit l'instance de singleton.
+		SoundManager.instance = this
 	}
 
 	/**
@@ -34,15 +30,14 @@ export default class SoundManager {
 	async startXp(key, volume = 0.5, animationStart = null) {
 		// Vérifie si la lecture a déjà démarré
 		if (!this.hasStarted) {
-			this.hasStarted = true;
-			this.soundsList[key].volume(0); // Démarre le son avec un volume à 0.
-			this.soundsList[key].play(); // Joue le son.
-			this.soundsList[key].fade(0, volume, 500); // Applique un fondu jusqu'au volume souhaité.
-			console.log(this.soundsList[key], "start");
-			this.currentSound = this.soundsList[key]; // Stocke le son actuellement joué.
-			this.isPlaying = true;
+			this.hasStarted = true
+			this.soundsList[ key ].volume(0)
+			this.soundsList[ key ].play()
+			this.soundsList[ key ].fade(0, volume, 500)
+			this.currentSound = this.soundsList[ key ] // Stocke le son actuellement joué.
+			this.isPlaying = true
 			if (animationStart) {
-				animationStart(); // Lance l'animation de démarrage si spécifiée.
+				animationStart() // Lance l'animation de démarrage si spécifiée.
 			}
 		}
 	}
@@ -54,16 +49,16 @@ export default class SoundManager {
 	 */
 	transitionMusic(room) {
 		if (this.currentSound) {
-			this.currentSound.fade(0.1, 0, 1000); // Applique un fondu pour réduire le volume.
-			this.currentSound.stop(); // Arrête le son actuel après le fondu.
+			this.currentSound.fade(0.1, 0, 1000)
+			this.currentSound.stop()
 		}
 
-		if (this.soundsList[room]) {
-			this.soundsList[room].play(); // Joue le son de la nouvelle pièce.
+		if (this.soundsList[ room ]) {
+			this.soundsList[ room ].play()
 			if (this.isPlaying) {
-				this.soundsList[room].fade(0, 0.1, 1000); // Applique un fondu pour introduire le nouveau son.
+				this.soundsList[ room ].fade(0, 0.1, 1000)
 			}
-			this.currentSound.current = this.soundsList[room]; // Met à jour le son actuellement joué.
+			this.currentSound.current = this.soundsList[ room ] // Met à jour le son actuellement joué.
 		}
 	}
 
@@ -76,17 +71,17 @@ export default class SoundManager {
 	toggleSound(animationStop, animationStart) {
 		if (this.soundsList) {
 			if (this.isPlaying) {
-				for (const [key, value] of Object.entries(this.soundsList)) {
-					this.soundsList[key].fade(0.1, 0, 500); // Diminue progressivement le volume des sons.
+				for (const [ key, value ] of Object.entries(this.soundsList)) {
+					this.soundsList[ key ].fade(0.1, 0, 500)
 				}
-				animationStop(); // Exécute l'animation d'arrêt.
+				animationStop()
 			} else {
-				animationStart(); // Exécute l'animation de démarrage.
-				for (const [key, value] of Object.entries(this.soundsList)) {
-					this.soundsList[key].fade(0, 0.1, 500); // Augmente progressivement le volume des sons.
+				animationStart()
+				for (const [ key, value ] of Object.entries(this.soundsList)) {
+					this.soundsList[ key ].fade(0, 0.1, 500)
 				}
 			}
-			this.isPlaying = !this.isPlaying; // Inverse l'état de lecture des sons.
+			this.isPlaying = !this.isPlaying // Inverse l'état de lecture des sons.
 		}
 	}
 
@@ -97,10 +92,10 @@ export default class SoundManager {
 	 * @param {number} volume - Le volume auquel jouer le son (par défaut 0.15).
 	 */
 	playSingleSound(sound, volume = 0.15) {
-		if (this.soundsList && this.isPlaying && this.soundsList[sound]) {
-			console.log(sound, "test");
-			this.soundsList[sound].volume(volume); // Définit le volume du son.
-			this.soundsList[sound].play(); // Joue le son.
+		if (this.soundsList && this.isPlaying && this.soundsList[ sound ]) {
+			console.log(sound, "test")
+			this.soundsList[ sound ].volume(volume) // Définit le volume du son.
+			this.soundsList[ sound ].play() // Joue le son.
 		}
 	}
 
@@ -110,9 +105,9 @@ export default class SoundManager {
 	 * @param {string} sound - Clé du son à arrêter.
 	 */
 	stopSingleSound(sound) {
-		if (this.soundsList && this.isPlaying && this.soundsList[sound]) {
-			this.soundsList[sound].fade(this.soundsList[sound]._volume, 0, 1000); // Diminue progressivement le volume avant d'arrêter.
-			this.soundsList[sound].stop(); // Arrête le son.
+		if (this.soundsList && this.isPlaying && this.soundsList[ sound ]) {
+			this.soundsList[ sound ].fade(this.soundsList[ sound ]._volume, 0, 1000)
+			this.soundsList[ sound ].stop()
 		}
 	}
 
@@ -120,7 +115,7 @@ export default class SoundManager {
 	 * Charge les sons nécessaires au jeu et les stocke dans une liste.
 	 */
 	async loadSounds() {
-		const tmp = {};
+		const tmp = {}
 
 		/**
 		 * Fonction utilitaire pour charger un son.
@@ -131,12 +126,12 @@ export default class SoundManager {
 		 * @param {boolean} loop - Si le son doit boucler ou non.
 		 */
 		const loadAudio = async (key, src, volume, loop = false) => {
-			tmp[key] = new Howl({
-				src: [src], // Chemin du fichier audio.
-				loop: loop, // Détermine si le son doit boucler.
-				volume: volume, // Volume initial du son.
-			});
-		};
+			tmp[ key ] = new Howl({
+				src: [ src ],
+				loop: loop,
+				volume: volume,
+			})
+		}
 
 		// Chargement des sons dans la liste.
 		await Promise.all([
@@ -148,8 +143,8 @@ export default class SoundManager {
 			loadAudio("mixing", "/assets/sounds/mixing.mp3", 0, true),
 			loadAudio("bake", "/assets/sounds/bake.mp3", 0, false),
 			loadAudio("recipeComplete", "/assets/sounds/recipeComplete.mp3", 0, false),
-		]);
+		])
 
-		this.soundsList = tmp; // Assigne la liste temporaire des sons à la liste de la classe.
+		this.soundsList = tmp // Assigne la liste temporaire des sons à la liste de la classe.
 	}
 }

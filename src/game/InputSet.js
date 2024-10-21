@@ -10,8 +10,7 @@ export default class InputSet {
 	 * @param {number} idPlayer - L'identifiant du joueur (1 ou 2).
 	 */
 	constructor(idPlayer) {
-		this.idPlayer = idPlayer // Identifiant du joueur (1 pour le premier joueur, 2 pour le deuxième).
-		// Définit le joueur courant en fonction de l'ID passé en paramètre.
+		this.idPlayer = idPlayer
 		this.currentPlayer = idPlayer === 1 ? InputSet.player1 : InputSet.player2
 	}
 
@@ -51,19 +50,13 @@ export default class InputSet {
 		this.currentPlayer.addEventListener("joystick:move", callback.bind(context)) // Écoute les mouvements du joystick.
 	}
 
-	/**
-	 * Simule les entrées clavier pour les deux joueurs.
-	 * Enregistre les touches pour chaque joueur avec des groupes distincts.
-	 */
 	static emulateKeyboard() {
-		// Groupe de touches pour le premier joueur
 		Axis.registerKeys("a", "a", 1)
 		Axis.registerKeys("z", "x", 1)
 		Axis.registerKeys("e", "i", 1)
 		Axis.registerKeys("r", "s", 1)
 		Axis.registerKeys("t", "w", 1)
 
-		// Groupe de touches pour le deuxième joueur
 		Axis.registerKeys("u", "a", 2)
 		Axis.registerKeys("i", "x", 2)
 		Axis.registerKeys("o", "i", 2)
@@ -71,30 +64,22 @@ export default class InputSet {
 		Axis.registerKeys("^", "w", 2)
 	}
 
-	/**
-	 * Simule l'utilisation de manettes de jeu pour les deux joueurs et mappe leurs boutons.
-	 * Cette méthode crée des émulateurs de manette et associe les boutons à des actions spécifiques.
-	 */
 	static emulateGamePad() {
-		// Émulateurs de manette pour les deux joueurs
-		InputSet.gamepadEmulatorPlayer1 = Axis.createGamepadEmulator(0) // Crée un émulateur pour la première manette (index 0).
-		InputSet.gamepadEmulatorPlayer2 = Axis.createGamepadEmulator(1) // Crée un émulateur pour la deuxième manette (index 1).
+		InputSet.gamepadEmulatorPlayer1 = Axis.createGamepadEmulator(0)
+		InputSet.gamepadEmulatorPlayer2 = Axis.createGamepadEmulator(1)
 
-		// Associe les joysticks des manettes émulateurs
-		Axis.joystick1.setGamepadEmulatorJoystick(InputSet.gamepadEmulatorPlayer1, 0) // Associe le premier joystick de la manette 1.
-		Axis.joystick2.setGamepadEmulatorJoystick(InputSet.gamepadEmulatorPlayer2, 0) // Associe le premier joystick de la manette 2.
+		Axis.joystick1.setGamepadEmulatorJoystick(InputSet.gamepadEmulatorPlayer1, 0)
+		Axis.joystick2.setGamepadEmulatorJoystick(InputSet.gamepadEmulatorPlayer2, 0)
 
-		// Mappe les boutons de la manette du joueur 1
-		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer1, 0, "a", 1) // Bouton X (PS4) associé à "a".
-		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer1, 1, "x", 1) // Bouton Carré (PS4) associé à "x".
-		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer1, 2, "i", 1) // Bouton Rond (PS4) associé à "i".
-		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer1, 3, "s", 1) // Bouton Triangle (PS4) associé à "s".
+		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer1, 0, "a", 1)
+		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer1, 1, "x", 1)
+		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer1, 2, "i", 1)
+		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer1, 3, "s", 1)
 
-		// Mappe les boutons de la manette du joueur 2
-		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer2, 0, "a", 1) // Bouton X (PS4) associé à "a".
-		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer2, 1, "x", 1) // Bouton Carré (PS4) associé à "x".
-		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer2, 2, "i", 1) // Bouton Rond (PS4) associé à "i".
-		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer2, 3, "s", 1) // Bouton Triangle (PS4) associé à "s".
+		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer2, 0, "a", 1)
+		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer2, 1, "x", 1)
+		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer2, 2, "i", 1)
+		Axis.registerGamepadEmulatorKeys(InputSet.gamepadEmulatorPlayer2, 3, "s", 1)
 	}
 
 	/**

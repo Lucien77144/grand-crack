@@ -4,15 +4,15 @@ import PixiApplication from "@/game/pixi/PixiApplication" // Import de l'applica
 
 export default class PixiSprite {
 	constructor({
-					x = 0,
-					y = 0,
-					size = 1,
-					anchor = [0.5, 0.5],
-					animationName = "",
-					zIndex = 0
-				} = {},
-				textureData) {
-		this.textureData = textureData // Données de texture pour le sprite
+		x = 0,
+		y = 0,
+		size = 1,
+		anchor = [ 0.5, 0.5 ],
+		animationName = "",
+		zIndex = 0
+	} = {},
+	textureData) {
+		this.textureData = textureData
 		this.atlasId = uuidv4() // Identifiant unique pour le sprite
 
 		// Propriétés de position, taille, ancre, animation, et zIndex
@@ -27,12 +27,12 @@ export default class PixiSprite {
 	}
 
 	init() {
-		const pixiApplication = new PixiApplication() // Crée une nouvelle instance de PixiApplication
+		const pixiApplication = new PixiApplication()
 
 		// Crée un AnimatedSprite si des données d'atlas sont fournies
 		if (this.textureData.sheet) {
 			this.sprite = new AnimatedSprite(
-				this.textureData.sheet.animations[this.animationName]
+				this.textureData.sheet.animations[ this.animationName ]
 			)
 		} else {
 			// Sinon, crée un Sprite simple
@@ -46,20 +46,18 @@ export default class PixiSprite {
 		this.sprite.scale = this.size
 		this.sprite.zIndex = this.zIndex
 
-		pixiApplication.appendToStage(this.sprite) // Ajoute le sprite à la scène Pixi
+		pixiApplication.appendToStage(this.sprite)
 	}
 
 	update(dt, t) {
-		// Méthode pour mettre à jour le sprite à chaque frame (vide ici, à personnaliser)
+		// ...
 	}
 
 	setSpritePos(nextPos) {
-		// Définit la position du sprite
 		this.sprite.position.set(nextPos.x, nextPos.y)
 	}
 
 	addVecPos(x, y) {
-		// Ajoute un vecteur à la position actuelle du sprite
 		this.sprite.x += x
 		this.sprite.y += y
 	}
@@ -69,10 +67,9 @@ export default class PixiSprite {
 		this.sprite.rotation = nextRotation
 	}
 
-	// Met à jour la position d'un sprite par rapport à un autre avec un offset
 	static updatePositionWithOffset(spriteA, spriteB) {
-		const dx = spriteB.x - spriteA.x // Différence sur l'axe x
-		const dy = spriteB.y - spriteA.y // Différence sur l'axe y
+		const dx = spriteB.x - spriteA.x
+		const dy = spriteB.y - spriteA.y
 
 		// Retourne la nouvelle position ajustée
 		const spriteBNew = {

@@ -10,30 +10,29 @@ import recipes from "@/game/recipe/recipes.json"
 
 export default class Player {
 	constructor(id) {
-		// Initialisation du joueur avec son identifiant
 		this.id = id
-		this.tl = new TextureLoader() // Charge les textures du joueur
-		this.textureData = this.tl.assetArray[ `cursor${ id }` ] // Récupère la texture spécifique au joueur
-		this.game = new Game() // Instance du jeu associée au joueur
+		this.tl = new TextureLoader()
+		this.textureData = this.tl.assetArray[ `cursor${ id }` ]
+		this.game = new Game()
 
 		// Comportements par défaut du joueur
-		this.canMove = true // Le joueur peut se déplacer
-		this.ingredientHold = null // L'ingrédient actuellement tenu par le joueur
-		this.distIngredient = null // Distance relative de l'ingrédient tenu
-		this.allowGrab = true // Le joueur peut attraper des objets
-		this.oxygen = 100 // Niveau d'oxygène du joueur
+		this.canMove = true
+		this.ingredientHold = null
+		this.distIngredient = null
+		this.allowGrab = true
+		this.oxygen = 100
 
 		// Variables liées à la physique du joueur (accélération et vélocité)
-		this.inputSet = new InputSet(id) // Système d'input (manette, clavier)
-		this.acceleration = 0 // Accélération initiale du joueur
-		this.maxVelocity = 10 * window.innerWidth * 0.00075 // Vélocité maximale en fonction de la largeur de l'écran
-		this.maxAcceleration = 0.5 * window.innerWidth * 0.00075 // Accélération maximale
-		this.decelerationRate = 0.05 // Taux de décélération lorsque le joueur arrête de se déplacer
-		this.joystickActive = false // Indique si le joystick est en mouvement
-		this.xDif = 0 // Différence en X calculée pour le mouvement
-		this.yDif = 0 // Différence en Y calculée pour le mouvement
+		this.inputSet = new InputSet(id)
+		this.acceleration = 0
+		this.maxVelocity = 10 * window.innerWidth * 0.00075
+		this.maxAcceleration = 0.5 * window.innerWidth * 0.00075
+		this.decelerationRate = 0.05
+		this.joystickActive = false
+		this.xDif = 0
+		this.yDif = 0
 
-		this.canvas = this.game.canvas // Accès au canvas du jeu
+		this.canvas = this.game.canvas
 
 		this.initPixiSprite() // Initialisation du sprite Pixi.js associé au joueur
 		this.setRandomRecipe() // Attribution d'une recette aléatoire au joueur
@@ -42,7 +41,7 @@ export default class Player {
 	setRandomRecipe() {
 		// Sélectionne une recette aléatoire pour le joueur
 		const randomIndex = Math.floor(Math.random() * recipes.length)
-		this.recipe = recipes[randomIndex]
+		this.recipe = recipes[ randomIndex ]
 		return this.recipe
 	}
 
@@ -50,13 +49,13 @@ export default class Player {
 		// Initialisation du sprite Pixi.js avec sa position, taille et animation
 		this.pixiSprite = new PixiSprite(
 			{
-				//TODO: Faire en sorte que la position des joueurs soit défini à des positions de départ fixe
+				// TODO: Faire en sorte que la position des joueurs soit définie à des positions de départ fixes
 				x: this.id === 1 ? this.canvas.offsetWidth / 2 - this.canvas.offsetWidth * 0.1 : this.canvas.offsetWidth / 2 + this.canvas.offsetWidth * 0.1,
 				y: 200,
 				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.0005, // Taille du sprite ajustée selon la largeur de l'écran
 				animationName: `cursor${ this.id }`, // Animation liée à l'id du joueur
-				anchor: [0.5, 0.5], // Centre le sprite
-				zIndex: 4 // Assure que le sprite est au-dessus des autres éléments
+				anchor: [ 0.5, 0.5 ], // Centre le sprite
+				zIndex: 4
 			},
 			this.textureData // Texture chargée pour le sprite
 		)
@@ -136,9 +135,9 @@ export default class Player {
 
 	updateAction() {
 		// Vérifie et met à jour l'action du joueur
-		if (store.players && store.players[this.id - 1]) {
-			if (store.players[this.id - 1].action !== this.action) {
-				this.action = store.players[this.id - 1].action
+		if (store.players && store.players[ this.id - 1 ]) {
+			if (store.players[ this.id - 1 ].action !== this.action) {
+				this.action = store.players[ this.id - 1 ].action
 				this.updateSpriteFrame() // Met à jour le sprite selon la nouvelle action
 			}
 		}
@@ -192,6 +191,7 @@ export default class Player {
 				this.game.soundManager.startXp("music", .25)
 			}
 
+			// TODO!! - le reload() est un hard reload du navigateur, il faut plutôt reset la partie
 			if (store.isGameOver) {
 				setTimeout(() => {
 					window.location.reload()
@@ -201,7 +201,7 @@ export default class Player {
 			}
 		})
 
-		// HACK - Just for debug with keyboard
+		// HACK - Ces events permettent de debug / tester en local
 		// this.inputSet.addEvent("x", this.eventInputX, this)
 		// this.inputSet.addEvent("i", this.eventInputI, this)
 		// this.inputSet.addEvent("s", this.eventInputS, this)
@@ -234,7 +234,7 @@ export default class Player {
 		this.canMove = canMove
 	}
 
-	//Permet de réinitialisé le joueur au début du jeu
+	// Permet de réinitialiser le joueur au début du jeu
 	reset() {
 		this.oxygen = 100
 		this.canMove = true

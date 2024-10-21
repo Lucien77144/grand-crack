@@ -1,19 +1,19 @@
-import { CookingStation } from "./CookingStation" // Importe la classe CookingStation comme classe parente
-import InputSet from "@/game/InputSet" // Importe la classe InputSet pour gérer les entrées des joueurs
+import { CookingStation } from "./CookingStation"
+import InputSet from "@/game/InputSet"
 
 export class Mixer extends CookingStation {
 	// Propriétés de la classe
 	inMixer = false
-	checkpoints = [0, 0, 0, 0] // Points de contrôle pour suivre le progrès
+	checkpoints = [ 0, 0, 0, 0 ] // Points de contrôle pour suivre le progrès
 	progress = 0 // Progrès de l'utilisateur dans le mélange
-	nbRevolution = 4 // Nombre de révolutions requis
+	nbRevolution = 4 // Nombre de tours requis
 	lastCheckPoint = 4 // Dernier point de contrôle atteint
-	soundPlayed = false // Indique si le son est déjà joué
-	thresholdIntensity = 0.5 // Intensité minimale pour les entrées
+	soundPlayed = false
+	thresholdIntensity = 0.5 // Intensité minimale pour les joysticks
 
 	constructor({ ...props }) {
-		super({ ...props }) // Appelle le constructeur de CookingStation
-		this.addInputCounterIn() // Ajoute les événements d'entrée
+		super({ ...props })
+		this.addInputCounterIn()
 	}
 
 	// Méthode pour gérer les événements du joystick
@@ -37,28 +37,28 @@ export class Mixer extends CookingStation {
 			if (this.checkCP1(xInput, yInput) && hasMinYIntensity) {
 				if (idx === 0 && this.lastCheckPoint === 4) {
 					this.progress++
-					this.checkpoints[idx]++
+					this.checkpoints[ idx ]++
 					this.pixiSprite.sprite.gotoAndStop(1) // Change l'animation
 				}
 				this.lastCheckPoint = 1
 			} else if (this.checkCP2(xInput, yInput) && hasMinXIntensity) {
 				if (idx === 1 && this.lastCheckPoint === 1) {
 					this.progress++
-					this.checkpoints[idx]++
+					this.checkpoints[ idx ]++
 					this.pixiSprite.sprite.gotoAndStop(2)
 				}
 				this.lastCheckPoint = 2
 			} else if (this.checkCP3(xInput, yInput) && hasMinYIntensity) {
 				if (idx === 2 && this.lastCheckPoint === 2) {
 					this.progress++
-					this.checkpoints[idx]++
+					this.checkpoints[ idx ]++
 					this.pixiSprite.sprite.gotoAndStop(3)
 				}
 				this.lastCheckPoint = 3
 			} else if (this.checkCP4(xInput, yInput) && hasMinXIntensity) {
 				if (idx === 3 && this.lastCheckPoint === 3) {
 					this.progress++
-					this.checkpoints[idx]++
+					this.checkpoints[ idx ]++
 					this.pixiSprite.sprite.gotoAndStop(4)
 				}
 				this.lastCheckPoint = 4
@@ -96,7 +96,7 @@ export class Mixer extends CookingStation {
 		this.ingredient = null
 		this.progress = 0
 		this.lastCheckPoint = 4
-		this.checkpoints = [0, 0, 0, 0] // Réinitialise les checkpoints
+		this.checkpoints = [ 0, 0, 0, 0 ] // Réinitialise les checkpoints
 	}
 
 	// Méthodes pour vérifier les points de contrôle
@@ -141,7 +141,6 @@ export class Mixer extends CookingStation {
 			this.player = player
 			this.ingredient = ingredient
 			this.inMixer = true
-			console.log("dans le mixer") // Log pour débugger
 
 			// Supprime la première image de l'animation
 			this.ogAnim = this.pixiSprite.textureData.sheet.animations.mixer
@@ -154,11 +153,11 @@ export class Mixer extends CookingStation {
 	// Ajoute les événements d'entrée pour les joueurs
 	addInputCounterIn() {
 		const inputSet1 = this.game.player1.inputSet
-		inputSet1.addEvent("x", this.onPressButtonInteract, this) // Ajoute l'événement pour le bouton
-		inputSet1.addEventJoystick(this.joystickEvent, this) // Ajoute l'événement pour le joystick
+		inputSet1.addEvent("x", this.onPressButtonInteract, this)
+		inputSet1.addEventJoystick(this.joystickEvent, this)
 
 		const inputSet2 = this.game.player2.inputSet
-		inputSet2.addEvent("x", this.onPressButtonInteract, this) // Ajoute l'événement pour le bouton
-		inputSet2.addEventJoystick(this.joystickEvent, this) // Ajoute l'événement pour le joystick
+		inputSet2.addEvent("x", this.onPressButtonInteract, this)
+		inputSet2.addEventJoystick(this.joystickEvent, this)
 	}
 }

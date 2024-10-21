@@ -30,7 +30,10 @@ export default class IngredientManager {
 	 * Les ingrédients manquants sont ceux qui n'ont pas encore atteint leur quantité cible.
 	 */
 
-	//TODO: A optimisé !!
+	// TODO!! À optimiser ! Boucles imbriquées, il y a trop d'appels de fonctions
+	// TODO! - Faire une fonction qui sert à faire apparaître un ingrédient aléatoirement et une avec callback qui appelle la première
+
+	// Sert à faire apparaître un ingrédient aléatoirement en fonction des ingrédients manquants
 	async spawnIngredient() {
 		const currentTime = Date.now()
 

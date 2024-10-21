@@ -7,16 +7,16 @@ import { gsap } from "gsap"
 
 export default class Ingredient {
 	// Membres privés
-	#id               // Identifiant unique de l'ingrédient, généré via uuidv4.
-	#name             // Nom de l'ingrédient (lié à sa texture ou animation).
-	#canMove          // Indique si l'ingrédient peut se déplacer.
-	#action           // Action associée à l'ingrédient (peut changer en fonction de l'état).
-	#isCooked         // Indique si l'ingrédient est cuit.
+	#id // Identifiant unique de l'ingrédient, généré via uuidv4.
+	#name // Nom de l'ingrédient (lié à sa texture ou animation).
+	#canMove // Indique si l'ingrédient peut se déplacer.
+	#action // Action associée à l'ingrédient (peut changer en fonction de l'état).
+	#isCooked // Indique si l'ingrédient est cuit.
 	#inCooking = false // Indique si l'ingrédient est en cours de cuisson.
-	#onPlate = false   // Indique si l'ingrédient est sur une assiette.
-	#speed = .05       // Vitesse de chute de l'ingrédient sous l'effet de la gravité.
-	#nbOfFrames = 0    // Nombre de frames de l'animation.
-	#game             // Référence au jeu actuel.
+	#onPlate = false // Indique si l'ingrédient est sur une assiette.
+	#speed = .05 // Vitesse de chute de l'ingrédient sous l'effet de la gravité.
+	#nbOfFrames = 0 // Nombre de frames de l'animation.
+	#game // Référence au jeu actuel.
 	#rotation = (Math.random() * 2) - 1 // Rotation aléatoire de l'ingrédient pour une animation plus réaliste.
 
 	/**
