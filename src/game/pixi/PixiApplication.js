@@ -1,5 +1,7 @@
 import * as PIXI from "pixi.js"
 import {ZoomBlurFilter} from "pixi-filters";
+import Axis from "axis-api";
+import {lerp} from "@/utils/maths";
 
 export default class PixiApplication {
 	static instance
@@ -36,13 +38,28 @@ export default class PixiApplication {
 
 		const filter = new ZoomBlurFilter({
 			strength: 0.01,
+			center: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
 		})
 
 		 this.app.stage.filters = [filter ]
+		let targetStrength = 0
 
+		const buttonA = Axis.buttonManager.getButton("w", 1) // Récupère le bouton en fonction de la touche et de l'ID du joueur.
+		buttonA.addEventListener("keydown", () => {
+			targetStrength = 0
+		})
+		const buttonB = Axis.buttonManager.getButton("w", 2) // Récupère le bouton en fonction de la touche et de l'ID du joueur.
+		buttonB.addEventListener("keydown", () => {
+			targetStrength = 0
+		})
+		let latestTime = 0
 		const update = () => {
 
-			filter.strength = (Math.sin(Date.now() * 0.0001) + 0.5) * 0.1
+			const currentTime = performance.now()
+			const delta = currentTime - latestTime
+			targetStrength += 0.00001 * delta
+			filter.strength = lerp(filter.strength, targetStrength, 0.001 * delta)
+			latestTime = currentTime
 			requestAnimationFrame(update)
 		}
 		update()
