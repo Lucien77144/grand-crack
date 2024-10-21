@@ -8,6 +8,7 @@ export class Mixer extends CookingStation {
 	nbRevolution = 4
 	lastCheckPoint = 4
 	soundPlayed = false
+	thresholdIntensity = 0.5
 
 	constructor({ ...props }) {
 		super({ ...props })
@@ -95,12 +96,12 @@ export class Mixer extends CookingStation {
 
 	checkCP1(x, y) {
 		const xValid = !this.checkThreshold(x, .25)
-		const yValid = y > 0.75
+		const yValid = y > this.thresholdIntensity
 		return xValid && yValid
 	}
 
 	checkCP2(x, y) {
-		const xValid = x > 0.75
+		const xValid = x > this.thresholdIntensity
 		const yValid = !this.checkThreshold(y, .25)
 
 		return xValid && yValid
@@ -108,13 +109,13 @@ export class Mixer extends CookingStation {
 
 	checkCP3(x, y) {
 		const xValid = !this.checkThreshold(x, .25)
-		const yValid = y < -0.75
+		const yValid = y < -this.thresholdIntensity
 
 		return xValid && yValid
 	}
 
 	checkCP4(x, y) {
-		const xValid = x < -0.75
+		const xValid = x < -this.thresholdIntensity
 		const yValid = !this.checkThreshold(y, .25)
 
 		return xValid && yValid
