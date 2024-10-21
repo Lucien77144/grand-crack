@@ -63,6 +63,8 @@ export default class Player {
 	joystickEvent(e) {
 		let xInput = e.position.x
 		let yInput = e.position.y
+		console.log(e.position)
+
 
 		if (this.pixiSprite && this.canMove && xInput !== 0 && yInput !== 0) {
 			this.joystickActive = true // On active le joystick
