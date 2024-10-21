@@ -9,7 +9,6 @@ const CURSOR_BASE_SIZE = 0.4
 import recipes from "@/game/recipe/recipes.json"
 
 export default class Player {
-
 	constructor(id) {
 		//Global
 		this.id = id
