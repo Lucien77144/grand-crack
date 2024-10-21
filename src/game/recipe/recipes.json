@@ -1,6 +1,7 @@
 [
 	{
 		"name": "recipe1",
+    // TODO! - Enlever "nbOfPlayerHaveCompleted" et utiliser à quel recette le personnage est rendu dans le store (store/index.js)
     "nbOfPlayerHaveCompleted": 0,
     "score": 200,
 		"ingredients": [
