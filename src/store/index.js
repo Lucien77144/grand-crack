@@ -5,7 +5,7 @@ export const store = reactive({
 	isSplashScreen: true,
 	players: [
 		{
-			id: 1,
+			// TODO! - Ajouter une propriété "recipe" qui donnera l'index de la recette en cours
 			name: "Player 1",
 			score: 0,
 			action: null,

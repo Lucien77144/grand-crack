@@ -16,6 +16,8 @@ export default class IngredientManager {
 		this.#recipes = Array.isArray(recipes) ? recipes : [ recipes ]
 	}
 
+	// Sert à faire apparaître un ingrédient aléatoirement en fonction des ingrédients manquants
+	//TODO! - Faire une fonction qui sert à faire apparaître un ingrédient aléatoirement et une avec callback qui appelle la première
 	async spawnIngredient() {
 		const currentTime = Date.now()
 
@@ -44,20 +46,24 @@ export default class IngredientManager {
 		}
 	}
 
+	// Sert à récupérer les ingrédients manquants
 	getMissingIngredients() {
 		return Object.entries(this.#ingredientsToSpawn)
 			.filter(([ name, quantity ]) => (this.#ingredientsSpawned[ name ] || 0) < quantity)
 			.map(([ name, quantity ]) => ({ name, quantity: quantity - (this.#ingredientsSpawned[ name ] || 0) }))
 	}
 
+	// Sert à initialiser les ingrédients
 	init() {
 		this.createIngredients()
 	}
 
+	// Sert à ajouter un ingrédient
 	addIngredient(ingredient) {
 		this.#ingredients.push(ingredient)
 	}
 
+	// Sert à retirer un ingrédient
 	removeIngredient(ingredient) {
 		const id = ingredient.getId()
 		const index = this.#ingredients.findIndex(ing => ing.getId() === id)
@@ -71,6 +77,7 @@ export default class IngredientManager {
 		}
 	}
 
+	// Sert à mettre à jour les ingrédients
 	update(dt) {
 		if (Object.keys(this.#ingredientsToSpawn).length > 0) {
 			this.spawnIngredient()
@@ -113,6 +120,7 @@ export default class IngredientManager {
 		this.updateIngredientsToSpawn()
 	}
 
+	// Sert à mettre à jour les ingrédients à faire apparaître
 	updateIngredientsToSpawn() {
 		this.#ingredientsToSpawn = this.#recipes.reduce((acc, recipe) => {
 			recipe.ingredients.forEach(({ name, quantity }) => {

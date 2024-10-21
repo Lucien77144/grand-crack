@@ -3,7 +3,7 @@ import { Game } from "@/game/Game"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import TextureLoader from "@/game/TextureLoader"
 import { store } from "@/store"
-import {gsap} from "gsap"
+import { gsap } from "gsap"
 
 export default class Ingredient {
 	#id
@@ -43,10 +43,12 @@ export default class Ingredient {
 		this.canvas = this.#game.canvas
 	}
 
+	// Sert à changer la frame de l'animation
 	setAnimatedSpriteFrame(frame) {
 		this.pixiSprite.gotoAndStop(frame)
 	}
 
+	// Initialise le sprite de l'ingrédient
 	initPixiSprite() {
 		this.pixiSprite = new PixiSprite({
 			x: this.x,
@@ -60,6 +62,7 @@ export default class Ingredient {
 		this.addInputOnA()
 	}
 
+	// Crée l'ingrédient
 	create() {
 		try {
 			this.ref.addIngredient(this)
@@ -69,10 +72,12 @@ export default class Ingredient {
 		}
 	}
 
+	// Met à jour l'ingrédient
 	update(dt) {
 		this.updateGravity(dt)
 	}
 
+	// Met à jour la gravité de l'ingrédient (le fait tomber)
 	updateGravity(dt) {
 		if (this.pixiSprite && this.#canMove && !this.#isCooked && !this.#inCooking) {
 			this.pixiSprite.sprite.position.y += dt * this.#speed * window.innerWidth * 0.00025
@@ -85,6 +90,7 @@ export default class Ingredient {
 		}
 	}
 
+	// Ajoute un input sur la touche A quand on tient l'ingrédient
 	addInputOnA() {
 		const inputSet1 = this.#game.player1.inputSet
 		inputSet1.addEvent("a", this.holdIngredient, this)
@@ -93,6 +99,7 @@ export default class Ingredient {
 		inputSet2.addEvent("a", this.holdIngredient, this)
 	}
 
+	// Permet de tenir l'ingrédient
 	holdIngredient(e) {
 		const player = e.id === 1 ? this.#game.player1 : this.#game.player2
 		if (this.#canMove && !this.#inCooking && !this.#onPlate && this.pixiSprite && this.pixiSprite.sprite) {
@@ -107,26 +114,30 @@ export default class Ingredient {
 		}
 	}
 
-	animOut(){
-		gsap.to(this.pixiSprite.sprite,{
+	// Permet de lancer l'animation de sortie d'un ingrédient d'une machine
+	animOut() {
+		gsap.to(this.pixiSprite.sprite, {
 			y: this.pixiSprite.sprite.y - 100,
 			ease: "back.out(4)",
 			duration: 1
 		})
 	}
 
+	// Permet de détruire l'ingrédient
 	destroy() {
 		this.ref.removeIngredient(this)
 		this.pixiSprite.sprite.destroy()
 		this.pixiSprite = null
 	}
 
+	// Permet de gérer l'ingrédient lorsqu'il est sur une machine
 	onInteractionCounterIn() {
 		this.pixiSprite.sprite.visible = false
 		this.setInCooking(true)
 		this.setCanMove(false)
 	}
 
+	// Permet de gérer l'ingrédient lorsqu'il est sur une machine et que la cuisson est terminée
 	onInteractionCounterEnd() {
 		this.pixiSprite.sprite.visible = true
 		this.setInCooking(false)
