@@ -44,7 +44,7 @@
 	})
 
 	onMounted(() => {
-		$$video.value.play()
+		// $$video.value.play()
 
 		// Create a texture loader
 		textureLoader.value = new TextureLoader()
@@ -107,12 +107,14 @@
 		<OxygenJauge :player="2" />
 		<div ref="$$canvas" />
 		<div class="background">
-			<video
+<!--			<video
 				ref="$$video"
 				src="/assets/video/background.mp4"
 				muted
 				loop
-			/>
+			/>-->
+			<img src="/assets/img/office.webp" />
+
 		</div>
 		<CookingInstruction :player="1" />
 		<CookingInstruction :player="2" />

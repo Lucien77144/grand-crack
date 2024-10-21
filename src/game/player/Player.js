@@ -108,6 +108,9 @@ export default class Player {
 
 		// Ajoute la différence de position calculée au sprite
 		this.pixiSprite.addVecPos(this.xDif, -this.yDif)
+		//clamp to innerWidth and innerHeight
+		this.pixiSprite.sprite.x = clamp(this.pixiSprite.sprite.x, 0, this.canvas.offsetWidth)
+		this.pixiSprite.sprite.y = clamp(this.pixiSprite.sprite.y, 0, this.canvas.offsetHeight)
 	}
 
 	updateGrab() {
