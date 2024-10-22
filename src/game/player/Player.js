@@ -71,7 +71,8 @@ export default class Player {
 		if (this.pixiSprite && this.canMove && xInput !== 0 && yInput !== 0) {
 			this.joystickActive = true // Active le joystick
 			// Augmente l'accélération tant que le joystick est actif
-			this.acceleration = Math.min(this.acceleration + this.maxAcceleration, this.maxVelocity)
+			// this.acceleration = Math.min(this.acceleration + this.maxAcceleration, this.maxVelocity)
+			this.acceleration = 20
 
 			// Calcule les différences en X et Y selon l'accélération et l'input du joystick
 			this.xDif = this.acceleration * xInput
