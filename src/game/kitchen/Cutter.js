@@ -57,11 +57,11 @@ export class Cutter extends CookingStation {
 	// Ajoute des événements d'entrée pour interagir avec le cutter
 	addInputCounterIn() {
 		const inputSet1 = this.game.player1.inputSet
-		inputSet1.addEvent("x", this.onPressButtonInteract, this)
-		inputSet1.addEvent("x", this.onPressButtonCut, this)
+		inputSet1.addEvent("a", this.onPressButtonInteract, this)
+		inputSet1.addEvent("a", this.onPressButtonCut, this)
 
 		const inputSet2 = this.game.player2.inputSet
-		inputSet2.addEvent("x", this.onPressButtonInteract, this)
-		inputSet2.addEvent("x", this.onPressButtonCut, this)
+		inputSet2.addEvent("a", this.onPressButtonInteract, this)
+		inputSet2.addEvent("a", this.onPressButtonCut, this)
 	}
 }

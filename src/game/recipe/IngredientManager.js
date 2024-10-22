@@ -3,6 +3,7 @@ import Ingredient from "./Ingredient.js"
 import Axis from "axis-api"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import TextureLoader from "@/game/TextureLoader"
+import signal from "@/utils/signal"
 
 const FREQUENCY = 5000 // Fréquence (en millisecondes) à laquelle les ingrédients peuvent apparaître.
 
@@ -58,7 +59,36 @@ export default class IngredientManager {
 			ingredientAction: "baker"
 		})
 
-		const handleKeydown = (player)=> {
+		const oven = new PixiSprite({
+			size: 0.2,
+			x: innerWidth / 2 + 300,
+			y: innerHeight / 2,
+		}, this.tl.assetArray[ "cutter" ])
+
+		ingredientsContainer.push({
+			sprite: oven.sprite,
+			bounds: oven.sprite.getBounds(),
+			ingredientName: "flour",
+			ingredientSize: 0.2,
+			ingredientAction: "mixer"
+		})
+
+
+
+		ingredientsContainer.forEach(container => {
+			signal.on("releaseIngredient", (ingredient) => {
+				//if the player is in the same position as the container destroy
+				if (!ingredient.pixiSprite) return
+				if (ingredient.pixiSprite.sprite.x >= container.bounds.x && ingredient.pixiSprite.sprite.x <= container.bounds.x + container.bounds.width && ingredient.pixiSprite.sprite.y >= container.bounds.y && ingredient.pixiSprite.sprite.y <= container.bounds.y + container.bounds.height) {
+					ingredient.destroy()
+				}
+			})
+		})
+
+
+
+		const handleKeydown = (player) => {
+			if (player.ingredientHold !== null) return
 			const playerPosition = {
 				x: player.pixiSprite.sprite.x,
 				y: player.pixiSprite.sprite.y
@@ -77,6 +107,7 @@ export default class IngredientManager {
 					)
 
 					ingredient.create()
+					console.log("create")
 
 					this.#ingredients.push(ingredient)
 
@@ -85,10 +116,10 @@ export default class IngredientManager {
 			})
 		}
 		const buttonA = Axis.buttonManager.getButton("a", 1)
-		buttonA.addEventListener("keydown", ()=> handleKeydown(this.#game.player1))
+		buttonA.addEventListener("keydown", () => handleKeydown(this.#game.player1))
 
 		const buttonB = Axis.buttonManager.getButton("a", 2)
-		buttonB.addEventListener("keydown", ()=> handleKeydown(this.#game.player2))
+		buttonB.addEventListener("keydown", () => handleKeydown(this.#game.player2))
 	}
 
 	/**
@@ -199,7 +230,7 @@ export default class IngredientManager {
 		// }
 
 		// Met à jour chaque ingrédient.
-		this.#ingredients.forEach(ingredient => ingredient.update(dt))
+		this.#ingredients.forEach(ingredient => ingredient?.update(dt))
 	}
 
 	/**

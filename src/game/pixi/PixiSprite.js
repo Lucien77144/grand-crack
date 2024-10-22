@@ -3,15 +3,17 @@ import { v4 as uuidv4 } from "uuid" // Import pour générer des identifiants un
 import PixiApplication from "@/game/pixi/PixiApplication" // Import de l'application Pixi
 
 export default class PixiSprite {
-	constructor({
-		x = 0,
-		y = 0,
-		size = 1,
-		anchor = [ 0.5, 0.5 ],
-		animationName = "",
-		zIndex = 0
-	} = {},
-	textureData) {
+	constructor(
+		{
+			x = 0,
+			y = 0,
+			size = 1,
+			anchor = [ 0.5, 0.5 ],
+			animationName = "",
+			zIndex = 0,
+		} = {},
+		textureData
+	) {
 		this.textureData = textureData
 		this.atlasId = uuidv4() // Identifiant unique pour le sprite
 
@@ -74,7 +76,7 @@ export default class PixiSprite {
 		// Retourne la nouvelle position ajustée
 		const spriteBNew = {
 			x: dx,
-			y: dy
+			y: dy,
 		}
 
 		return spriteBNew
@@ -86,8 +88,11 @@ export default class PixiSprite {
 		const halfHeight = targetSprite.height / 2
 
 		// Vérifie si le point est à l'intérieur des dimensions du sprite
-		const isInside = baseSprite.x >= -halfWidth + targetSprite.x && baseSprite.x <= halfWidth + targetSprite.x &&
-			baseSprite.y >= -halfHeight + targetSprite.y && baseSprite.y <= halfHeight + targetSprite.y
+		const isInside =
+			baseSprite.x >= -halfWidth + targetSprite.x &&
+			baseSprite.x <= halfWidth + targetSprite.x &&
+			baseSprite.y >= -halfHeight + targetSprite.y &&
+			baseSprite.y <= halfHeight + targetSprite.y
 
 		return isInside // Retourne true si overlap, false sinon
 	}

@@ -18,14 +18,14 @@ export class Composer extends CookingStation {
 	start() {
 		if (store.isGameOver) return
 		const rdm = Math.floor(Math.random() * 25) * 1000
-		const min = 5000
+		const min = 10000
 
 		// @TODO: Optimise and do a destroy
-		setTimeout(() => {
-			this.recipeList = this.playerAssign.setRecipeList()
-			this.#setTargetIngredients()
-			this.start()
-		}, rdm + min)
+		// setTimeout(() => {
+		// 	this.recipeList = this.playerAssign.setRecipeList()
+		// 	this.#setTargetIngredients()
+		// 	this.start()
+		// }, rdm + min)
 	}
 
 	assignPlayer(player) {
@@ -68,7 +68,6 @@ export class Composer extends CookingStation {
 					this.removeIngredients(
 						recipe.ingredients.map((i) => i.name)
 					)
-					console.log("Recipe complete", recipe.name)
 
 					this.#setTargetIngredients()
 					this.addPlate(recipe)
@@ -90,6 +89,7 @@ export class Composer extends CookingStation {
 
 	addPlate(recipe) {
 		this.textureData = this.tl.assetArray[ recipe.name ]
+		if (!this.textureData) return
 		this.plate = new PixiSprite(
 			{
 				x: this.pixiSprite.sprite.x,
@@ -157,6 +157,6 @@ export class Composer extends CookingStation {
 
 	addInputCounterIn(player) {
 		const inputSet = player.inputSet
-		inputSet.addEvent("x", this.onPressButtonInteract, this)
+		inputSet.addEvent("a", this.onPressButtonInteract, this)
 	}
 }

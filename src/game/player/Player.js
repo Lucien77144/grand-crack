@@ -5,6 +5,7 @@ import { clamp } from "@/utils/maths"
 import TextureLoader from "@/game/TextureLoader"
 import { store } from "@/store"
 import recipes from "@/game/recipe/recipes.json"
+import signal from "@/utils/signal"
 
 const MAX_RECIPES_ALLOWED = 4
 const CURSOR_BASE_SIZE = 0.4
@@ -41,11 +42,8 @@ export default class Player {
 	}
 
 	setRecipeList() {
-		// const active = this.recipeList.map((r) => r.name)
-		// const list = recipes.filter((r) => !active.includes(r.name))
-		// const index = Math.floor(Math.random() * list.length)
-
-		const list = recipes
+		const active = this.recipeList.map((r) => r.name)
+		const list = recipes.filter((r) => !active.includes(r.name))
 		const index = Math.floor(Math.random() * list.length)
 
 		const recipe = list[ index ]
@@ -65,9 +63,17 @@ export default class Player {
 	}
 
 	removeRecipeFromList(names = []) {
+		console.log(this.recipeList)
+		console.log(this.id)
+
 		this.recipeList = this.recipeList.filter(
-			(r) => !names.includes(r.name)
+			(r) => !names.includes(r.name) || r.player !== this.id
 		)
+		store.recipesList = [
+			...store.recipesList.filter(
+				(r) => !names.includes(r.name) || r.player !== this.id
+			),
+		]
 
 		return this.recipeList
 	}
@@ -102,10 +108,8 @@ export default class Player {
 		if (this.pixiSprite && this.canMove && xInput !== 0 && yInput !== 0) {
 			this.joystickActive = true // Active le joystick
 			// Augmente l'accélération tant que le joystick est actif
-			this.acceleration = Math.min(
-				this.acceleration + this.maxAcceleration,
-				this.maxVelocity
-			)
+			// this.acceleration = Math.min(this.acceleration + this.maxAcceleration, this.maxVelocity)
+			this.acceleration = 20
 
 			// Calcule les différences en X et Y selon l'accélération et l'input du joystick
 			this.xDif = this.acceleration * xInput
@@ -161,11 +165,9 @@ export default class Player {
 
 	updateGrab() {
 		// Mise à jour de la position de l'ingrédient si un ingrédient est tenu
-		if (this.ingredientHold) {
-			this.ingredientHold.pixiSprite.sprite.x =
-				this.pixiSprite.sprite.x + this.distIngredient.x
-			this.ingredientHold.pixiSprite.sprite.y =
-				this.pixiSprite.sprite.y + this.distIngredient.y
+		if (this.ingredientHold?.pixiSprite?.sprite && this.pixiSprite.sprite && this.distIngredient) {
+			this.ingredientHold.pixiSprite.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
+			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient?.y
 		}
 	}
 
@@ -221,12 +223,15 @@ export default class Player {
 		// Libère l'ingrédient actuellement tenu
 		if (this.ingredientHold && !this.allowGrab) {
 			this.ingredientHold.setCanMove(true) // Permet à l'ingrédient de bouger de nouveau
-			this.ingredientHold = null
+			signal.emit("releaseIngredient", this.ingredientHold)
+			requestAnimationFrame(() => {
+				this.ingredientHold = null
+			})
 			this.distIngredient = null
 			this.updateSpriteFrame(false) // Revient à l'animation par défaut
-			setTimeout(() => {
-				this.allowGrab = true // Permet de reprendre un ingrédient après une seconde
-			}, 1000)
+			// setTimeout(() => {
+			this.allowGrab = true // Permet de reprendre un ingrédient après une seconde
+			// }, 1000)
 		}
 	}
 
