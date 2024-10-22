@@ -84,7 +84,7 @@ export class Mixer extends CookingStation {
 				this.pixiSprite.sprite.textures = this.ogAnim
 				this.pixiSprite.sprite.gotoAndStop(0)
 
-				this.success() // Appelle la méthode de succès
+				// this.success() // Appelle la méthode de succès
 			}
 		}
 	}

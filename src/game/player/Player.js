@@ -4,9 +4,9 @@ import PixiSprite from "@/game/pixi/PixiSprite"
 import { clamp } from "@/utils/maths"
 import TextureLoader from "@/game/TextureLoader"
 import { store } from "@/store"
+import recipes from "@/game/recipe/recipes.json"
 
 const CURSOR_BASE_SIZE = 0.4
-import recipes from "@/game/recipe/recipes.json"
 
 export default class Player {
 	constructor(id) {
@@ -14,6 +14,7 @@ export default class Player {
 		this.tl = new TextureLoader()
 		this.textureData = this.tl.assetArray[ `cursor${ id }` ]
 		this.game = new Game()
+		this.recipeList = []
 
 		// Comportements par défaut du joueur
 		this.canMove = true
@@ -35,14 +36,30 @@ export default class Player {
 		this.canvas = this.game.canvas
 
 		this.initPixiSprite() // Initialisation du sprite Pixi.js associé au joueur
-		this.setRandomRecipe() // Attribution d'une recette aléatoire au joueur
+		this.setRecipeList() // Attribution d'une recette aléatoire au joueur
 	}
 
-	setRandomRecipe() {
-		// Sélectionne une recette aléatoire pour le joueur
-		const randomIndex = Math.floor(Math.random() * recipes.length)
-		this.recipe = recipes[ randomIndex ]
-		return this.recipe
+	setRecipeList() {
+		const active = this.recipeList.map((r) => r.name)
+		const list = recipes.filter((r) => !active.includes(r.name))
+		const index = Math.floor(Math.random() * list.length)
+
+		const recipe = list[ index ]
+		if (!recipe) return this.recipeList
+
+		this.recipeList.push(recipe)
+		console.log(
+			this.recipeList.flatMap((r) => r.ingredients.map((i) => i.name))
+		)
+		return this.recipeList
+	}
+
+	removeRecipeFromList(names = []) {
+		this.recipeList = this.recipeList.filter(
+			(r) => !names.includes(r.name)
+		)
+
+		return this.recipeList
 	}
 
 	initPixiSprite() {
@@ -50,12 +67,17 @@ export default class Player {
 		this.pixiSprite = new PixiSprite(
 			{
 				// TODO: Faire en sorte que la position des joueurs soit définie à des positions de départ fixes
-				x: this.id === 1 ? this.canvas.offsetWidth / 2 - this.canvas.offsetWidth * 0.1 : this.canvas.offsetWidth / 2 + this.canvas.offsetWidth * 0.1,
+				x:
+					this.id === 1
+						? this.canvas.offsetWidth / 2 -
+						  this.canvas.offsetWidth * 0.1
+						: this.canvas.offsetWidth / 2 +
+						  this.canvas.offsetWidth * 0.1,
 				y: 200,
 				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.0005, // Taille du sprite ajustée selon la largeur de l'écran
 				animationName: `cursor${ this.id }`, // Animation liée à l'id du joueur
 				anchor: [ 0.5, 0.5 ], // Centre le sprite
-				zIndex: 4
+				zIndex: 4,
 			},
 			this.textureData // Texture chargée pour le sprite
 		)
@@ -70,7 +92,10 @@ export default class Player {
 		if (this.pixiSprite && this.canMove && xInput !== 0 && yInput !== 0) {
 			this.joystickActive = true // Active le joystick
 			// Augmente l'accélération tant que le joystick est actif
-			this.acceleration = Math.min(this.acceleration + this.maxAcceleration, this.maxVelocity)
+			this.acceleration = Math.min(
+				this.acceleration + this.maxAcceleration,
+				this.maxVelocity
+			)
 
 			// Calcule les différences en X et Y selon l'accélération et l'input du joystick
 			this.xDif = this.acceleration * xInput
@@ -98,7 +123,10 @@ export default class Player {
 	updateSpeed() {
 		// Gestion de la décélération lorsque le joystick n'est plus actif
 		if (!this.joystickActive && this.acceleration > 0) {
-			this.acceleration = Math.max(this.acceleration - this.decelerationRate, 0) // Réduit l'accélération progressivement
+			this.acceleration = Math.max(
+				this.acceleration - this.decelerationRate,
+				0
+			) // Réduit l'accélération progressivement
 		}
 
 		// Gestion de la vélocité quand le joystick est relâché
@@ -109,15 +137,25 @@ export default class Player {
 		// Ajoute la différence de position calculée au sprite
 		this.pixiSprite.addVecPos(this.xDif, -this.yDif)
 		//clamp to innerWidth and innerHeight
-		this.pixiSprite.sprite.x = clamp(this.pixiSprite.sprite.x, 0, this.canvas.offsetWidth)
-		this.pixiSprite.sprite.y = clamp(this.pixiSprite.sprite.y, 0, this.canvas.offsetHeight)
+		this.pixiSprite.sprite.x = clamp(
+			this.pixiSprite.sprite.x,
+			0,
+			this.canvas.offsetWidth
+		)
+		this.pixiSprite.sprite.y = clamp(
+			this.pixiSprite.sprite.y,
+			0,
+			this.canvas.offsetHeight
+		)
 	}
 
 	updateGrab() {
 		// Mise à jour de la position de l'ingrédient si un ingrédient est tenu
 		if (this.ingredientHold) {
-			this.ingredientHold.pixiSprite.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
-			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient.y
+			this.ingredientHold.pixiSprite.sprite.x =
+				this.pixiSprite.sprite.x + this.distIngredient.x
+			this.ingredientHold.pixiSprite.sprite.y =
+				this.pixiSprite.sprite.y + this.distIngredient.y
 		}
 	}
 
@@ -159,7 +197,8 @@ export default class Player {
 		if (!this.ingredientHold && this.allowGrab) {
 			this.ingredientHold = ingredient
 			const distOffset = PixiSprite.updatePositionWithOffset(
-				this.pixiSprite.sprite, this.ingredientHold.pixiSprite.sprite
+				this.pixiSprite.sprite,
+				this.ingredientHold.pixiSprite.sprite
 			)
 			this.updateSpriteFrame(true) // Passe à l'animation 'grab'
 			this.distIngredient = distOffset
@@ -187,11 +226,10 @@ export default class Player {
 		this.inputSet.addEvent("a", this.releaseIngredient, this) // 'a' pour relâcher un ingrédient
 		this.inputSet.addEvent("w", this.gainOxygen, this) // 'w' pour gagner de l'oxygen
 
-
 		this.inputSet.addEvent("a", () => {
 			if (store.isSplashScreen) {
 				store.isSplashScreen = false
-				this.game.soundManager.startXp("music", .25)
+				this.game.soundManager.startXp("music", 0.25)
 			}
 
 			// TODO!! - le reload() est un hard reload du navigateur, il faut plutôt reset la partie

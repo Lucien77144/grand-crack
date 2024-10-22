@@ -6,7 +6,7 @@ import { gsap } from "gsap"
 
 export class Composer extends CookingStation {
 	playerAssign = 0
-	targetIngredients = []
+	targetIngredients = {}
 	ingredients = {}
 	plate = null
 
@@ -15,14 +15,26 @@ export class Composer extends CookingStation {
 		this.tl = new TextureLoader()
 	}
 
+	start() {
+		// @TODO: Optimise and do a destroy
+		setInterval(() => {
+			this.recipeList = this.playerAssign.setRecipeList()
+			this.#setTargetIngredients()
+		}, 5000)
+	}
+
 	assignPlayer(player) {
 		this.playerAssign = player
-		this.targetIngredients = player.recipe.ingredients.map(
-			(ingredient) => ingredient.name
-		)
-		this.recipe = player.recipe
+		this.recipeList = player.recipeList
+		this.#setTargetIngredients()
 
 		this.addInputCounterIn(player)
+	}
+
+	#setTargetIngredients() {
+		this.targetIngredients = this.recipeList.flatMap((r) => {
+			return { [ r.name ]: r.ingredients.map((i) => i.name) }
+		})
 	}
 
 	onPressButtonInteract(e) {
@@ -41,18 +53,23 @@ export class Composer extends CookingStation {
 
 			this.addIngredient(ingredient)
 
-			if (this.checkIsFinished()) {
-				this.game.soundManager.playSingleSound("recipeComplete", 1)
-				store.players[ this.playerAssign.id - 1 ].score +=
-					this.recipe.score
-				const recipe = this.playerAssign.setRandomRecipe()
-				this.recipe = recipe
-				this.removeIngredients()
-				this.targetIngredients = recipe.ingredients.map(
-					(ingredient) => ingredient.name
-				)
-				this.addPlate()
-			}
+			this.recipeList.forEach((recipe) => {
+				console.log("recipe", recipe)
+
+				if (this.checkIsFinished(recipe)) {
+					const pIndex = this.playerAssign.id - 1
+					store.players[ pIndex ].score += recipe.score
+
+					this.game.soundManager.playSingleSound("recipeComplete", 1)
+					this.playerAssign.removeRecipeFromList(recipe.name)
+
+					this.removeIngredients(
+						recipe.ingredients.map((i) => i.name)
+					)
+					this.#setTargetIngredients()
+					this.addPlate(recipe)
+				}
+			})
 		}
 	}
 
@@ -60,15 +77,15 @@ export class Composer extends CookingStation {
 		this.ingredients[ ingredient.getName() ] = ingredient
 	}
 
-	removeIngredients() {
-		Object.keys(this.ingredients).forEach((ingredient) =>
+	removeIngredients(list = []) {
+		list.forEach((ingredient) => {
 			this.ingredients[ ingredient ].destroy()
-		)
-		this.ingredients = {}
+			delete this.ingredients[ ingredient ]
+		})
 	}
 
-	addPlate() {
-		this.textureData = this.tl.assetArray[ this.recipe.name ]
+	addPlate(recipe) {
+		this.textureData = this.tl.assetArray[ recipe.name ]
 		this.plate = new PixiSprite(
 			{
 				x: this.pixiSprite.sprite.x,
@@ -128,8 +145,8 @@ export class Composer extends CookingStation {
 		}
 	}
 
-	checkIsFinished() {
-		return this.targetIngredients.every((ingredient) =>
+	checkIsFinished(name) {
+		return this.targetIngredients[ name ].every((ingredient) =>
 			this.ingredients.hasOwnProperty(ingredient)
 		)
 	}

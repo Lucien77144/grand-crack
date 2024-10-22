@@ -58,7 +58,7 @@ export class Baker extends CookingStation {
 			this.pixiSprite.sprite.textures = anim
 			this.pixiSprite.sprite.gotoAndStop(0)
 
-			this.success()
+			// this.success()
 		}
 	}
 

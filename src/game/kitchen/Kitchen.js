@@ -22,6 +22,11 @@ export class Kitchen {
 		this.textureDataKitchen = this.tl.assetArray[ "kitchen" ]
 	}
 
+	start() {
+		this.composer1.start()
+		this.composer2.start()
+	}
+
 	// Méthode pour configurer la cuisine
 	setup() {
 		this.createKitchenPlan()

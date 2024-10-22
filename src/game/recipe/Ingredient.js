@@ -14,10 +14,10 @@ export default class Ingredient {
 	#isCooked // Indique si l'ingrédient est cuit.
 	#inCooking = false // Indique si l'ingrédient est en cours de cuisson.
 	#onPlate = false // Indique si l'ingrédient est sur une assiette.
-	#speed = .05 // Vitesse de chute de l'ingrédient sous l'effet de la gravité.
+	#speed = 0.05 // Vitesse de chute de l'ingrédient sous l'effet de la gravité.
 	#nbOfFrames = 0 // Nombre de frames de l'animation.
 	#game // Référence au jeu actuel.
-	#rotation = (Math.random() * 2) - 1 // Rotation aléatoire de l'ingrédient pour une animation plus réaliste.
+	#rotation = Math.random() * 2 - 1 // Rotation aléatoire de l'ingrédient pour une animation plus réaliste.
 
 	/**
 	 * Constructeur de la classe Ingredient
@@ -100,9 +100,21 @@ export default class Ingredient {
 	 * @param {Number} dt - Délai entre les mises à jour.
 	 */
 	updateGravity(dt) {
-		if (this.pixiSprite && this.#canMove && !this.#isCooked && !this.#inCooking) {
-			this.pixiSprite.sprite.position.y += dt * this.#speed * window.innerWidth * 0.00025
-			this.pixiSprite.sprite.rotation += 0.001 * dt * this.#speed * this.#rotation * window.innerWidth * 0.00025
+		if (
+			this.pixiSprite &&
+			this.#canMove &&
+			!this.#isCooked &&
+			!this.#inCooking
+		) {
+			this.pixiSprite.sprite.position.y +=
+				dt * this.#speed * window.innerWidth * 0.00025
+			this.pixiSprite.sprite.rotation +=
+				0.001 *
+				dt *
+				this.#speed *
+				this.#rotation *
+				window.innerWidth *
+				0.00025
 
 			if (this.pixiSprite.sprite.position.y > window.innerHeight) {
 				this.destroy()
@@ -129,9 +141,21 @@ export default class Ingredient {
 	 */
 	holdIngredient(e) {
 		const player = e.id === 1 ? this.#game.player1 : this.#game.player2
-		if (this.#canMove && !this.#inCooking && !this.#onPlate && this.pixiSprite && this.pixiSprite.sprite) {
-			if (player && PixiSprite.checkOverlap(player.pixiSprite.sprite, this.pixiSprite.sprite)) {
-				this.#game.soundManager.playSingleSound("hold", .25)
+		if (
+			this.#canMove &&
+			!this.#inCooking &&
+			!this.#onPlate &&
+			this.pixiSprite &&
+			this.pixiSprite.sprite
+		) {
+			if (
+				player &&
+				PixiSprite.checkOverlap(
+					player.pixiSprite.sprite,
+					this.pixiSprite.sprite
+				)
+			) {
+				this.#game.soundManager.playSingleSound("hold", 0.25)
 				player.holdIngredient(this)
 				this.pixiSprite.sprite.zIndex = 3
 				store.players[ e.id - 1 ].action = this.#action
@@ -148,7 +172,7 @@ export default class Ingredient {
 		gsap.to(this.pixiSprite.sprite, {
 			y: this.pixiSprite.sprite.y - 100,
 			ease: "back.out(4)",
-			duration: 1
+			duration: 1,
 		})
 	}
 

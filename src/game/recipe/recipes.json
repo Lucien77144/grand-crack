@@ -1,33 +1,63 @@
 [
-	{
-		"name": "recipe1",
+  {
+    "name": "recipe1",
     "nbOfPlayerHaveCompleted": 0,
+    "description": "Fais nous un bon gros bédo mon gars ! Glouglou ça se noie sous les feuilles des tropiques ou quoicoubeh ??",
     "score": 200,
-		"ingredients": [
-			{
-				"name": "banana",
-				"size": 0.3,
-				"canMove": true,
-				"action": "cutter",
-				"isCooked": false,
-				"quantity": 1
-			},
-			{
-				"name": "flour",
-				"size": 0.2,
-				"canMove": true,
-				"action": "mixer",
-				"isCooked": false,
-				"quantity": 1
-			},
+    "ingredients": [
       {
-				"name": "cheese",
-				"size": 0.2,
-				"canMove": true,
-				"action": "baker",
-				"isCooked": false,
-				"quantity": 1
-			}
-		]
-	}
+        "name": "banana",
+        "cover": "banana-1.png",
+        "size": 0.3,
+        "canMove": true,
+        "action": "cutter",
+        "isCooked": false,
+        "quantity": 1
+      },
+      {
+        "name": "flour",
+        "cover": "flour-1.png",
+        "size": 0.2,
+        "canMove": true,
+        "action": "mixer",
+        "isCooked": false,
+        "quantity": 1
+      },
+      {
+        "name": "cheese",
+        "cover": "cheese-1.png",
+        "size": 0.2,
+        "canMove": true,
+        "action": "baker",
+        "isCooked": false,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "name": "recipe2",
+    "nbOfPlayerHaveCompleted": 0,
+    "description": "description2",
+    "score": 150,
+    "ingredients": [
+      {
+        "name": "flour",
+        "cover": "flour-1.png",
+        "size": 0.2,
+        "canMove": true,
+        "action": "mixer",
+        "isCooked": false,
+        "quantity": 1
+      },
+      {
+        "name": "cheese",
+        "cover": "cheese-1.png",
+        "size": 0.2,
+        "canMove": true,
+        "action": "baker",
+        "isCooked": false,
+        "quantity": 1
+      }
+    ]
+  }
 ]

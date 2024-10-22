@@ -9,6 +9,7 @@
 	import TextureLoader from "@/game/TextureLoader"
 	import Signal from "@/utils/signal"
 	import SplashScreen from "@/components/SplashScreen/SplashScreen.vue"
+	import TaskManager from "@/components/TaskManager/TaskManager.vue"
 	import SoundManager from "@/game/SoundManager"
 	import GameScore from "@/components/GameScore/GameScore.vue"
 	import { store } from "@/store"
@@ -36,7 +37,10 @@
 			return
 		}
 
-		if (game?.value?.player1?.oxygen <= 40 || game?.value?.player2?.oxygen <= 40) {
+		if (
+			game?.value?.player1?.oxygen <= 40 ||
+			game?.value?.player2?.oxygen <= 40
+		) {
 			isPanic.value = true
 		} else {
 			isPanic.value = false
@@ -57,13 +61,19 @@
 
 		watch([ () => size ], resize)
 
-		watch(() => store.players[ 0 ].action, (action) => {
-			Signal.emit(":actionPlayer1", action)
-		})
+		watch(
+			() => store.players[ 0 ].action,
+			(action) => {
+				Signal.emit(":actionPlayer1", action)
+			}
+		)
 
-		watch(() => store.players[ 1 ].action, (action) => {
-			Signal.emit(":actionPlayer2", action)
-		})
+		watch(
+			() => store.players[ 1 ].action,
+			(action) => {
+				Signal.emit(":actionPlayer2", action)
+			}
+		)
 	})
 
 	onBeforeUnmount(() => {
@@ -85,36 +95,34 @@
 
 <template>
 	<main class="site-wrapper">
+		<TaskManager />
 		<div
 			class="overlay"
 			:class="{
-				'is-panic': isPanic
+				'is-panic': isPanic,
 			}"
 		/>
 		<GameScore :player="1" />
 		<GameScore :player="2" />
 		<SplashScreen
 			:class="{
-				'is-visible': store.isSplashScreen
+				'is-visible': store.isSplashScreen,
 			}"
 		/>
 		<GameOver
 			:class="{
-				'is-visible': store.isGameOver
+				'is-visible': store.isGameOver,
 			}"
 		/>
-		<OxygenJauge :player="1" />
-		<OxygenJauge :player="2" />
 		<div ref="$$canvas" />
 		<div class="background">
-<!--			<video
+			<!--			<video
 				ref="$$video"
 				src="/assets/video/background.mp4"
 				muted
 				loop
 			/>-->
-			<img src="/assets/img/office.webp" />
-
+			<img src="/assets/img/office.webp">
 		</div>
 		<CookingInstruction :player="1" />
 		<CookingInstruction :player="2" />
