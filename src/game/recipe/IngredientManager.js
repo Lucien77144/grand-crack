@@ -1,5 +1,8 @@
-import { Game } from "../Game.js"
+import {Game} from "../Game.js"
 import Ingredient from "./Ingredient.js"
+import Axis from "axis-api";
+import PixiSprite from "@/game/pixi/PixiSprite";
+import TextureLoader from "@/game/TextureLoader";
 
 const FREQUENCY = 5000 // Fréquence (en millisecondes) à laquelle les ingrédients peuvent apparaître.
 
@@ -14,6 +17,7 @@ export default class IngredientManager {
 	#ingredientsSpawned = {} // Dictionnaire du nombre d'ingrédients apparus.
 	#lastSpawnTime = 0 // Timestamp de la dernière fois qu'un ingrédient a été généré.
 	dropZone = 800 // Largeur de la zone dans laquelle les ingrédients peuvent apparaître (horizontalement).
+	tl = new TextureLoader()
 
 	/**
 	 * Constructeur du gestionnaire d'ingrédients.
@@ -21,7 +25,72 @@ export default class IngredientManager {
 	 * @param {Array} recipes - Liste des recettes pour lesquelles les ingrédients seront gérés.
 	 */
 	constructor(recipes) {
-		this.#recipes = Array.isArray(recipes) ? recipes : [ recipes ]
+		this.#recipes = Array.isArray(recipes) ? recipes : [recipes]
+
+		// create a cube where the ingredient can be hold
+		const cube = new PixiSprite({
+			size: 0.1,
+			x: innerWidth / 2,
+			y: innerHeight / 2,
+		}, this.tl.assetArray['kitchen'])
+		cube.sprite.rotation = Math.PI / 2
+
+
+		const buttonA = Axis.buttonManager.getButton("a", 1)
+		buttonA.addEventListener("keydown", () => {
+			const player1Position = {
+				x: this.#game.player1.pixiSprite.sprite.x,
+				y: this.#game.player1.pixiSprite.sprite.y
+			}
+			const cubeBounds = cube.sprite.getBounds()
+			if (player1Position.x >= cubeBounds.x && player1Position.x <= cubeBounds.x + cubeBounds.width && player1Position.y >= cubeBounds.y && player1Position.y <= cubeBounds.y + cubeBounds.height) {
+				const ingredient = new Ingredient(
+					this,
+					'banana',
+					0.3,
+					player1Position.x,
+					true,
+					'cutter',
+					false,
+					player1Position.y
+				)
+
+				ingredient.create() // Crée l'ingrédient et l'ajoute au jeu.
+
+				this.#ingredients.push(ingredient)
+
+				this.#game.player1.holdIngredient(ingredient)
+			}
+		})
+		const buttonB = Axis.buttonManager.getButton("a", 2)
+		buttonB.addEventListener("keydown", () => {
+			const player2Postion = {
+				x: this.#game.player2.pixiSprite.sprite.x,
+				y: this.#game.player2.pixiSprite.sprite.y
+			}
+			const cubeBounds = cube.sprite.getBounds()
+
+			if (player2Postion.x >= cubeBounds.x && player2Postion.x <= cubeBounds.x + cubeBounds.width && player2Postion.y >= cubeBounds.y && player2Postion.y <= cubeBounds.y + cubeBounds.height) {
+				const ingredient = new Ingredient(
+					this,
+					'banana',
+					0.3,
+					player2Postion.x,
+					true,
+					'cutter',
+					false,
+					player2Postion.y
+				)
+
+				ingredient.create() // Crée l'ingrédient et l'ajoute au jeu.
+
+				this.#ingredients.push(ingredient)
+
+				this.#game.player2.holdIngredient(ingredient)
+			}
+
+		})
+
 	}
 
 	/**
@@ -43,8 +112,8 @@ export default class IngredientManager {
 
 			// Si des ingrédients manquent, on en génère un aléatoirement.
 			if (missingIngredients.length > 0) {
-				const randomIngredient = missingIngredients[ Math.floor(Math.random() * missingIngredients.length) ]
-				const { name } = randomIngredient
+				const randomIngredient = missingIngredients[Math.floor(Math.random() * missingIngredients.length)]
+				const {name} = randomIngredient
 
 				// Trouve l'ingrédient dans la liste des recettes.
 				const ingredientRecipe = this.#recipes
@@ -53,6 +122,7 @@ export default class IngredientManager {
 
 				if (ingredientRecipe) {
 					const x = window.innerWidth / 2 + Math.random() * this.dropZone - this.dropZone / 2
+					const y = innerHeight / 2
 					const ingredient = new Ingredient(
 						this,
 						name,
@@ -60,13 +130,14 @@ export default class IngredientManager {
 						x,
 						ingredientRecipe.canMove,
 						ingredientRecipe.action,
-						ingredientRecipe.isCooked
+						ingredientRecipe.isCooked,
+						y
 					)
 
 					await ingredient.create() // Crée l'ingrédient et l'ajoute au jeu.
 
 					this.#ingredients.push(ingredient)
-					this.#ingredientsSpawned[ name ] = (this.#ingredientsSpawned[ name ] || 0) + 1
+					this.#ingredientsSpawned[name] = (this.#ingredientsSpawned[name] || 0) + 1
 					this.#lastSpawnTime = currentTime // Met à jour l'heure du dernier spawn.
 				}
 			}
@@ -80,8 +151,8 @@ export default class IngredientManager {
 	 */
 	getMissingIngredients() {
 		return Object.entries(this.#ingredientsToSpawn)
-			.filter(([ name, quantity ]) => (this.#ingredientsSpawned[ name ] || 0) < quantity)
-			.map(([ name, quantity ]) => ({ name, quantity: quantity - (this.#ingredientsSpawned[ name ] || 0) }))
+			.filter(([name, quantity]) => (this.#ingredientsSpawned[name] || 0) < quantity)
+			.map(([name, quantity]) => ({name, quantity: quantity - (this.#ingredientsSpawned[name] || 0)}))
 	}
 
 	/**
@@ -112,8 +183,8 @@ export default class IngredientManager {
 		if (index !== -1) {
 			this.#ingredients.splice(index, 1)
 			const name = ingredient.getName()
-			if (this.#ingredientsSpawned[ name ] !== undefined) {
-				this.#ingredientsSpawned[ name ]--
+			if (this.#ingredientsSpawned[name] !== undefined) {
+				this.#ingredientsSpawned[name]--
 			}
 		}
 	}
@@ -125,9 +196,9 @@ export default class IngredientManager {
 	 */
 	update(dt) {
 		// Si des ingrédients doivent encore apparaître, en génère un.
-		if (Object.keys(this.#ingredientsToSpawn).length > 0) {
-			this.spawnIngredient()
-		}
+		// if (Object.keys(this.#ingredientsToSpawn).length > 0) {
+		// 	this.spawnIngredient()
+		// }
 
 		// Met à jour chaque ingrédient.
 		this.#ingredients.forEach(ingredient => ingredient.update(dt))
@@ -208,9 +279,9 @@ export default class IngredientManager {
 	 */
 	updateIngredientsToSpawn() {
 		this.#ingredientsToSpawn = this.#recipes.reduce((acc, recipe) => {
-			recipe.ingredients.forEach(({ name, quantity }) => {
+			recipe.ingredients.forEach(({name, quantity}) => {
 				const totalQuantity = quantity * 2 - recipe.nbOfPlayerHaveCompleted
-				acc[ name ] = Math.min(totalQuantity, acc[ name ] || totalQuantity)
+				acc[name] = Math.min(totalQuantity, acc[name] || totalQuantity)
 			})
 			return acc
 		}, {})

@@ -30,7 +30,7 @@ export default class Ingredient {
 	 * @param {String} action - Action associée à l'ingrédient.
 	 * @param {Boolean} isCooked - Indique si l'ingrédient est déjà cuit (par défaut false).
 	 */
-	constructor(ref, name, size, x, canMove = true, action, isCooked = false) {
+	constructor(ref, name, size, x, canMove = true, action, isCooked = false, y) {
 		this.#game = new Game()
 		this.#id = uuidv4()
 		this.#name = name
@@ -40,6 +40,7 @@ export default class Ingredient {
 
 		this.ref = ref
 		this.x = x
+		this.y = y
 		this.size = size
 		this.tl = new TextureLoader()
 		this.textureData = this.tl.assetArray[ this.#name ]
@@ -62,11 +63,11 @@ export default class Ingredient {
 	initPixiSprite() {
 		this.pixiSprite = new PixiSprite({
 			x: this.x,
-			y: -this.canvas.offsetWidth * 0.05,
+			y: this.y,
 			size: this.size * this.canvas.offsetWidth * 0.00075,
 			action: this.#action,
 			animationName: this.#name,
-			zIndex: 0
+			zIndex: 3
 		}, this.textureData)
 
 		this.addInputOnA()
@@ -90,7 +91,7 @@ export default class Ingredient {
 	 * @param {Number} dt - Délai entre les mises à jour.
 	 */
 	update(dt) {
-		this.updateGravity(dt)
+		// this.updateGravity(dt)
 	}
 
 	/**
