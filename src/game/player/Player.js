@@ -7,6 +7,7 @@ import { store } from "@/store"
 
 const CURSOR_BASE_SIZE = 0.4
 import recipes from "@/game/recipe/recipes.json"
+import signal from "@/utils/signal";
 
 export default class Player {
 	constructor(id) {
@@ -115,7 +116,7 @@ export default class Player {
 
 	updateGrab() {
 		// Mise à jour de la position de l'ingrédient si un ingrédient est tenu
-		if (this.ingredientHold) {
+		if (this.ingredientHold && this.ingredientHold.pixiSprite) {
 			this.ingredientHold.pixiSprite.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
 			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient.y
 		}
@@ -172,7 +173,10 @@ export default class Player {
 		// Libère l'ingrédient actuellement tenu
 		if (this.ingredientHold && !this.allowGrab) {
 			this.ingredientHold.setCanMove(true) // Permet à l'ingrédient de bouger de nouveau
-			this.ingredientHold = null
+			signal.emit("releaseIngredient", this.ingredientHold)
+			requestAnimationFrame(() => {
+				this.ingredientHold = null
+			})
 			this.distIngredient = null
 			this.updateSpriteFrame(false) // Revient à l'animation par défaut
 			setTimeout(() => {

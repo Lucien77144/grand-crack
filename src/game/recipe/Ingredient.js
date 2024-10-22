@@ -156,9 +156,12 @@ export default class Ingredient {
 	 * Détruit l'ingrédient et supprime son sprite de l'écran.
 	 */
 	destroy() {
+		this.pixiSprite.sprite.parent.removeChild(this.pixiSprite.sprite)
+		// this.pixiSprite.sprite.visible = false
 		this.ref.removeIngredient(this)
 		this.pixiSprite.sprite.destroy()
 		this.pixiSprite = null
+
 	}
 
 	/**
