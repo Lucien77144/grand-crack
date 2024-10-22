@@ -179,9 +179,9 @@ export default class Player {
 			})
 			this.distIngredient = null
 			this.updateSpriteFrame(false) // Revient à l'animation par défaut
-			setTimeout(() => {
+			// setTimeout(() => {
 				this.allowGrab = true // Permet de reprendre un ingrédient après une seconde
-			}, 1000)
+			// }, 1000)
 		}
 	}
 
