@@ -46,7 +46,7 @@ export default class Player {
 		const list = recipes.filter((r) => !active.includes(r.name))
 		const index = Math.floor(Math.random() * list.length)
 
-		const recipe = list[ index ]
+		const recipe = { ...list[ index ] }
 		if (!recipe) return this.recipeList
 
 		recipe.player = this.id
@@ -63,9 +63,6 @@ export default class Player {
 	}
 
 	removeRecipeFromList(names = []) {
-		console.log(this.recipeList)
-		console.log(this.id)
-
 		this.recipeList = this.recipeList.filter(
 			(r) => !names.includes(r.name) || r.player !== this.id
 		)
@@ -165,9 +162,15 @@ export default class Player {
 
 	updateGrab() {
 		// Mise à jour de la position de l'ingrédient si un ingrédient est tenu
-		if (this.ingredientHold?.pixiSprite?.sprite && this.pixiSprite.sprite && this.distIngredient) {
-			this.ingredientHold.pixiSprite.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
-			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient?.y
+		if (
+			this.ingredientHold?.pixiSprite?.sprite &&
+			this.pixiSprite.sprite &&
+			this.distIngredient
+		) {
+			this.ingredientHold.pixiSprite.sprite.x =
+				this.pixiSprite.sprite.x + this.distIngredient.x
+			this.ingredientHold.pixiSprite.sprite.y =
+				this.pixiSprite.sprite.y + this.distIngredient?.y
 		}
 	}
 

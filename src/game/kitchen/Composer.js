@@ -40,6 +40,8 @@ export class Composer extends CookingStation {
 		this.targetIngredients = this.recipeList.reduce((acc, r) => {
 			return { ...acc, [ r.name ]: r.ingredients.map((i) => i.name) }
 		}, {})
+		console.log(this.targetIngredients)
+		console.log(this.recipeList)
 	}
 
 	onPressButtonInteract() {
@@ -57,6 +59,7 @@ export class Composer extends CookingStation {
 
 			this.addIngredient(ingredient)
 
+			const newList = []
 			this.recipeList.forEach((recipe) => {
 				if (this.checkIsFinished(recipe.name)) {
 					const pIndex = this.playerAssign.id - 1
@@ -71,8 +74,11 @@ export class Composer extends CookingStation {
 
 					this.#setTargetIngredients()
 					this.addPlate(recipe)
+				} else {
+					newList.push(recipe)
 				}
 			})
+			this.recipeList = newList
 		}
 	}
 
