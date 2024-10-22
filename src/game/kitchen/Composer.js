@@ -40,8 +40,6 @@ export class Composer extends CookingStation {
 		this.targetIngredients = this.recipeList.reduce((acc, r) => {
 			return { ...acc, [ r.name ]: r.ingredients.map((i) => i.name) }
 		}, {})
-		console.log(this.targetIngredients)
-		console.log(this.recipeList)
 	}
 
 	onPressButtonInteract() {
