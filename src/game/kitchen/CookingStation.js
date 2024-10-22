@@ -70,9 +70,9 @@ export class CookingStation {
 	// Ajoute des événements d'entrée pour interagir avec la station de cuisson
 	addInputCounterIn() {
 		const inputSet1 = this.game.player1.inputSet
-		inputSet1.addEvent("x", this.onPressButtonInteract, this)
+		inputSet1.addEvent("a", this.onPressButtonInteract, this)
 
 		const inputSet2 = this.game.player2.inputSet
-		inputSet2.addEvent("x", this.onPressButtonInteract, this)
+		inputSet2.addEvent("a", this.onPressButtonInteract, this)
 	}
 }

@@ -117,9 +117,9 @@ export default class Player {
 
 	updateGrab() {
 		// Mise à jour de la position de l'ingrédient si un ingrédient est tenu
-		if (this.ingredientHold && this.ingredientHold.pixiSprite) {
+		if (this.ingredientHold && this.ingredientHold.pixiSprite && this.distIngredient) {
 			this.ingredientHold.pixiSprite.sprite.x = this.pixiSprite.sprite.x + this.distIngredient.x
-			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient.y
+			this.ingredientHold.pixiSprite.sprite.y = this.pixiSprite.sprite.y + this.distIngredient?.y
 		}
 	}
 

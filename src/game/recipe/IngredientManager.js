@@ -107,7 +107,6 @@ export default class IngredientManager {
 					)
 
 					ingredient.create()
-					console.log('create')
 
 					this.#ingredients.push(ingredient)
 
