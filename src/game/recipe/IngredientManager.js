@@ -28,68 +28,70 @@ export default class IngredientManager {
 		this.#recipes = Array.isArray(recipes) ? recipes : [recipes]
 
 		// create a cube where the ingredient can be hold
-		const cube = new PixiSprite({
+		const ingredientsContainer = []
+		const fridge = new PixiSprite({
 			size: 0.1,
 			x: innerWidth / 2,
 			y: innerHeight / 2,
 		}, this.tl.assetArray['kitchen'])
-		cube.sprite.rotation = Math.PI / 2
+		fridge.sprite.rotation = Math.PI / 2
+
+		ingredientsContainer.push({
+			sprite: fridge.sprite,
+			bounds: fridge.sprite.getBounds(),
+			ingredientName: 'banana',
+			ingredientSize: 0.3,
+			ingredientAction: 'cutter'
+		})
+
+		const tiroir = new PixiSprite({
+			size: 0.2,
+			x: innerWidth / 2 - 300,
+			y: innerHeight / 2,
+		}, this.tl.assetArray['cutter'])
+
+		ingredientsContainer.push({
+			sprite: tiroir.sprite,
+			bounds: tiroir.sprite.getBounds(),
+			ingredientName: 'cheese',
+			ingredientSize: 0.2,
+			ingredientAction: 'baker'
+		})
 
 
+
+
+		const handleKeydown = (player)=> {
+			const playerPosition = {
+				x: player.pixiSprite.sprite.x,
+				y: player.pixiSprite.sprite.y
+			}
+			ingredientsContainer.forEach(container => {
+				if (playerPosition.x >= container.bounds.x && playerPosition.x <= container.bounds.x + container.bounds.width && playerPosition.y >= container.bounds.y && playerPosition.y <= container.bounds.y + container.bounds.height) {
+					const ingredient = new Ingredient(
+						this,
+						container.ingredientName,
+						container.ingredientSize,
+						playerPosition.x,
+						true,
+						container.ingredientAction,
+						false,
+						playerPosition.y
+					)
+
+					ingredient.create()
+
+					this.#ingredients.push(ingredient)
+
+					player.holdIngredient(ingredient)
+				}
+			})
+		}
 		const buttonA = Axis.buttonManager.getButton("a", 1)
-		buttonA.addEventListener("keydown", () => {
-			const player1Position = {
-				x: this.#game.player1.pixiSprite.sprite.x,
-				y: this.#game.player1.pixiSprite.sprite.y
-			}
-			const cubeBounds = cube.sprite.getBounds()
-			if (player1Position.x >= cubeBounds.x && player1Position.x <= cubeBounds.x + cubeBounds.width && player1Position.y >= cubeBounds.y && player1Position.y <= cubeBounds.y + cubeBounds.height) {
-				const ingredient = new Ingredient(
-					this,
-					'banana',
-					0.3,
-					player1Position.x,
-					true,
-					'cutter',
-					false,
-					player1Position.y
-				)
+		buttonA.addEventListener("keydown", ()=> handleKeydown(this.#game.player1))
 
-				ingredient.create() // Crée l'ingrédient et l'ajoute au jeu.
-
-				this.#ingredients.push(ingredient)
-
-				this.#game.player1.holdIngredient(ingredient)
-			}
-		})
 		const buttonB = Axis.buttonManager.getButton("a", 2)
-		buttonB.addEventListener("keydown", () => {
-			const player2Postion = {
-				x: this.#game.player2.pixiSprite.sprite.x,
-				y: this.#game.player2.pixiSprite.sprite.y
-			}
-			const cubeBounds = cube.sprite.getBounds()
-
-			if (player2Postion.x >= cubeBounds.x && player2Postion.x <= cubeBounds.x + cubeBounds.width && player2Postion.y >= cubeBounds.y && player2Postion.y <= cubeBounds.y + cubeBounds.height) {
-				const ingredient = new Ingredient(
-					this,
-					'banana',
-					0.3,
-					player2Postion.x,
-					true,
-					'cutter',
-					false,
-					player2Postion.y
-				)
-
-				ingredient.create() // Crée l'ingrédient et l'ajoute au jeu.
-
-				this.#ingredients.push(ingredient)
-
-				this.#game.player2.holdIngredient(ingredient)
-			}
-
-		})
+		buttonB.addEventListener("keydown", ()=> handleKeydown(this.#game.player2))
 
 	}
 
