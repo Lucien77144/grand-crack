@@ -47,10 +47,12 @@ export default class Player {
 		const recipe = list[ index ]
 		if (!recipe) return this.recipeList
 
+		recipe.player = this.id
 		this.recipeList.push(recipe)
-		console.log(
-			this.recipeList.flatMap((r) => r.ingredients.map((i) => i.name))
-		)
+
+		store.recipesList ??= []
+		store.recipesList.push(recipe)
+
 		return this.recipeList
 	}
 

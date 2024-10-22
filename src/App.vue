@@ -3,7 +3,6 @@
 	import { useRaf } from "@/composables/useRaf/useRaf"
 	import { useSize } from "@/composables/useSize/useSize"
 	import { Game } from "@/game/Game"
-	import OxygenJauge from "@/components/OxygenJauge/OxygenJauge.vue"
 	import GameOver from "@/components/GameOver/GameOver.vue"
 	import CookingInstruction from "@/components/CookingInstruction/CookingInstruction.vue"
 	import TextureLoader from "@/game/TextureLoader"

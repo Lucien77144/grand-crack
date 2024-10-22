@@ -9,6 +9,7 @@ import SoundManager from "@/game/SoundManager"
 
 export class Game {
 	static instance
+	isPaused = null
 	kitchen = null
 	soundManager = null
 	existingIngredientList = {}
@@ -30,7 +31,6 @@ export class Game {
 		this.pixiApplication = new PixiApplication()
 		this.canvas = canvas
 		this.size = size
-		this.isPaused = true
 	}
 
 	/**
@@ -90,7 +90,7 @@ export class Game {
 	 */
 	update(dt, t) {
 		if (store.isSplashScreen || store.isGameOver) return
-		if (this.isPaused !== undefined) {
+		if (this.isPaused === null) {
 			this.isPaused = false
 			this.kitchen.start()
 		}

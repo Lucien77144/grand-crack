@@ -32,16 +32,15 @@ export class Composer extends CookingStation {
 	}
 
 	#setTargetIngredients() {
-		this.targetIngredients = this.recipeList.flatMap((r) => {
-			return { [ r.name ]: r.ingredients.map((i) => i.name) }
-		})
+		this.targetIngredients = this.recipeList.reduce((acc, r) => {
+			return { ...acc, [ r.name ]: r.ingredients.map((i) => i.name) }
+		}, {})
 	}
 
 	onPressButtonInteract(e) {
-		const ingredient = this.playerAssign.ingredientHold
+		const ingredient = this.playerAssign?.ingredientHold
 
 		if (
-			this.playerAssign &&
 			ingredient &&
 			this.checkCanInteractWithIngredient(this.playerAssign, ingredient)
 		) {
@@ -54,9 +53,7 @@ export class Composer extends CookingStation {
 			this.addIngredient(ingredient)
 
 			this.recipeList.forEach((recipe) => {
-				console.log("recipe", recipe)
-
-				if (this.checkIsFinished(recipe)) {
+				if (this.checkIsFinished(recipe.name)) {
 					const pIndex = this.playerAssign.id - 1
 					store.players[ pIndex ].score += recipe.score
 
@@ -66,6 +63,8 @@ export class Composer extends CookingStation {
 					this.removeIngredients(
 						recipe.ingredients.map((i) => i.name)
 					)
+					console.log("Recipe complete", recipe.name)
+
 					this.#setTargetIngredients()
 					this.addPlate(recipe)
 				}
@@ -130,8 +129,8 @@ export class Composer extends CookingStation {
 				ingredient.getIsCooked() === true &&
 				!ingredient.getOnPlate()
 
-			const inRecipe = this.targetIngredients.includes(
-				ingredient.getName()
+			const inRecipe = this.recipeList.some((recipe) =>
+				recipe.ingredients.some((i) => i.name === ingredient.getName())
 			)
 			const notAlreadyIn = !this.ingredients.hasOwnProperty(
 				ingredient.getName()

@@ -1,11 +1,13 @@
 <script setup>
 	import { ref } from "vue"
-	const tasks = ref([])
+	import { store } from "@/store"
+
+	console.log(store.recipesList)
 </script>
 
 <template>
 	<div class="task__container">
-		<div v-for="task in tasks" :key="task.name" class="task">
+		<div v-for="task in store.recipesList" :key="task.name" class="task">
 			<div class="task__header">
 				<h1 class="task__title">
 					{{ task.name }}
