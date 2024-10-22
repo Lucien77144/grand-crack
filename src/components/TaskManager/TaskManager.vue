@@ -1,8 +1,5 @@
 <script setup>
-	import { ref } from "vue"
 	import { store } from "@/store"
-
-	console.log(store.recipesList)
 </script>
 
 <template>

@@ -16,11 +16,16 @@ export class Composer extends CookingStation {
 	}
 
 	start() {
+		if (store.isGameOver) return
+		const rdm = Math.floor(Math.random() * 25) * 1000
+		const min = 5000
+
 		// @TODO: Optimise and do a destroy
-		setInterval(() => {
+		setTimeout(() => {
 			this.recipeList = this.playerAssign.setRecipeList()
 			this.#setTargetIngredients()
-		}, 5000)
+			this.start()
+		}, rdm + min)
 	}
 
 	assignPlayer(player) {
@@ -37,7 +42,7 @@ export class Composer extends CookingStation {
 		}, {})
 	}
 
-	onPressButtonInteract(e) {
+	onPressButtonInteract() {
 		const ingredient = this.playerAssign?.ingredientHold
 
 		if (

@@ -6,6 +6,7 @@ import TextureLoader from "@/game/TextureLoader"
 import { store } from "@/store"
 import recipes from "@/game/recipe/recipes.json"
 
+const MAX_RECIPES_ALLOWED = 4
 const CURSOR_BASE_SIZE = 0.4
 
 export default class Player {
@@ -40,8 +41,11 @@ export default class Player {
 	}
 
 	setRecipeList() {
-		const active = this.recipeList.map((r) => r.name)
-		const list = recipes.filter((r) => !active.includes(r.name))
+		// const active = this.recipeList.map((r) => r.name)
+		// const list = recipes.filter((r) => !active.includes(r.name))
+		// const index = Math.floor(Math.random() * list.length)
+
+		const list = recipes
 		const index = Math.floor(Math.random() * list.length)
 
 		const recipe = list[ index ]
@@ -50,10 +54,14 @@ export default class Player {
 		recipe.player = this.id
 		this.recipeList.push(recipe)
 
-		store.recipesList ??= []
-		store.recipesList.push(recipe)
-
-		return this.recipeList
+		if (this.recipeList.length > MAX_RECIPES_ALLOWED) {
+			store.isGameOver = true
+			return this.recipeList
+		} else {
+			store.recipesList ??= []
+			store.recipesList.push(recipe)
+			return this.recipeList
+		}
 	}
 
 	removeRecipeFromList(names = []) {

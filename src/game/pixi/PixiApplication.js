@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js"
-import {ZoomBlurFilter} from "pixi-filters";
-import Axis from "axis-api";
-import {lerp} from "@/utils/maths";
+import { ZoomBlurFilter } from "pixi-filters"
+import Axis from "axis-api"
+import { lerp } from "@/utils/maths"
 
 export default class PixiApplication {
 	static instance
@@ -16,12 +16,12 @@ export default class PixiApplication {
 
 	async init(wrapper, color = "#000") {
 		this.app = new PIXI.Application()
-		await this.app.init({resizeTo: window,}).then(() => {
+		await this.app.init({ resizeTo: window, }).then(() => {
 			wrapper.appendChild(this.app.canvas)
 			this.canvas = this.app.canvas
 		})
 
-		await PIXI.Assets.load("/assets/img/office.webp");
+		await PIXI.Assets.load("/assets/img/office.webp")
 		// change background with an image /assets/img/office.webp
 		const assets = PIXI.Assets.get("/assets/img/office.webp")
 		// get ratio of image
@@ -38,10 +38,10 @@ export default class PixiApplication {
 
 		const filter = new ZoomBlurFilter({
 			strength: 0.01,
-			center: {x: window.innerWidth / 2, y: window.innerHeight / 2},
+			center: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
 		})
 
-		this.app.stage.filters = [filter]
+		// this.app.stage.filters = [filter]
 		let targetStrength = 0
 
 		const buttonA = Axis.buttonManager.getButton("w", 1) // Récupère le bouton en fonction de la touche et de l'ID du joueur.
@@ -54,7 +54,6 @@ export default class PixiApplication {
 		})
 		let latestTime = 0
 		const update = () => {
-
 			const currentTime = performance.now()
 			const delta = currentTime - latestTime
 			targetStrength += 0.00001 * delta
@@ -63,8 +62,6 @@ export default class PixiApplication {
 			requestAnimationFrame(update)
 		}
 		update()
-
-
 	}
 
 	appendToStage(elt) {
