@@ -67,7 +67,7 @@ export class Mixer extends CookingStation {
 			// Vérifie si tous les checkpoints sont complétés
 			if (this.checkpoints.every(elt => elt >= this.nbRevolution)) {
 				this.player.onPlayerInteractCounter(true) // Réinitialise le compteur d'interaction du joueur
-				this.ingredient.onInteractionCounterEnd() // Termine l'interaction avec l'ingrédient
+				this.ingredient.onInteractionCounterEnd("mixer") // Termine l'interaction avec l'ingrédient
 
 				// Met à jour l'animation de l'ingrédient
 				this.ingredient.pixiSprite.sprite.gotoAndStop(

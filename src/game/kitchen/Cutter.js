@@ -45,7 +45,7 @@ export class Cutter extends CookingStation {
 			if (this.progress === this.ingredient.pixiSprite.sprite.totalFrames - 1) {
 				this.ingredient.animOut()
 				this.player.onPlayerInteractCounter(true)
-				this.ingredient.onInteractionCounterEnd()
+				this.ingredient.onInteractionCounterEnd("cutter")
 				this.inCutter = false
 				this.player = null
 				this.ingredient = null

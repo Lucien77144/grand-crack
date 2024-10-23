@@ -93,7 +93,6 @@ export default class SoundManager {
 	 */
 	playSingleSound(sound, volume = 0.15) {
 		if (this.soundsList && this.isPlaying && this.soundsList[ sound ]) {
-			console.log(sound, "test")
 			this.soundsList[ sound ].volume(volume) // Définit le volume du son.
 			this.soundsList[ sound ].play() // Joue le son.
 		}
@@ -143,6 +142,13 @@ export default class SoundManager {
 			loadAudio("mixing", "/assets/sounds/mixing.mp3", 0, true),
 			loadAudio("bake", "/assets/sounds/bake.mp3", 0, false),
 			loadAudio("recipeComplete", "/assets/sounds/recipeComplete.mp3", 0, false),
+			loadAudio("aubergine", "/assets/sounds/aubergine.m4a", 0, false),
+			loadAudio("courgette", "/assets/sounds/courgette.m4a", 0, false),
+			loadAudio("courgette", "/assets/sounds/courgette.m4a", 0, false),
+			loadAudio("samy", "/assets/sounds/samy.m4a", 0, false),
+			loadAudio("tomate", "/assets/sounds/tomate.m4a", 0, false),
+			loadAudio("sniff", "/assets/sounds/sniff.m4a", 0, false),
+
 		])
 
 		this.soundsList = tmp // Assigne la liste temporaire des sons à la liste de la classe.

@@ -125,12 +125,60 @@
 			/>-->
 			<img src="/assets/img/office.webp">
 		</div>
+		<div class="bumper-left">
+			<img src="/assets/img/bumper_base.png">
+			<img src="/assets/img/bumper_top.png">
+		</div>
+		<div class="bumper-right">
+			<img src="/assets/img/bumper_base.png">
+			<img src="/assets/img/bumper_top.png">
+		</div>
 		<CookingInstruction :player="1" />
 		<CookingInstruction :player="2" />
 	</main>
 </template>
 
 <style lang="scss" scoped>
+.bumper-left {
+	position: absolute;
+	top: 40%;
+	left: 0;
+	width: 100px;
+	height: 125px;
+
+	img {
+		position: absolute;
+		width: 100px;
+		height: 125px;
+		top: 0;
+		left: -50px;
+	}
+
+	img:nth-child(2) {
+		left: 45px;
+	}
+}
+
+.bumper-right {
+	position: absolute;
+	top: 40%;
+	right: 0;
+	width: 100px;
+	height: 125px;
+	transform: rotateY(180deg);
+
+	img {
+		position: absolute;
+		width: 100px;
+		height: 125px;
+		top: 0;
+		left: -50px;
+	}
+
+	img:nth-child(2) {
+		left: 45px;
+	}
+}
 	.site-wrapper {
 		height: 100%;
 		position: relative;

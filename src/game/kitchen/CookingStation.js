@@ -59,7 +59,7 @@ export class CookingStation {
 			const isNotCook = ingredient.getInCooking() === false
 				&& ingredient.getIsCooked() === false // Vérifie que l'ingrédient n'est pas en cours de cuisson et pas cuit
 
-			const correspondingAction = ingredient.getAction() === this.action // Vérifie si l'action de l'ingrédient correspond à celle de la station
+			const correspondingAction = ingredient.getAction()[0] === this.action // Vérifie si l'action de l'ingrédient correspond à celle de la station
 
 			// Retourne vrai si toutes les conditions sont remplies
 			return ingredient && isEmpty && overlapping && isNotCook && correspondingAction

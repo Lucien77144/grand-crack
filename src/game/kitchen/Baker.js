@@ -51,7 +51,7 @@ export class Baker extends CookingStation {
 			// Notifie l'ingrédient et le joueur de la fin de l'interaction
 			this.ingredient.animOut()
 			this.player.onPlayerInteractCounter(true) // Indique que le joueur peut interagir à nouveau
-			this.ingredient.onInteractionCounterEnd() // Indique que l'interaction avec l'ingrédient est terminée
+			this.ingredient.onInteractionCounterEnd("baker") // Indique que l'interaction avec l'ingrédient est terminée
 
 			this.resetBaker()
 
