@@ -93,7 +93,6 @@ export default class SoundManager {
 	 */
 	playSingleSound(sound, volume = 0.15) {
 		if (this.soundsList && this.isPlaying && this.soundsList[ sound ]) {
-			console.log(sound, "test")
 			this.soundsList[ sound ].volume(volume) // Définit le volume du son.
 			this.soundsList[ sound ].play() // Joue le son.
 		}

@@ -40,10 +40,10 @@ export default class IngredientManager {
 		ingredientsContainer.push({
 			sprite: fridge.sprite,
 			bounds: fridge.sprite.getBounds(),
-			ingredientName: "banana",
+			ingredientName: ["cheese", 'banana'],
 			ingredientSize: 0.3,
-			ingredientAction: "cutter",
-			ingredientSound: "tomate"
+			ingredientAction: ["baker","cutter"],
+			ingredientSound: "tomate",
 		})
 
 		const tiroir = new PixiSprite({
@@ -55,9 +55,9 @@ export default class IngredientManager {
 		ingredientsContainer.push({
 			sprite: tiroir.sprite,
 			bounds: tiroir.sprite.getBounds(),
-			ingredientName: "cheese",
+			ingredientName: ["cheese"],
 			ingredientSize: 0.2,
-			ingredientAction: "baker",
+			ingredientAction: ["baker"],
 			ingredientSound: "aubergine"
 		})
 
@@ -70,9 +70,9 @@ export default class IngredientManager {
 		ingredientsContainer.push({
 			sprite: oven.sprite,
 			bounds: oven.sprite.getBounds(),
-			ingredientName: "flour",
+			ingredientName: ["flour"],
 			ingredientSize: 0.2,
-			ingredientAction: "mixer",
+			ingredientAction: ["mixer"],
 			ingredientSound: "courgette"
 		})
 
@@ -103,10 +103,8 @@ export default class IngredientManager {
 						container.ingredientName,
 						container.ingredientSize,
 						playerPosition.x,
-						true,
 						container.ingredientAction,
-						false,
-						playerPosition.y
+						playerPosition.y,
 					)
 
 					ingredient.create()

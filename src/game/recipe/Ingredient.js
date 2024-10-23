@@ -1,9 +1,9 @@
-import { v4 as uuidv4 } from "uuid"
-import { Game } from "@/game/Game"
+import {v4 as uuidv4} from "uuid"
+import {Game} from "@/game/Game"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import TextureLoader from "@/game/TextureLoader"
-import { store } from "@/store"
-import { gsap } from "gsap"
+import {store} from "@/store"
+import {gsap} from "gsap"
 
 export default class Ingredient {
 	// Membres privés
@@ -11,7 +11,7 @@ export default class Ingredient {
 	#name // Nom de l'ingrédient (lié à sa texture ou animation).
 	#canMove // Indique si l'ingrédient peut se déplacer.
 	#action // Action associée à l'ingrédient (peut changer en fonction de l'état).
-	#isCooked // Indique si l'ingrédient est cuit.
+	#isCooked = false // Indique si l'ingrédient est cuit.
 	#inCooking = false // Indique si l'ingrédient est en cours de cuisson.
 	#onPlate = false // Indique si l'ingrédient est sur une assiette.
 	#speed = 0.05 // Vitesse de chute de l'ingrédient sous l'effet de la gravité.
@@ -23,27 +23,26 @@ export default class Ingredient {
 	 * Constructeur de la classe Ingredient
 	 *
 	 * @param {Object} ref - Référence au conteneur qui gère l'ingrédient.
-	 * @param {String} name - Nom de l'ingrédient (lié à sa texture ou son animation).
+	 * @param {String[]} name - Nom de l'ingrédient (lié à sa texture ou son animation).
 	 * @param {Number} size - Taille de l'ingrédient.
 	 * @param {Number} x - Position initiale en X de l'ingrédient.
 	 * @param {Boolean} canMove - Définit si l'ingrédient peut se déplacer (par défaut true).
-	 * @param {String} action - Action associée à l'ingrédient.
+	 * @param {string[]} action - Action associée à l'ingrédient.
 	 * @param {Boolean} isCooked - Indique si l'ingrédient est déjà cuit (par défaut false).
 	 */
-	constructor(ref, name, size, x, canMove = true, action, isCooked = false, y) {
+	constructor(ref, name, size, x, action, y) {
 		this.#game = new Game()
 		this.#id = uuidv4()
-		this.#name = name
+		this.#name = [...name]
 		this.#action = action
-		this.#canMove = canMove
-		this.#isCooked = isCooked
+		this.#canMove = true
 
 		this.ref = ref
 		this.x = x
 		this.y = y
 		this.size = size
 		this.tl = new TextureLoader()
-		this.textureData = this.tl.assetArray[ this.#name ]
+		this.textureData = this.tl.assetArray[this.#name[0]]
 
 		this.canvas = this.#game.canvas
 	}
@@ -61,12 +60,12 @@ export default class Ingredient {
 	 * Initialise le sprite de l'ingrédient avec PixiSprite.
 	 */
 	initPixiSprite() {
+		console.log(this.#name[0])
 		this.pixiSprite = new PixiSprite({
 			x: this.x,
 			y: this.y,
 			size: this.size * this.canvas.offsetWidth * 0.00075,
-			action: this.#action,
-			animationName: this.#name,
+			animationName: this.#name[0],
 			zIndex: 3
 		}, this.textureData)
 
@@ -158,9 +157,9 @@ export default class Ingredient {
 				this.#game.soundManager.playSingleSound("hold", 0.25)
 				player.holdIngredient(this)
 				this.pixiSprite.sprite.zIndex = 3
-				store.players[ e.id - 1 ].action = this.#action
+				store.players[e.id - 1].action = this.#action
 			} else {
-				store.players[ e.id - 1 ].action = null
+				store.players[e.id - 1].action = null
 			}
 		}
 	}
@@ -200,11 +199,22 @@ export default class Ingredient {
 	/**
 	 * Indique que l'interaction avec une machine est terminée et remet l'ingrédient en état normal.
 	 */
-	onInteractionCounterEnd() {
+	onInteractionCounterEnd(action) {
 		this.pixiSprite.sprite.visible = true
 		this.setInCooking(false)
 		this.setCanMove(true)
-		this.setIsCooked(true)
+		if (this.#name.length > 1) {
+			this.#name.shift()
+
+			const newTextureData = this.tl.assetArray[this.#name[0]]
+
+			this.pixiSprite.sprite.textures = newTextureData.sheet.animations[this.#name[0]]
+		}
+		//remove action to #action
+		this.#action = this.#action.filter((a) => a !== action)
+		if (this.#action.length === 0) {
+			this.setIsCooked(true)
+		}
 	}
 
 	// Getters et Setters pour manipuler les membres privés
@@ -226,7 +236,7 @@ export default class Ingredient {
 	}
 
 	getName() {
-		return this.#name
+		return this.#name[0]
 	}
 
 	setCanMove(canMove) {

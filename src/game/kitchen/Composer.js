@@ -50,12 +50,15 @@ export class Composer extends CookingStation {
 			this.checkCanInteractWithIngredient(this.playerAssign, ingredient)
 		) {
 			this.playerAssign.updateSpriteFrame(false)
-			this.game.soundManager.playSingleSound("hold", 0.25)
+			this.game.soundManager.playSingleSound("hold", 0.1)
 			ingredient.setOnPlate(true)
 			ingredient.setCanMove(false)
 			this.playerAssign.onPlayerInteractCounter(true)
 
 			this.addIngredient(ingredient)
+			requestAnimationFrame(() => {
+				this.playerAssign.releaseIngredient()
+			})
 
 			const newList = []
 			this.recipeList.forEach((recipe) => {
