@@ -1,7 +1,7 @@
 import { computed, reactive } from "vue"
 
 export const store = reactive({
-	isPaused: false,
+	isGameStarted: false,
 	isSplashScreen: true,
 	players: [
 		{

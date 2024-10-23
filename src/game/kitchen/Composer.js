@@ -3,12 +3,14 @@ import PixiSprite from "@/game/pixi/PixiSprite"
 import { store } from "@/store"
 import TextureLoader from "@/game/TextureLoader"
 import { gsap } from "gsap"
+import { Game } from "../Game"
 
 export class Composer extends CookingStation {
 	playerAssign = 0
 	targetIngredients = {}
 	ingredients = {}
 	plate = null
+	game = new Game()
 
 	constructor({ ...props }) {
 		super({ ...props })
@@ -19,13 +21,17 @@ export class Composer extends CookingStation {
 		if (store.isGameOver) return
 		const rdm = Math.floor(Math.random() * 25) * 1000
 		const min = 10000
+		const speed =
+			(this.game.recipesDone - (this.playerAssign.id - 1)) * 1000
+
+		this.game.recipesDone++
 
 		// @TODO: Optimise and do a destroy
-		// setTimeout(() => {
-		// 	this.recipeList = this.playerAssign.setRecipeList()
-		// 	this.#setTargetIngredients()
-		// 	this.start()
-		// }, rdm + min)
+		setTimeout(() => {
+			this.recipeList = this.playerAssign.setRecipeList()
+			this.#setTargetIngredients()
+			this.start()
+		}, rdm + min - speed)
 	}
 
 	assignPlayer(player) {
@@ -130,7 +136,7 @@ export class Composer extends CookingStation {
 				player &&
 				PixiSprite.checkOverlap(
 					player.pixiSprite.sprite,
-					this.pixiSprite.sprite
+					this.pixiSprite.sprite,
 				)
 
 			const isCook =

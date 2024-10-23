@@ -42,12 +42,19 @@ export default class Player {
 	}
 
 	setRecipeList() {
+		// if (!store.isGameStarted) return
 		const active = this.recipeList.map((r) => r.name)
 		const list = recipes.filter((r) => !active.includes(r.name))
 		const index = Math.floor(Math.random() * list.length)
 
-		const recipe = { ...list[ index ] }
-		if (!recipe) return this.recipeList
+		const item = list[ index ]
+
+		if (!item) {
+			store.isGameOver = true
+			return this.recipeList
+		}
+
+		const recipe = JSON.parse(JSON.stringify(item))
 
 		recipe.player = this.id
 		this.recipeList.push(recipe)

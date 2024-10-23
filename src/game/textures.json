@@ -16,7 +16,7 @@
     },
     {
       "name": "kitchen",
-      "src": "/assets/sprites/kitchen/kitchen.png"
+      "src": "/assets/sprites/kitchen/kitchen.svg"
     },
     {
       "name": "baker",
@@ -39,11 +39,11 @@
     },
     {
       "name": "composerP1",
-      "src": "/assets/sprites/composer/composerP1.png"
+      "src": "/assets/sprites/composer/composer.svg"
     },
     {
       "name": "composerP2",
-      "src": "/assets/sprites/composer/composerP2.png"
+      "src": "/assets/sprites/composer/composer.svg"
     },
     {
       "name":  "recipe1",

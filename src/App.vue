@@ -21,6 +21,7 @@
 	// Game state
 	let game = shallowRef()
 	let textureLoader = shallowRef()
+	const textures = shallowRef()
 	let soundManager = shallowRef()
 	let t = 0
 	provide("game", game)
@@ -51,7 +52,8 @@
 
 		// Create a texture loader
 		textureLoader.value = new TextureLoader()
-		textureLoader.value.loadTexture().then(() => {
+		textureLoader.value.loadTexture().then((e) => {
+			textures.value = e
 			// Create game
 			soundManager.value = new SoundManager()
 			game.value = new Game($$canvas.value, size)
@@ -94,7 +96,7 @@
 
 <template>
 	<main class="site-wrapper">
-		<TaskManager />
+		<TaskManager :textures="textures" />
 		<div
 			class="overlay"
 			:class="{

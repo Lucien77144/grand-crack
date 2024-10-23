@@ -14,6 +14,7 @@ export class CookingStation {
 		this.y = props.y
 		this.action = props.action
 		this.size = props.size
+		this.anchor = props.anchor
 		this.game = new Game()
 		this.tl = new TextureLoader()
 		this.textureData = this.tl.assetArray[ props.action ]
@@ -27,9 +28,9 @@ export class CookingStation {
 				x: this.x,
 				y: this.y,
 				size: this.size,
-				anchor: [ 0.5, 0.5 ], // Centre l'ancre du sprite
+				anchor: this.anchor, // Centre l'ancre du sprite
 				animationName: this.action,
-				zIndex: 2
+				zIndex: 2,
 			},
 			this.textureData
 		)

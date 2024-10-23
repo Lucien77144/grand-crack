@@ -5,6 +5,7 @@ import { Mixer } from "./Mixer"
 import { Baker } from "./Baker"
 import TextureLoader from "@/game/TextureLoader"
 import { Composer } from "@/game/kitchen/Composer"
+import { Application } from "pixi.js"
 
 const KITCHEN_PLAN_BASE_SIZE = 0.23
 const CUTTER_BASE_SIZE = 0.23
@@ -43,13 +44,17 @@ export class Kitchen {
 
 	// Crée le plan de la cuisine
 	createKitchenPlan() {
-		const size = KITCHEN_PLAN_BASE_SIZE * (this.canvas.offsetWidth * 0.00075) // Calcule la taille du plan
+		const size = this.canvas.offsetWidth * 0.00025
+		// const size = this.canvas.offsetWidth * 0.001 // Calcule la taille du plan
 		const x = this.canvas.offsetWidth / 2
 		const y = this.canvas.offsetHeight
 		const anchor = [ 0.5, 1 ] // Point d'ancrage au centre en bas
 		const zIndex = 1
 
-		this.kitchen = new PixiSprite({ x, y, size, anchor, zIndex }, this.textureDataKitchen)
+		this.kitchen = new PixiSprite(
+			{ x, y, size, anchor, zIndex },
+			this.textureDataKitchen
+		)
 	}
 
 	// Crée la station de découpe
@@ -62,7 +67,7 @@ export class Kitchen {
 			x,
 			y,
 			size,
-			action: "cutter"
+			action: "cutter",
 		})
 
 		this.addCookingStation(this.cutter)
@@ -78,7 +83,7 @@ export class Kitchen {
 			x,
 			y,
 			size,
-			action: "mixer"
+			action: "mixer",
 		})
 
 		this.addCookingStation(this.mixer)
@@ -94,7 +99,7 @@ export class Kitchen {
 			x,
 			y,
 			size,
-			action: "baker"
+			action: "baker",
 		})
 
 		this.addCookingStation(this.baker)
@@ -102,29 +107,27 @@ export class Kitchen {
 
 	// Crée les stations de composition pour les joueurs
 	createComposer() {
-		const size = COMPOSER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
-		const x = 100
-		const y = this.canvas.offsetHeight - 100
+		const width = Math.floor(this.canvas.offsetWidth)
+		const height = Math.floor(this.canvas.offsetHeight)
+		const size = 0.75
 
 		const player1 = this.game.player1
 		this.composer1 = new Composer({
-			x,
-			y,
+			x: (width * size) / 8,
+			y: height * size + (height * size) / 4,
 			size,
-			action: "composerP1"
+			anchor: [ 0.5, 0.5 ],
+			action: "composerP1",
 		})
 		this.composer1.assignPlayer(player1)
 
-		const size2 = COMPOSER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
-		const x2 = this.canvas.offsetWidth - 80
-		const y2 = this.canvas.offsetHeight - 100
-
 		const player2 = this.game.player2
 		this.composer2 = new Composer({
-			x: x2,
-			y: y2,
-			size: size2,
-			action: "composerP2"
+			x: width * size + (width * size) / 4,
+			y: height * size + (height * size) / 4,
+			size,
+			anchor: [ 0.5, 0.5 ],
+			action: "composerP2",
 		})
 		this.composer2.assignPlayer(player2)
 	}

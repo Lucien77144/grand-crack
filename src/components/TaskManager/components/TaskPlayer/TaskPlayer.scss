@@ -1,0 +1,37 @@
+.player {
+	height: 20px;
+	width: 20px;
+
+	&__code {
+		color: #fff;
+		font-family: "Jersey 20", sans-serif;
+		font-size: 20px;
+		font-style: normal;
+		font-weight: 400;
+		letter-spacing: 0.4px;
+		line-height: 90%; /* 18px */
+		margin: auto;
+		text-align: center;
+		text-shadow:
+			2px 0 #000,
+			-2px 0 #000,
+			0 2px #000,
+			0 -2px #000,
+			1px 1px #000,
+			-1px -1px #000,
+			1px -1px #000,
+			-1px 1px #000;
+		-webkit-text-stroke-color: #000;
+		-webkit-text-stroke-width: 1;
+		text-wrap: nowrap;
+	}
+
+	&__bg {
+		height: 175%;
+		position: absolute;
+		right: -38%;
+		top: -38%;
+		width: 175%;
+		z-index: -1;
+	}
+}

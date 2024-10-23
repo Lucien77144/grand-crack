@@ -1,0 +1,24 @@
+.ingredients {
+	&__wrapper {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin-left: 0.4rem;
+	}
+
+	&__item {
+		margin: -0.25rem;
+		position: relative;
+		width: 66px;
+		z-index: -2;
+	}
+
+	&__img {
+		height: 75%;
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		width: 75%;
+	}
+}
