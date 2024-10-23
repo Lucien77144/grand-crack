@@ -53,75 +53,80 @@ export default class PixiApplication {
 		let targetStrength = 0
 		let block = true
 
-		setTimeout(() => {
-			block = false
-			setTimeout(() => {
-				gsap.to([".bumper-left", ".bumper-right"], {
-					x: 0,
-				})
-			}, 5000)
-		}, 10000)
+		let leftPressed = false
+		const leftCoke = document.querySelector(".bumper-left img:nth-child(2)")
+
+		let rightPressed = false
+		const rightCoke = document.querySelector(".bumper-right img:nth-child(2)")
+
+		let progress = 0
+		let activeSide = ""
+
 		gsap.set(".bumper-left", {
-			x: -100,
+			x: -400,
 		})
 		gsap.set(".bumper-right", {
-			x: 100,
+			x: 400,
 		})
-
-		let leftClick = false
-		let rightClick = false
-
-		const resetBump = () => {
-			if (leftClick && rightClick) {
-				game.soundManager.playSingleSound("sniff", 1)
-				targetStrength = 0
-				leftClick = false
-				rightClick = false
-
-				gsap.to([".bumper-left img:nth-child(2)", ".bumper-right img:nth-child(2)"], {
-					duration: 0.5, x: 0,
+		const handleRandom = () => {
+			setTimeout(() => {
+				const randomSide = Math.random() > .5 ? "left" : "right"
+				activeSide = randomSide
+				block = false
+				gsap.to([`.bumper-${randomSide}`], {
+					x: 0,
+					delay: 1
 				})
-
-				block = true
-
-				gsap.to(".bumper-left", {
-					x: -100,
-				})
-				gsap.to(".bumper-right", {
-					x: 100,
-				})
-				setTimeout(() => {
-					block = false
-					setTimeout(() => {
-						gsap.to([".bumper-left", ".bumper-right"], {
-							x: 0,
-						})
-					}, 5000)
-				}, 10000)
-			}
+			}, 5000)
 		}
+		handleRandom()
 
 		const buttonA = Axis.buttonManager.getButton("w", 1) // Récupère le bouton en fonction de la touche et de l'ID du joueur.
 		buttonA.addEventListener("keydown", () => {
-			gsap.set(".bumper-left img:nth-child(2)", {x: 0})
-			gsap.to(".bumper-left img:nth-child(2)", {
-				duration: 0.5, x: -10,
-			})
-			leftClick = true
-			resetBump()
+			if (activeSide === "left" && !leftPressed) {
+				game.soundManager.playSingleSound("sniff", 1)
+			}
+			leftPressed = true
+
+		})
+		buttonA.addEventListener("keyup", () => {
+			leftPressed = false
 		})
 
 		const buttonB = Axis.buttonManager.getButton("w", 2) // Récupère le bouton en fonction de la touche et de l'ID du joueur.
 		buttonB.addEventListener("keydown", () => {
-			gsap.set(".bumper-right img:nth-child(2)", {x: 0})
-			gsap.to(".bumper-right img:nth-child(2)", {
-				duration: 0.5, x: -10,
-
-			})
-			rightClick = true
-
-			resetBump()
+			if (activeSide === "right" && !rightPressed) {
+				game.soundManager.playSingleSound("sniff", 1)
+			}
+			rightPressed = true
 		})
+		buttonB.addEventListener("keyup", () => {
+			rightPressed = false
+		})
+
+		const handleReset = () => {
+			progress = 0
+			leftPressed = false
+			rightPressed = false
+			block = true
+			activeSide = ""
+
+			gsap.to(".bumper-left", {
+				x: -400,
+				onComplete: () => {
+					leftCoke.style.clipPath = `inset(0 0% 0 0)`
+					rightCoke.style.clipPath = `inset(0 0% 0 0)`
+
+					handleRandom()
+
+				},
+			})
+			gsap.to(".bumper-right", {
+				x: 400,
+			})
+		}
+
+
 		let latestTime = 0
 		const update = () => {
 
@@ -131,6 +136,25 @@ export default class PixiApplication {
 			if (block) targetStrength = 0
 			if (targetStrength > 0.1) targetStrength = 0.1
 			filter.strength = lerp(filter.strength, targetStrength, 0.01 * delta)
+
+			if (leftPressed && activeSide === "left") {
+				leftCoke.style.clipPath = `inset(0 ${progress}% 0 0)`
+				progress += 3
+				targetStrength -= 0.001
+				if (progress >= 100) {
+					handleReset()
+				}
+			}
+			if (rightPressed && activeSide === "right") {
+				rightCoke.style.clipPath = `inset(0 ${progress}% 0 0)`
+				progress += 3
+				targetStrength -= 0.001
+				if (progress >= 100) {
+					handleReset()
+				}
+			}
+
+
 			latestTime = currentTime
 			requestAnimationFrame(update)
 		}

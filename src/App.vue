@@ -126,12 +126,12 @@
 			<img src="/assets/img/office.webp">
 		</div>
 		<div class="bumper-left">
-			<img src="/assets/img/bumper_base.png">
-			<img src="/assets/img/bumper_top.png">
+			<img src="/assets/img/base.png">
+			<img src="/assets/img/coke.png">
 		</div>
 		<div class="bumper-right">
-			<img src="/assets/img/bumper_base.png">
-			<img src="/assets/img/bumper_top.png">
+			<img src="/assets/img/base.png">
+			<img src="/assets/img/coke.png">
 		</div>
 		<CookingInstruction :player="1" />
 		<CookingInstruction :player="2" />
@@ -139,46 +139,40 @@
 </template>
 
 <style lang="scss" scoped>
-.bumper-left {
+.bumper-left, .bumper-right {
 	position: absolute;
 	top: 40%;
-	left: 0;
-	width: 100px;
-	height: 125px;
+	left: 40px;
 
 	img {
 		position: absolute;
-		width: 100px;
-		height: 125px;
 		top: 0;
 		left: -50px;
+		width: auto;
+		height: auto;
+	}
+
+	img:nth-child(1) {
+		//width: 100px;
 	}
 
 	img:nth-child(2) {
-		left: 45px;
+		width: 270px;
+		top: 20px;
+		left: 60px;
+		//transition: clip-path 1s;
+		//clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+		clip-path: inset(0 0 0 0);
+
 	}
 }
 
-.bumper-right {
-	position: absolute;
-	top: 40%;
-	right: 0;
-	width: 100px;
-	height: 125px;
-	transform: rotateY(180deg);
-
-	img {
-		position: absolute;
-		width: 100px;
-		height: 125px;
-		top: 0;
-		left: -50px;
-	}
-
-	img:nth-child(2) {
-		left: 45px;
-	}
+.bumper-right{
+	left: auto;
+	right: 40px;
+	transform: scaleX(-1);
 }
+
 	.site-wrapper {
 		height: 100%;
 		position: relative;
