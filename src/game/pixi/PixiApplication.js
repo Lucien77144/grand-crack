@@ -38,15 +38,59 @@ export default class PixiApplication {
 
 
 		const filter = new ZoomBlurFilter({
-			strength: 0.01,
-			center: {x: window.innerWidth / 2, y: window.innerHeight / 2},
+			strength: 0.01, center: {x: window.innerWidth / 2, y: window.innerHeight / 2},
 		})
 
 		this.app.stage.filters = [filter]
 		let targetStrength = 0
+		let block = true
+
+		setTimeout(() => {
+			block = false
+			setTimeout(() => {
+				gsap.to([".bumper-left", ".bumper-right"], {
+					x: 0,
+				})
+			}, 5000)
+		}, 10000)
+		gsap.set(".bumper-left", {
+			x: -100,
+		})
+		gsap.set(".bumper-right", {
+			x: 100,
+		})
 
 		let leftClick = false
 		let rightClick = false
+
+		const resetBump = () => {
+			if (leftClick && rightClick) {
+				targetStrength = 0
+				leftClick = false
+				rightClick = false
+
+				gsap.to([".bumper-left img:nth-child(2)", ".bumper-right img:nth-child(2)"], {
+					duration: 0.5, x: 0,
+				})
+
+				block = true
+
+				gsap.to(".bumper-left", {
+					x: -100,
+				})
+				gsap.to(".bumper-right", {
+					x: 100,
+				})
+				setTimeout(() => {
+					block = false
+					setTimeout(() => {
+						gsap.to([".bumper-left", ".bumper-right"], {
+							x: 0,
+						})
+					}, 5000)
+				}, 10000)
+			}
+		}
 
 		const buttonA = Axis.buttonManager.getButton("w", 1) // Récupère le bouton en fonction de la touche et de l'ID du joueur.
 		buttonA.addEventListener("keydown", () => {
@@ -55,22 +99,9 @@ export default class PixiApplication {
 				duration: 0.5, x: -10,
 			})
 			leftClick = true
-
-			if (leftClick && rightClick) {
-				targetStrength = 0
-				leftClick = false
-				rightClick = false
-
-				gsap.to(".bumper-left img:nth-child(2)", {
-					duration: 0.5, x: 0,
-				})
-				gsap.to(".bumper-right img:nth-child(2)", {
-					duration: 0.5, x: 0,
-				})
-
-			}
-
+			resetBump()
 		})
+
 		const buttonB = Axis.buttonManager.getButton("w", 2) // Récupère le bouton en fonction de la touche et de l'ID du joueur.
 		buttonB.addEventListener("keydown", () => {
 			gsap.set(".bumper-right img:nth-child(2)", {x: 0})
@@ -80,18 +111,7 @@ export default class PixiApplication {
 			})
 			rightClick = true
 
-			if (leftClick && rightClick) {
-				targetStrength = 0
-				leftClick = false
-				rightClick = false
-
-				gsap.to(".bumper-left img:nth-child(2)", {
-					duration: 0.5, x: 0,
-				})
-				gsap.to(".bumper-right img:nth-child(2)", {
-					duration: 0.5, x: 0,
-				})
-			}
+			resetBump()
 		})
 		let latestTime = 0
 		const update = () => {
@@ -99,7 +119,8 @@ export default class PixiApplication {
 			const currentTime = performance.now()
 			const delta = currentTime - latestTime
 			targetStrength += 0.00001 * delta
-			filter.strength = lerp(filter.strength, targetStrength, 0.001 * delta)
+			if (block) targetStrength = 0
+			filter.strength = lerp(filter.strength, targetStrength, 0.01 * delta)
 			latestTime = currentTime
 			requestAnimationFrame(update)
 		}
