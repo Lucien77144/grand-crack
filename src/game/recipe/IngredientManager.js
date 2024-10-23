@@ -42,7 +42,8 @@ export default class IngredientManager {
 			bounds: fridge.sprite.getBounds(),
 			ingredientName: "banana",
 			ingredientSize: 0.3,
-			ingredientAction: "cutter"
+			ingredientAction: "cutter",
+			ingredientSound: "tomate"
 		})
 
 		const tiroir = new PixiSprite({
@@ -56,7 +57,8 @@ export default class IngredientManager {
 			bounds: tiroir.sprite.getBounds(),
 			ingredientName: "cheese",
 			ingredientSize: 0.2,
-			ingredientAction: "baker"
+			ingredientAction: "baker",
+			ingredientSound: "aubergine"
 		})
 
 		const oven = new PixiSprite({
@@ -70,7 +72,8 @@ export default class IngredientManager {
 			bounds: oven.sprite.getBounds(),
 			ingredientName: "flour",
 			ingredientSize: 0.2,
-			ingredientAction: "mixer"
+			ingredientAction: "mixer",
+			ingredientSound: "courgette"
 		})
 
 
@@ -107,9 +110,11 @@ export default class IngredientManager {
 					)
 
 					ingredient.create()
-					console.log("create")
+					this.#game.soundManager.playSingleSound(container.ingredientSound, .5)
 
 					this.#ingredients.push(ingredient)
+
+					player.releaseIngredient()
 
 					player.holdIngredient(ingredient)
 				}

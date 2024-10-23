@@ -3,6 +3,7 @@ import {ZoomBlurFilter} from "pixi-filters";
 import Axis from "axis-api";
 import {lerp} from "@/utils/maths";
 import gsap from "gsap";
+import {Game} from "@/game/Game";
 
 export default class PixiApplication {
 	static instance
@@ -22,19 +23,26 @@ export default class PixiApplication {
 			this.canvas = this.app.canvas
 		})
 
-		await PIXI.Assets.load("/assets/img/office.webp");
+		await PIXI.Assets.load("/assets/img/background.jpg");
 		// change background with an image /assets/img/office.webp
-		const assets = PIXI.Assets.get("/assets/img/office.webp")
+		const assets = PIXI.Assets.get("/assets/img/background.jpg")
 		// get ratio of image
 		const ratio = assets.width / assets.height
 		const slide = new PIXI.Sprite(assets)
-		slide.width = window.innerWidth * ratio
-		slide.height = window.innerHeight
+		if (innerWidth / innerHeight > ratio) {
+			slide.width = window.innerWidth
+			slide.height = window.innerWidth / ratio
+		} else {
+			slide.width = window.innerHeight * ratio
+			slide.height = window.innerHeight
+		}
 		slide.x = window.innerWidth / 2 - slide.width / 2
 		this.app.stage.addChild(slide)
 
 
 		// create custom filter
+
+		const game = new Game()
 
 
 		const filter = new ZoomBlurFilter({
@@ -65,6 +73,7 @@ export default class PixiApplication {
 
 		const resetBump = () => {
 			if (leftClick && rightClick) {
+				game.soundManager.playSingleSound("sniff", 1)
 				targetStrength = 0
 				leftClick = false
 				rightClick = false
@@ -120,6 +129,7 @@ export default class PixiApplication {
 			const delta = currentTime - latestTime
 			targetStrength += 0.00001 * delta
 			if (block) targetStrength = 0
+			if (targetStrength > 0.1) targetStrength = 0.1
 			filter.strength = lerp(filter.strength, targetStrength, 0.01 * delta)
 			latestTime = currentTime
 			requestAnimationFrame(update)
