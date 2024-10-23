@@ -77,7 +77,7 @@ export default class PixiApplication {
 					x: 0,
 					delay: 1
 				})
-			}, 5000)
+			}, 10000)
 		}
 		handleRandom()
 
