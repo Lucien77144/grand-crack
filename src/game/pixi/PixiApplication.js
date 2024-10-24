@@ -39,14 +39,20 @@ export default class PixiApplication {
 		slide.x = window.innerWidth / 2 - slide.width / 2
 		this.app.stage.addChild(slide)
 
+		gsap.set(".bumper-left", {
+			x: -400,
+		})
+		gsap.set(".bumper-right", {
+			x: 400,
+		})
+	}
 
-		// create custom filter
-
+	startCoke() {
 		const game = new Game()
 
 
 		const filter = new ZoomBlurFilter({
-			strength: 0.01, center: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
+			strength: 0, center: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
 		})
 
 		this.app.stage.filters = [ filter ]
@@ -61,13 +67,9 @@ export default class PixiApplication {
 
 		let progress = 0
 		let activeSide = ""
+		let timeout = 30000
 
-		gsap.set(".bumper-left", {
-			x: "-100%",
-		})
-		gsap.set(".bumper-right", {
-			x: "100%",
-		})
+
 		const handleRandom = () => {
 			setTimeout(() => {
 				const randomSide = Math.random() > .5 ? "left" : "right"
@@ -77,7 +79,7 @@ export default class PixiApplication {
 					x: 0,
 					delay: 1
 				})
-			}, 10000)
+			}, timeout)
 		}
 		handleRandom()
 
@@ -109,6 +111,9 @@ export default class PixiApplication {
 			rightPressed = false
 			block = true
 			activeSide = ""
+
+			game.soundManager.playSingleSound("aaa", 1)
+			timeout = Math.max(2000, timeout - 2000)
 
 			gsap.to(".bumper-left", {
 				x: "-100%",

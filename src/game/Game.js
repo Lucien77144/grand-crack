@@ -94,6 +94,7 @@ export class Game {
 		if (!store.isGameStarted) {
 			store.isGameStarted = true
 			this.kitchen.start()
+			this.pixiApplication.startCoke()
 		}
 
 		InputSet.update()
