@@ -1,10 +1,6 @@
 {
   "textures": [
     {
-      "name": "cursor",
-      "src": "/assets/sprites/cursor/cursor.png"
-    },
-    {
       "name": "cursor1",
       "src": "/assets/sprites/cursor1/cursor1.png",
       "atlasData": "/assets/sprites/cursor1/cursor1.json"
@@ -33,41 +29,12 @@
       "atlasData": "/assets/sprites/mixer/mixer.json"
     },
     {
-      "name": "mushroom",
-      "src": "/assets/sprites/ingredients/mushroom.png",
-      "atlasData": "/assets/sprites/ingredients/mushroom.json"
-    },
-    {
       "name": "composerP1",
       "src": "/assets/sprites/composer/composer.svg"
     },
     {
       "name": "composerP2",
       "src": "/assets/sprites/composer/composer.svg"
-    },
-    {
-      "name": "recipe1",
-      "src": "/assets/sprites/recipe/recipe1.png"
-    },
-    {
-      "name": "sardine",
-      "src": "/assets/sprites/ingredients/sardine.png",
-      "atlasData": "/assets/sprites/ingredients/sardine.json"
-    },
-    {
-      "name": "banana",
-      "src": "/assets/sprites/ingredients/banana.png",
-      "atlasData": "/assets/sprites/ingredients/banana.json"
-    },
-    {
-      "name": "cheese",
-      "src": "/assets/sprites/ingredients/cheese.png",
-      "atlasData": "/assets/sprites/ingredients/cheese.json"
-    },
-    {
-      "name": "flour",
-      "src": "/assets/sprites/ingredients/flour.png",
-      "atlasData": "/assets/sprites/ingredients/flour.json"
     },
     {
       "name": "tete_de_beuh",
