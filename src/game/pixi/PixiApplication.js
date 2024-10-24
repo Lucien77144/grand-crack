@@ -40,10 +40,10 @@ export default class PixiApplication {
 		this.app.stage.addChild(slide)
 
 		gsap.set(".bumper-left", {
-			x: -400,
+			x: "-100%",
 		})
 		gsap.set(".bumper-right", {
-			x: 400,
+			x: "100%",
 		})
 	}
 

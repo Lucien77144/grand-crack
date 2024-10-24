@@ -100,7 +100,7 @@ export class Composer extends CookingStation {
 	}
 
 	addPlate(recipe) {
-		this.textureData = this.tl.assetArray[ recipe.name ]
+		this.textureData = this.tl.assetArray[ recipe.name ] || this.tl.assetArray[ recipe.name ]
 		if (!this.textureData) return
 		this.plate = new PixiSprite(
 			{

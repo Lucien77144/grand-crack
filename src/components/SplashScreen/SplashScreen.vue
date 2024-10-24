@@ -6,7 +6,7 @@
 <template>
 	<div class="splash-screen">
 		<div class="logo">
-			<img src="/assets/ui/splash-screen/logo.svg">
+			<img src="/assets/ui/splash-screen/logo.png">
 		</div>
 		<div class="start-button">
 			<img src="/assets/ui/splash-screen/start-button.svg">

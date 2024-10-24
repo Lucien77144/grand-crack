@@ -5,13 +5,10 @@ import { Mixer } from "./Mixer"
 import { Baker } from "./Baker"
 import TextureLoader from "@/game/TextureLoader"
 import { Composer } from "@/game/kitchen/Composer"
-import { Application } from "pixi.js"
 
-const KITCHEN_PLAN_BASE_SIZE = 0.23
-const CUTTER_BASE_SIZE = 0.23
-const COMPOSER_BASE_SIZE = 0.3
-const MIXER_BASE_SIZE = 0.23
-const BAKER_BASE_SIZE = 0.25
+const CUTTER_BASE_SIZE = 0.175
+const MIXER_BASE_SIZE = 0.175
+const BAKER_BASE_SIZE = 0.175
 
 export class Kitchen {
 	constructor() {
@@ -60,8 +57,8 @@ export class Kitchen {
 	// Crée la station de découpe
 	createCutter() {
 		const size = CUTTER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
-		const x = this.canvas.offsetWidth / 3.8
-		const y = this.canvas.offsetHeight * 0.9
+		const x = this.canvas.offsetWidth / 3.1
+		const y = this.canvas.offsetHeight * 0.915
 
 		this.cutter = new Cutter({
 			x,
@@ -77,7 +74,7 @@ export class Kitchen {
 	createMixer() {
 		const size = MIXER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
 		const x = this.canvas.offsetWidth / 2
-		const y = this.canvas.offsetHeight * 0.86
+		const y = this.canvas.offsetHeight * 0.885
 
 		this.mixer = new Mixer({
 			x,
@@ -92,8 +89,8 @@ export class Kitchen {
 	// Crée la station de cuisson
 	createBaker() {
 		const size = BAKER_BASE_SIZE * (this.canvas.offsetWidth * 0.00075)
-		const x = this.canvas.offsetWidth / 1.38
-		const y = this.canvas.offsetHeight * 0.76
+		const x = this.canvas.offsetWidth / 1.5
+		const y = this.canvas.offsetHeight * 0.82
 
 		this.baker = new Baker({
 			x,

@@ -2,21 +2,12 @@
   {
     "name": "Gros bedo",
     "nbOfPlayerHaveCompleted": 0,
-    "cover": "/assets/img/office.webp",
-    "score": 200,
+    "cover": "/assets/img/joint.png",
+    "score": 100,
     "ingredients": [
       {
-        "name": "Feuilles OCB",
-        "cover": "banana-1.png",
-        "size": 0.3,
-        "canMove": true,
-        "action": "cutter",
-        "isCooked": false,
-        "quantity": 1
-      },
-      {
         "name": "Beuh dla frappe",
-        "cover": "flour-1.png",
+        "cover": "/assets/img/tete_de_beuh.png",
         "size": 0.2,
         "canMove": true,
         "action": "mixer",
@@ -24,11 +15,37 @@
         "quantity": 1
       },
       {
-        "name": "Un tonc",
-        "cover": "cheese-1.png",
+        "name": "Feuilles OCB",
+        "cover": "/assets/img/OCB.png",
+        "size": 0.3,
+        "canMove": true,
+        "action": "cutter",
+        "isCooked": false,
+        "quantity": 1
+      }
+    ]
+  },
+  {
+    "name": "Héroïne",
+    "nbOfPlayerHaveCompleted": 0,
+    "cover": "/assets/img/heroine.png",
+    "score": 100,
+    "ingredients": [
+      {
+        "name": "Beuh dla frappe",
+        "cover": "/assets/img/seringue_vide.png",
         "size": 0.2,
         "canMove": true,
-        "action": "baker",
+        "action": "mixer",
+        "isCooked": false,
+        "quantity": 1
+      },
+      {
+        "name": "Feuilles OCB",
+        "cover": "/assets/img/diamorphine.png",
+        "size": 0.3,
+        "canMove": true,
+        "action": "cutter",
         "isCooked": false,
         "quantity": 1
       }
@@ -65,32 +82,6 @@
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/office.webp",
     "score": 100,
-    "ingredients": [
-      {
-        "name": "flour",
-        "cover": "flour-1.png",
-        "size": 0.2,
-        "canMove": true,
-        "action": "mixer",
-        "isCooked": false,
-        "quantity": 1
-      },
-      {
-        "name": "cheese",
-        "cover": "cheese-1.png",
-        "size": 0.2,
-        "canMove": true,
-        "action": "baker",
-        "isCooked": false,
-        "quantity": 1
-      }
-    ]
-  },
-  {
-    "name": "Héroïne",
-    "nbOfPlayerHaveCompleted": 0,
-    "cover": "/assets/img/office.webp",
-    "score": 150,
     "ingredients": [
       {
         "name": "flour",

@@ -39,7 +39,7 @@
 					</div>
 				</div>
 				<div class="task__footer">
-					<TaskIngredient :ingredients="task.ingredients" :textures="textures" color="green" />
+					<TaskIngredient :ingredients="task.ingredients" color="green" />
 				</div>
 			</div>
 		</div>

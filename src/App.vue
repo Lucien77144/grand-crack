@@ -116,15 +116,6 @@
 			}"
 		/>
 		<div ref="$$canvas" />
-		<div class="background">
-			<!--			<video
-				ref="$$video"
-				src="/assets/video/background.mp4"
-				muted
-				loop
-			/>-->
-			<img src="/assets/img/office.webp">
-		</div>
 		<div class="bumper-left">
 			<img src="/assets/img/base.png">
 			<img src="/assets/img/coke.png">
@@ -133,8 +124,8 @@
 			<img src="/assets/img/base.png">
 			<img src="/assets/img/coke.png">
 		</div>
-		<CookingInstruction :player="1" />
-		<CookingInstruction :player="2" />
+		<!-- <CookingInstruction :player="1" />
+		<CookingInstruction :player="2" /> -->
 	</main>
 </template>
 
@@ -188,12 +179,12 @@
 				@include inset(0, absolute);
 
 				background:
-					radial-gradient(
-						circle,
-						rgb(255 0 0 / 0%) 0%,
-						rgb(255 0 0 / 25%) 50%,
-						rgb(255 0 0 / 50%) 100%
-					);
+ radial-gradient(
+					circle,
+					rgb(255 0 0 / 0%) 0%,
+					rgb(255 0 0 / 25%) 50%,
+					rgb(255 0 0 / 50%) 100%
+				);
 				content: "";
 				opacity: 0;
 				transition: opacity 5s cubic-bezier(0.215, 0.61, 0.355, 1);
