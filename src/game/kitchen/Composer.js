@@ -62,9 +62,6 @@ export class Composer extends CookingStation {
 			this.playerAssign.onPlayerInteractCounter(true)
 
 			this.addIngredient(ingredient)
-			requestAnimationFrame(() => {
-				this.playerAssign.releaseIngredient()
-			})
 
 			const newList = []
 			this.recipeList.forEach((recipe) => {
@@ -86,6 +83,8 @@ export class Composer extends CookingStation {
 				}
 			})
 			this.recipeList = newList
+
+			this.playerAssign.releaseIngredient(true)
 		}
 	}
 
