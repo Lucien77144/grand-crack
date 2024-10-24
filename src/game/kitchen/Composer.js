@@ -26,7 +26,6 @@ export class Composer extends CookingStation {
 
 		this.game.recipesDone++
 
-		// @TODO: Optimise and do a destroy
 		setTimeout(() => {
 			this.recipeList = this.playerAssign.setRecipeList()
 			this.#setTargetIngredients()
@@ -44,7 +43,7 @@ export class Composer extends CookingStation {
 
 	#setTargetIngredients() {
 		this.targetIngredients = this.recipeList.reduce((acc, r) => {
-			return { ...acc, [ r.name ]: r.ingredients.map((i) => i.name) }
+			return { ...acc, [ r.id ]: r.ingredients.map((i) => i.id) }
 		}, {})
 	}
 
@@ -65,16 +64,14 @@ export class Composer extends CookingStation {
 
 			const newList = []
 			this.recipeList.forEach((recipe) => {
-				if (this.checkIsFinished(recipe.name)) {
+				if (this.checkIsFinished(recipe.id)) {
 					const pIndex = this.playerAssign.id - 1
 					store.players[ pIndex ].score += recipe.score
 
 					this.game.soundManager.playSingleSound("recipeComplete", 1)
-					this.playerAssign.removeRecipeFromList(recipe.name)
+					this.playerAssign.removeRecipeFromList(recipe.id)
 
-					this.removeIngredients(
-						recipe.ingredients.map((i) => i.name)
-					)
+					this.removeIngredients(recipe.ingredients.map((i) => i.id))
 
 					this.#setTargetIngredients()
 					this.addPlate(recipe)
@@ -89,7 +86,7 @@ export class Composer extends CookingStation {
 	}
 
 	addIngredient(ingredient) {
-		this.ingredients[ ingredient.getName() ] = ingredient
+		this.ingredients[ ingredient.getId() ] = ingredient
 	}
 
 	removeIngredients(list = []) {
@@ -100,7 +97,8 @@ export class Composer extends CookingStation {
 	}
 
 	addPlate(recipe) {
-		this.textureData = this.tl.assetArray[ recipe.name ] || this.tl.assetArray[ recipe.name ]
+		this.textureData =
+			this.tl.assetArray[ recipe.id ] || this.tl.assetArray[ recipe.id ]
 		if (!this.textureData) return
 		this.plate = new PixiSprite(
 			{
@@ -138,31 +136,48 @@ export class Composer extends CookingStation {
 				player &&
 				PixiSprite.checkOverlap(
 					player.pixiSprite.sprite,
-					this.pixiSprite.sprite,
+					this.pixiSprite.sprite
 				)
 
-			const isCook =
-				ingredient.getInCooking() === false &&
-				ingredient.getIsCooked() === true &&
-				!ingredient.getOnPlate()
+			const isCook = true
 
+			// const isCook =
+			// 	ingredient.getInCooking() === false &&
+			// 	ingredient.getIsCooked() === true &&
+			// 	!ingredient.getOnPlate()
+
+			console.log(this.recipeList)
 			const inRecipe = this.recipeList.some((recipe) =>
-				recipe.ingredients.some((i) => i.name === ingredient.getName())
+				recipe.ingredients.some((i) => i.id === ingredient.getId())
 			)
 			const notAlreadyIn = !this.ingredients.hasOwnProperty(
-				ingredient.getName()
+				ingredient.getId()
 			)
 
+			console.log(
+				"ingredient",
+				ingredient,
+				"overlapping",
+				overlapping,
+				"isCook",
+				isCook,
+				"inRecipe",
+				inRecipe,
+				"notAlreadyIn",
+				notAlreadyIn
+			)
+
+
 			return (
-				ingredient && overlapping && isCook && inRecipe && notAlreadyIn
+				ingredient && overlapping && inRecipe && notAlreadyIn
 			)
 		} else {
 			return false
 		}
 	}
 
-	checkIsFinished(name) {
-		return this.targetIngredients[ name ].every((ingredient) =>
+	checkIsFinished(id) {
+		return this.targetIngredients[ id ].every((ingredient) =>
 			this.ingredients.hasOwnProperty(ingredient)
 		)
 	}

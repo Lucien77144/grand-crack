@@ -43,8 +43,8 @@ export default class Player {
 
 	setRecipeList() {
 		// if (!store.isGameStarted) return
-		const active = this.recipeList.map((r) => r.name)
-		const list = recipes.filter((r) => !active.includes(r.name))
+		const active = this.recipeList.map((r) => r.id)
+		const list = recipes.filter((r) => !active.includes(r.id))
 		const index = Math.floor(Math.random() * list.length)
 
 		const item = list[ index ]
@@ -69,13 +69,13 @@ export default class Player {
 		}
 	}
 
-	removeRecipeFromList(names = []) {
+	removeRecipeFromList(ids = []) {
 		this.recipeList = this.recipeList.filter(
-			(r) => !names.includes(r.name) || r.player !== this.id
+			(r) => !ids.includes(r.id) || r.player !== this.id
 		)
 		store.recipesList = [
 			...store.recipesList.filter(
-				(r) => !names.includes(r.name) || r.player !== this.id
+				(r) => !ids.includes(r.id) || r.player !== this.id
 			),
 		]
 
@@ -90,9 +90,9 @@ export default class Player {
 				x:
 					this.id === 1
 						? this.canvas.offsetWidth / 2 -
-						this.canvas.offsetWidth * 0.1
+						  this.canvas.offsetWidth * 0.1
 						: this.canvas.offsetWidth / 2 +
-						this.canvas.offsetWidth * 0.1,
+						  this.canvas.offsetWidth * 0.1,
 				y: 200,
 				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.0005, // Taille du sprite ajustée selon la largeur de l'écran
 				animationName: `cursor${ this.id }`, // Animation liée à l'id du joueur

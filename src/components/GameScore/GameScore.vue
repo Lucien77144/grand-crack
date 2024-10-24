@@ -36,12 +36,12 @@
 			width: 11rem;
 
 			&.player-1 {
-				right: 2.75rem;
+				left: 3.25rem;
 				transform: rotateX(14deg) rotateY(-4deg);
 			}
 
 			&.player-2 {
-				left: 3.25rem;
+				right: 2.75rem;
 				transform: rotateX(-4deg) rotateY(-4deg);
 			}
 		}

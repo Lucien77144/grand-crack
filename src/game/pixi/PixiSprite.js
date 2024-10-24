@@ -1,5 +1,4 @@
 import { Assets, Sprite, Point, AnimatedSprite } from "pixi.js" // Import des classes nécessaires de Pixi.js
-import { v4 as uuidv4 } from "uuid" // Import pour générer des identifiants uniques
 import PixiApplication from "@/game/pixi/PixiApplication" // Import de l'application Pixi
 
 export default class PixiSprite {
@@ -15,7 +14,6 @@ export default class PixiSprite {
 		textureData
 	) {
 		this.textureData = textureData
-		this.atlasId = uuidv4() // Identifiant unique pour le sprite
 
 		// Propriétés de position, taille, ancre, animation, et zIndex
 		this.x = x

@@ -16,7 +16,12 @@ export class Cutter extends CookingStation {
 		const ingredient = player.ingredientHold
 
 		// Vérifie si le joueur et l'ingrédient existent, si l'interaction est possible, et si le cutter est libre
-		if (player && ingredient && this.checkCanInteractWithIngredient(player, ingredient) && !this.inMixer) {
+		if (
+			player &&
+			ingredient &&
+			this.checkCanInteractWithIngredient(player, ingredient) &&
+			!this.inMixer
+		) {
 			player.updateSpriteFrame(false) // Met à jour le sprite du joueur
 			ingredient.setInCooking(true) // Indique que l'ingrédient est en cours de cuisson
 			ingredient.setCanMove(false) // Empêche le mouvement de l'ingrédient
@@ -34,24 +39,41 @@ export class Cutter extends CookingStation {
 	// Fonction appelée lors de l'appui sur le bouton pour couper l'ingrédient
 	onPressButtonCut(e) {
 		if (this.inCutter) {
-			this.progress += 1
-			// Limite le progrès à l'intervalle valide des images du sprite
-			this.progress = clamp(this.progress, 0, this.ingredient.pixiSprite.sprite.totalFrames - 1)
-			this.ingredient.pixiSprite.sprite.gotoAndStop(this.progress)
-			const rand = Math.floor(Math.random() * 3)
-			this.game.soundManager.playSingleSound(`cutting${ rand }`, 0.5)
+			if (!this.ingredient?.pixiSprite?.sprite.gotoAndStop) {
+				this.onInteractionEnd()
+			} else {
+				this.progress += 1
+				// Limite le progrès à l'intervalle valide des images du sprite
+				this.progress = clamp(
+					this.progress,
+					0,
+					this.ingredient.pixiSprite.sprite.totalFrames - 1
+				)
+				this.ingredient.pixiSprite.sprite.gotoAndStop(this.progress)
+				const rand = Math.floor(Math.random() * 3)
+				this.game.soundManager.playSingleSound(`cutting${ rand }`, 0.5)
 
-			// Vérifie si la découpe est terminée
-			if (this.progress === this.ingredient.pixiSprite.sprite.totalFrames - 1) {
-				this.ingredient.animOut()
-				this.player.onPlayerInteractCounter(true)
-				this.ingredient.onInteractionCounterEnd("cutter")
-				this.inCutter = false
-				this.player = null
-				this.ingredient = null
-				this.progress = 0
+				// Vérifie si la découpe est terminée
+				if (
+					this.progress ===
+					this.ingredient.pixiSprite.sprite.totalFrames - 1
+				) {
+					this.onInteractionEnd()
+				}
 			}
 		}
+	}
+
+	onInteractionEnd() {
+		window.requestAnimationFrame(() =>{
+			this.ingredient.animOut()
+			this.player.onPlayerInteractCounter(true) // Indique que le joueur peut interagir à nouveau
+			this.ingredient.onInteractionCounterEnd("cutter") // Indique que l'interaction avec l'ingrédient est terminée
+			this.inCutter = false
+			this.progress = 0
+			this.player = null
+			this.ingredient = null
+		})
 	}
 
 	// Ajoute des événements d'entrée pour interagir avec le cutter

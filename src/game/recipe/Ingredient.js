@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid"
 import { Game } from "@/game/Game"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import TextureLoader from "@/game/TextureLoader"
@@ -7,7 +6,8 @@ import { gsap } from "gsap"
 
 export default class Ingredient {
 	// Membres privés
-	#id // Identifiant unique de l'ingrédient, généré via uuidv4.
+	#id // Identifiant unique de l'ingrédient
+	#idList // Liste des identifiants uniques de l'ingrédient
 	#size // Nom de l'ingrédient.
 	#name // Nom de l'ingrédient (lié à sa texture ou animation).
 	#canMove // Indique si l'ingrédient peut se déplacer.
@@ -31,14 +31,15 @@ export default class Ingredient {
 	 * @param {string[]} action - Action associée à l'ingrédient.
 	 * @param {Boolean} isCooked - Indique si l'ingrédient est déjà cuit (par défaut false).
 	 */
-	constructor(ref, name, size, x, action, y) {
+	constructor(ref, name, idList, size, x, action, y) {
 		this.#game = new Game()
-		this.#id = uuidv4()
-		this.#name = [ ...name ];
-		(this.#size = Array.isArray(size)
+		this.#name = [ ...name ]
+		this.#idList = [ ...idList ]
+		this.#id = this.#idList[ 0 ]
+		this.#size = Array.isArray(size)
 			? [ ...size ]
-			: Array(size.length).fill(size)),
-		(this.#action = action)
+			: Array(size.length).fill(size)
+		this.#action = action
 		this.#canMove = true
 
 		this.ref = ref
@@ -210,12 +211,14 @@ export default class Ingredient {
 		if (this.#name.length > 1) {
 			this.#name.shift()
 			this.#size.shift()
+			this.#idList.shift()
+			this.#id = this.#idList[ 0 ]
 
-			const newTextureData = this.tl.assetArray[ this.#name[ 0 ] ]
+			const newTextureData = this.tl.assetArray[ this.#id ]
 
 			if (newTextureData.sheet) {
 				this.pixiSprite.sprite.textures =
-					newTextureData.sheet?.animations?.[ this.#name[ 0 ] ]
+					newTextureData.sheet?.animations?.[ this.#id ]
 			} else {
 				this.pixiSprite.sprite.texture = newTextureData.texture
 				if (this.#size[ 0 ]) {

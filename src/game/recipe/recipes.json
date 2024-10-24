@@ -1,5 +1,6 @@
 [
   {
+    "id": "bedo",
     "name": "Le GROS Dodo",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/joint.png",
@@ -7,8 +8,9 @@
     "score": 100,
     "ingredients": [
       {
-        "name": "tete_de_beuh",
-        "cover": "/assets/img/tete_de_beuh.png",
+        "id": "beuh_grinde",
+        "name": "beuh_grinde",
+        "cover": "/assets/img/beuh_grinde.png",
         "size": 0.2,
         "color": "#032826",
         "canMove": true,
@@ -17,6 +19,7 @@
         "quantity": 1
       },
       {
+        "id": "feuille_ouverte",
         "name": "feuille_ouverte",
         "cover": "/assets/img/feuille_ouverte.png",
         "size": 0.3,
@@ -29,35 +32,39 @@
     ]
   },
   {
+    "id": "hero",
     "name": "El Biberon",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/heroine.png",
     "color": "#5C3307",
-    "score": 100,
+    "score": 50,
     "ingredients": [
       {
-        "name": "seringue_vide",
-        "cover": "/assets/img/seringue_vide.png",
-        "size": 0.2,
+        "id": "diamorphine",
+        "name": "diamorphine",
+        "cover": "/assets/img/diamorphine.png",
+        "size": 0.3,
         "color": "#032826",
         "canMove": true,
-        "action": "mixer",
+        "action": "cutter",
         "isCooked": false,
         "quantity": 1
       },
       {
-        "name": "diamorphine",
-        "cover": "/assets/img/diamorphine.png",
-        "size": 0.3,
+        "id": "seringue_vide",
+        "name": "seringue_vide",
+        "cover": "/assets/img/seringue_vide.png",
+        "size": 0.2,
         "color": "#505A58",
         "canMove": true,
-        "action": "cutter",
+        "action": "mixer",
         "isCooked": false,
         "quantity": 1
       }
     ]
   },
   {
+    "id": "crack",
     "name": "Surprise 2 Papy",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/pipe-a-crack-remplie.png",
@@ -65,28 +72,31 @@
     "score": 500,
     "ingredients": [
       {
-        "name": "pipe-a-crack",
-        "cover": "/assets/img/pipe-a-crack.png",
+        "id": "crystal",
+        "name": "crystal",
+        "cover": "/assets/img/crystal.png",
         "size": 0.2,
         "color": "#032826",
         "canMove": true,
-        "action": "mixer",
+        "action": "baker",
         "isCooked": false,
         "quantity": 1
       },
       {
-        "name": "crystal",
-        "cover": "/assets/img/crystal.png",
+        "id": "pipe-a-crack",
+        "name": "pipe-a-crack",
+        "cover": "/assets/img/pipe-a-crack.png",
         "size": 0.2,
         "color": "#505A58",
         "canMove": true,
-        "action": "baker",
+        "action": "mixer",
         "isCooked": false,
         "quantity": 1
       }
     ]
   },
   {
+    "id": "coke",
     "name": "Banane En Poudre",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/pochon_coke.png",
@@ -94,22 +104,24 @@
     "score": 100,
     "ingredients": [
       {
-        "name": "pochon_coke",
-        "cover": "/assets/img/pochon_coke.png",
+        "id": "coco",
+        "name": "coco",
+        "cover": "/assets/img/coco.png",
         "size": 0.2,
         "color": "#032826",
         "canMove": true,
-        "action": "mixer",
+        "action": "baker",
         "isCooked": false,
         "quantity": 1
       },
       {
-        "name": "coco",
-        "cover": "/assets/img/coco.png",
+        "id": "pochon_coke",
+        "name": "pochon_coke",
+        "cover": "/assets/img/pochon_coke.png",
         "size": 0.2,
         "color": "#505A58",
         "canMove": true,
-        "action": "baker",
+        "action": "mixer",
         "isCooked": false,
         "quantity": 1
       }

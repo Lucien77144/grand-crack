@@ -29,11 +29,7 @@
       "atlasData": "/assets/sprites/mixer/mixer.json"
     },
     {
-      "name": "composerP1",
-      "src": "/assets/sprites/composer/composer.svg"
-    },
-    {
-      "name": "composerP2",
+      "name": "composer",
       "src": "/assets/sprites/composer/composer.svg"
     },
     {
@@ -53,8 +49,24 @@
       "src": "/assets/img/coco.png"
     },
     {
+      "name": "diamorphine",
+      "src": "/assets/img/diamorphine.png"
+    },
+    {
+      "name": "ocb",
+      "src": "/assets/img/ocb.png"
+    },
+    {
+      "name": "feuille_ouverte",
+      "src": "/assets/img/feuille_ouverte.png"
+    },
+    {
       "name": "bounding_beuh",
       "src": "/assets/img/bounding_beuh.svg"
+    },
+    {
+      "name": "bounding_square",
+      "src": "/assets/img/bounding_square.svg"
     }
   ]
 }
