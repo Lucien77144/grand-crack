@@ -1,6 +1,7 @@
 .ingredients {
 	&__wrapper {
 		align-items: center;
+		animation: comein 0.5s ease-in-out;
 		display: flex;
 		justify-content: center;
 		margin-left: 0.4rem;
@@ -11,6 +12,14 @@
 		position: relative;
 		width: 33%;
 		z-index: -2;
+
+		&:nth-child(1) {
+			transform: rotate(365deg) translateY(-0.1rem);
+		}
+
+		&:nth-child(2) {
+			transform: rotate(2deg) translateY(-0.1rem);
+		}
 	}
 
 	&__img {
@@ -20,5 +29,15 @@
 		top: 50%;
 		transform: translate(-50%, -50%);
 		width: 75%;
+	}
+}
+
+@keyframes comein {
+	0% {
+		transform: rotate(5deg) translateY(-100%);
+	}
+
+	100% {
+		transform: rotate(0deg) translateY(0);
 	}
 }

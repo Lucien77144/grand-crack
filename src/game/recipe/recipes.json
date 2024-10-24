@@ -1,23 +1,26 @@
 [
   {
-    "name": "Gros bedo",
+    "name": "Le GROS Dodo",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/joint.png",
+    "color": "#03280C",
     "score": 100,
     "ingredients": [
       {
-        "name": "Beuh dla frappe",
+        "name": "tete_de_beuh",
         "cover": "/assets/img/tete_de_beuh.png",
         "size": 0.2,
+        "color": "#032826",
         "canMove": true,
         "action": "mixer",
         "isCooked": false,
         "quantity": 1
       },
       {
-        "name": "Feuilles OCB",
-        "cover": "/assets/img/OCB.png",
+        "name": "feuille_ouverte",
+        "cover": "/assets/img/feuille_ouverte.png",
         "size": 0.3,
+        "color": "#032826",
         "canMove": true,
         "action": "cutter",
         "isCooked": false,
@@ -26,24 +29,27 @@
     ]
   },
   {
-    "name": "Héroïne",
+    "name": "El Biberon",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/heroine.png",
+    "color": "#5C3307",
     "score": 100,
     "ingredients": [
       {
-        "name": "Beuh dla frappe",
+        "name": "seringue_vide",
         "cover": "/assets/img/seringue_vide.png",
         "size": 0.2,
+        "color": "#032826",
         "canMove": true,
         "action": "mixer",
         "isCooked": false,
         "quantity": 1
       },
       {
-        "name": "Feuilles OCB",
+        "name": "diamorphine",
         "cover": "/assets/img/diamorphine.png",
         "size": 0.3,
+        "color": "#032826",
         "canMove": true,
         "action": "cutter",
         "isCooked": false,
@@ -52,24 +58,27 @@
     ]
   },
   {
-    "name": "Crystal 2 Meth",
+    "name": "Surprise 2 Papy",
     "nbOfPlayerHaveCompleted": 0,
-    "cover": "/assets/img/office.webp",
+    "cover": "/assets/img/pipe-a-crack-remplie.png",
+    "color": "#032132",
     "score": 500,
     "ingredients": [
       {
-        "name": "flour",
-        "cover": "flour-1.png",
+        "name": "pipe-a-crack",
+        "cover": "/assets/img/pipe-a-crack.png",
         "size": 0.2,
+        "color": "#032826",
         "canMove": true,
         "action": "mixer",
         "isCooked": false,
         "quantity": 1
       },
       {
-        "name": "cheese",
-        "cover": "cheese-1.png",
+        "name": "crystal",
+        "cover": "/assets/img/crystal.png",
         "size": 0.2,
+        "color": "#032826",
         "canMove": true,
         "action": "baker",
         "isCooked": false,
@@ -78,24 +87,27 @@
     ]
   },
   {
-    "name": "Cocaïne",
+    "name": "Banane En Poudre",
     "nbOfPlayerHaveCompleted": 0,
-    "cover": "/assets/img/office.webp",
+    "cover": "/assets/img/pochon_coke.png",
+    "color": "#2E2519",
     "score": 100,
     "ingredients": [
       {
-        "name": "flour",
-        "cover": "flour-1.png",
+        "name": "pochon_coke",
+        "cover": "/assets/img/pochon_coke.png",
         "size": 0.2,
+        "color": "#032826",
         "canMove": true,
         "action": "mixer",
         "isCooked": false,
         "quantity": 1
       },
       {
-        "name": "cheese",
-        "cover": "cheese-1.png",
+        "name": "coco",
+        "cover": "/assets/img/coco.png",
         "size": 0.2,
+        "color": "#032826",
         "canMove": true,
         "action": "baker",
         "isCooked": false,

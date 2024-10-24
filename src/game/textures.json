@@ -46,8 +46,8 @@
       "src": "/assets/sprites/composer/composer.svg"
     },
     {
-      "name":  "recipe1",
-      "src" : "/assets/sprites/recipe/recipe1.png"
+      "name": "recipe1",
+      "src": "/assets/sprites/recipe/recipe1.png"
     },
     {
       "name": "sardine",
@@ -68,6 +68,26 @@
       "name": "flour",
       "src": "/assets/sprites/ingredients/flour.png",
       "atlasData": "/assets/sprites/ingredients/flour.json"
+    },
+    {
+      "name": "tete_de_beuh",
+      "src": "/assets/img/tete_de_beuh.png"
+    },
+    {
+      "name": "beuh_grinde",
+      "src": "/assets/img/beuh_grinde.png"
+    },
+    {
+      "name": "feuilles_de_coca",
+      "src": "/assets/img/feuilles_de_coca.png"
+    },
+    {
+      "name": "coco",
+      "src": "/assets/img/coco.png"
+    },
+    {
+      "name": "bouding_beuh",
+      "src": "/assets/img/bouding_beuh.svg"
     }
   ]
 }

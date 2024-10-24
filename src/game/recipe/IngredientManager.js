@@ -31,33 +31,32 @@ export default class IngredientManager {
 		// create a cube where the ingredient can be hold
 		const ingredientsContainer = []
 		const fridge = new PixiSprite({
-			size: 0.1,
-			x: innerWidth / 2,
-			y: innerHeight / 2,
-		}, this.tl.assetArray[ "kitchen" ])
-		fridge.sprite.rotation = Math.PI / 2
+			size: .7,
+			x: innerWidth * .365,
+			y: innerHeight * .67,
+		}, this.tl.assetArray[ "bouding_beuh" ])
 
 		ingredientsContainer.push({
-			sprite: fridge.sprite,
+			// sprite: fridge.sprite,
 			bounds: fridge.sprite.getBounds(),
-			ingredientName: ["cheese", 'banana'],
-			ingredientSize: 0.3,
-			ingredientAction: ["baker","cutter"],
+			ingredientName: [ "tete_de_beuh", "beuh_grinde" ],
+			ingredientSize: [ 0.04, .06 ],
+			ingredientAction: [ "mixer", null ],
 			ingredientSound: "tomate",
 		})
 
 		const tiroir = new PixiSprite({
-			size: 0.2,
-			x: innerWidth / 2 - 300,
-			y: innerHeight / 2,
-		}, this.tl.assetArray[ "cutter" ])
+			size: .7,
+			x: innerWidth * .6325,
+			y: innerHeight * .67,
+		}, this.tl.assetArray[ "bouding_beuh" ])
 
 		ingredientsContainer.push({
 			sprite: tiroir.sprite,
 			bounds: tiroir.sprite.getBounds(),
-			ingredientName: ["cheese"],
-			ingredientSize: 0.2,
-			ingredientAction: ["baker"],
+			ingredientName: [ "feuilles_de_coca", "coco" ],
+			ingredientSize: [ 0.03 ],
+			ingredientAction: [ "mixer", null ],
 			ingredientSound: "aubergine"
 		})
 
@@ -70,9 +69,9 @@ export default class IngredientManager {
 		ingredientsContainer.push({
 			sprite: oven.sprite,
 			bounds: oven.sprite.getBounds(),
-			ingredientName: ["flour"],
+			ingredientName: [ "flour" ],
 			ingredientSize: 0.2,
-			ingredientAction: ["mixer"],
+			ingredientAction: [ "mixer" ],
 			ingredientSound: "courgette"
 		})
 
@@ -81,7 +80,7 @@ export default class IngredientManager {
 		ingredientsContainer.forEach(container => {
 			signal.on("releaseIngredient", (ingredient) => {
 				//if the player is in the same position as the container destroy
-				if (!ingredient.pixiSprite) return
+				if (!ingredient?.pixiSprite) return
 				if (ingredient.pixiSprite.sprite.x >= container.bounds.x && ingredient.pixiSprite.sprite.x <= container.bounds.x + container.bounds.width && ingredient.pixiSprite.sprite.y >= container.bounds.y && ingredient.pixiSprite.sprite.y <= container.bounds.y + container.bounds.height) {
 					ingredient.destroy()
 				}

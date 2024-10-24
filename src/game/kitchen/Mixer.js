@@ -70,7 +70,7 @@ export class Mixer extends CookingStation {
 				this.ingredient.onInteractionCounterEnd("mixer") // Termine l'interaction avec l'ingrédient
 
 				// Met à jour l'animation de l'ingrédient
-				this.ingredient.pixiSprite.sprite.gotoAndStop(
+				this.ingredient.pixiSprite.sprite.gotoAndStop?.(
 					this.ingredient.pixiSprite.sprite.totalFrames - 1
 				)
 				this.ingredient.animOut()

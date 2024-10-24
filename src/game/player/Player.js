@@ -1,20 +1,20 @@
-import {Game} from "@/game/Game"
+import { Game } from "@/game/Game"
 import InputSet from "@/game/InputSet"
 import PixiSprite from "@/game/pixi/PixiSprite"
-import {clamp} from "@/utils/maths"
+import { clamp } from "@/utils/maths"
 import TextureLoader from "@/game/TextureLoader"
-import {store} from "@/store"
+import { store } from "@/store"
 import recipes from "@/game/recipe/recipes.json"
 import signal from "@/utils/signal"
 
-const MAX_RECIPES_ALLOWED = 4
+const MAX_RECIPES_ALLOWED = 7
 const CURSOR_BASE_SIZE = 0.4
 
 export default class Player {
 	constructor(id) {
 		this.id = id
 		this.tl = new TextureLoader()
-		this.textureData = this.tl.assetArray[`cursor${id}`]
+		this.textureData = this.tl.assetArray[ `cursor${ id }` ]
 		this.game = new Game()
 		this.recipeList = []
 
@@ -47,7 +47,7 @@ export default class Player {
 		const list = recipes.filter((r) => !active.includes(r.name))
 		const index = Math.floor(Math.random() * list.length)
 
-		const item = list[index]
+		const item = list[ index ]
 
 		if (!item) {
 			store.isGameOver = true
@@ -95,8 +95,8 @@ export default class Player {
 						this.canvas.offsetWidth * 0.1,
 				y: 200,
 				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.0005, // Taille du sprite ajustée selon la largeur de l'écran
-				animationName: `cursor${this.id}`, // Animation liée à l'id du joueur
-				anchor: [0.5, 0.5], // Centre le sprite
+				animationName: `cursor${ this.id }`, // Animation liée à l'id du joueur
+				anchor: [ 0.5, 0.5 ], // Centre le sprite
 				zIndex: 4,
 			},
 			this.textureData // Texture chargée pour le sprite
@@ -198,9 +198,9 @@ export default class Player {
 
 	updateAction() {
 		// Vérifie et met à jour l'action du joueur
-		if (store.players && store.players[this.id - 1]) {
-			if (store.players[this.id - 1].action !== this.action) {
-				this.action = store.players[this.id - 1].action
+		if (store.players && store.players[ this.id - 1 ]) {
+			if (store.players[ this.id - 1 ].action !== this.action) {
+				this.action = store.players[ this.id - 1 ].action
 				this.updateSpriteFrame() // Met à jour le sprite selon la nouvelle action
 			}
 		}

@@ -1,13 +1,14 @@
-import {v4 as uuidv4} from "uuid"
-import {Game} from "@/game/Game"
+import { v4 as uuidv4 } from "uuid"
+import { Game } from "@/game/Game"
 import PixiSprite from "@/game/pixi/PixiSprite"
 import TextureLoader from "@/game/TextureLoader"
-import {store} from "@/store"
-import {gsap} from "gsap"
+import { store } from "@/store"
+import { gsap } from "gsap"
 
 export default class Ingredient {
 	// Membres privés
 	#id // Identifiant unique de l'ingrédient, généré via uuidv4.
+	#size // Nom de l'ingrédient.
 	#name // Nom de l'ingrédient (lié à sa texture ou animation).
 	#canMove // Indique si l'ingrédient peut se déplacer.
 	#action // Action associée à l'ingrédient (peut changer en fonction de l'état).
@@ -33,16 +34,16 @@ export default class Ingredient {
 	constructor(ref, name, size, x, action, y) {
 		this.#game = new Game()
 		this.#id = uuidv4()
-		this.#name = [...name]
+		this.#name = [ ...name ]
+		this.#size = (Array.isArray(size) ? [ ...size ] : Array(size.length).fill(size)),
 		this.#action = action
 		this.#canMove = true
 
 		this.ref = ref
 		this.x = x
 		this.y = y
-		this.size = size
 		this.tl = new TextureLoader()
-		this.textureData = this.tl.assetArray[this.#name[0]]
+		this.textureData = this.tl.assetArray[ this.#name[ 0 ] ]
 
 		this.canvas = this.#game.canvas
 	}
@@ -53,21 +54,23 @@ export default class Ingredient {
 	 * @param {Number} frame - La frame à afficher.
 	 */
 	setAnimatedSpriteFrame(frame) {
-		this.pixiSprite.gotoAndStop(frame)
+		this.pixiSprite.gotoAndStop?.(frame)
 	}
 
 	/**
 	 * Initialise le sprite de l'ingrédient avec PixiSprite.
 	 */
 	initPixiSprite() {
-		console.log(this.#name[0])
-		this.pixiSprite = new PixiSprite({
-			x: this.x,
-			y: this.y,
-			size: this.size * this.canvas.offsetWidth * 0.00075,
-			animationName: this.#name[0],
-			zIndex: 3
-		}, this.textureData)
+		this.pixiSprite = new PixiSprite(
+			{
+				x: this.x,
+				y: this.y,
+				size: this.#size[ 0 ] * this.canvas.offsetWidth * 0.00075,
+				animationName: this.#name[ 0 ],
+				zIndex: 3,
+			},
+			this.textureData
+		)
 
 		this.addInputOnA()
 	}
@@ -157,9 +160,9 @@ export default class Ingredient {
 				this.#game.soundManager.playSingleSound("hold", 0.25)
 				player.holdIngredient(this)
 				this.pixiSprite.sprite.zIndex = 3
-				store.players[e.id - 1].action = this.#action
+				store.players[ e.id - 1 ].action = this.#action
 			} else {
-				store.players[e.id - 1].action = null
+				store.players[ e.id - 1 ].action = null
 			}
 		}
 	}
@@ -184,7 +187,6 @@ export default class Ingredient {
 		this.ref.removeIngredient(this)
 		this.pixiSprite.sprite.destroy()
 		this.pixiSprite = null
-
 	}
 
 	/**
@@ -205,10 +207,17 @@ export default class Ingredient {
 		this.setCanMove(true)
 		if (this.#name.length > 1) {
 			this.#name.shift()
+			this.#size.shift()
 
-			const newTextureData = this.tl.assetArray[this.#name[0]]
+			const newTextureData = this.tl.assetArray[ this.#name[ 0 ] ]
 
-			this.pixiSprite.sprite.textures = newTextureData.sheet.animations[this.#name[0]]
+			if (newTextureData.sheet) {
+				this.pixiSprite.sprite.textures =
+					newTextureData.sheet?.animations?.[ this.#name[ 0 ] ]
+			} else {
+				this.pixiSprite.sprite.texture = newTextureData.texture
+				this.pixiSprite.sprite.scale = this.#size[ 0 ]
+			}
 		}
 		//remove action to #action
 		this.#action = this.#action.filter((a) => a !== action)
@@ -236,7 +245,7 @@ export default class Ingredient {
 	}
 
 	getName() {
-		return this.#name[0]
+		return this.#name[ 0 ]
 	}
 
 	setCanMove(canMove) {

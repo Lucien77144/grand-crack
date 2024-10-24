@@ -135,7 +135,7 @@
 		bottom: 3rem;
 		left: 40px;
 		position: absolute;
-		width: 12rem;
+		width: 15rem;
 
 		img {
 			height: auto;
@@ -179,12 +179,12 @@
 				@include inset(0, absolute);
 
 				background:
- radial-gradient(
-					circle,
-					rgb(255 0 0 / 0%) 0%,
-					rgb(255 0 0 / 25%) 50%,
-					rgb(255 0 0 / 50%) 100%
-				);
+					radial-gradient(
+						circle,
+						rgb(255 0 0 / 0%) 0%,
+						rgb(255 0 0 / 25%) 50%,
+						rgb(255 0 0 / 50%) 100%
+					);
 				content: "";
 				opacity: 0;
 				transition: opacity 5s cubic-bezier(0.215, 0.61, 0.355, 1);

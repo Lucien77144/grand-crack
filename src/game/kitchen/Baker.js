@@ -44,7 +44,7 @@ export class Baker extends CookingStation {
 
 			// Arrête le sprite de l'ingrédient sur le dernier cadre
 			// TODO! - Vérifier si c'est utile
-			this.ingredient.pixiSprite.sprite.gotoAndStop(
+			this.ingredient.pixiSprite.sprite?.gotoAndStop?.(
 				this.ingredient.pixiSprite.sprite.totalFrames - 1
 			)
 

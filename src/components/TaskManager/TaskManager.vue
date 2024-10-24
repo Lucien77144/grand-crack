@@ -1,16 +1,8 @@
 <script setup>
 	import { store } from "@/store"
-	import { defineProps } from "vue"
 	import TaskContainer from "./components/TaskContainer/TaskContainer.vue"
 	import TaskPlayer from "./components/TaskPlayer/TaskPlayer.vue"
 	import TaskIngredient from "./components/TaskIngredient/TaskIngredient.vue"
-
-	const props = defineProps({
-		textures: {
-			type: Object,
-			required: true,
-		},
-	})
 </script>
 
 <template>
@@ -32,7 +24,7 @@
 						<TaskPlayer :player="task.player" />
 					</div>
 					<div class="task__bg">
-						<TaskContainer color="green" />
+						<TaskContainer :color="task.color" />
 					</div>
 					<div class="task__img">
 						<img :src="task.cover" alt="">
