@@ -28,43 +28,54 @@ export default class IngredientManager {
 	constructor(recipes) {
 		this.#recipes = Array.isArray(recipes) ? recipes : [ recipes ]
 
+		const factor = innerWidth / 2560
+
 		// create a cube where the ingredient can be hold
 		const ingredientsContainer = []
-		const fridge = new PixiSprite({
-			size: .7,
-			x: innerWidth * .365,
-			y: innerHeight * .67,
-		}, this.tl.assetArray[ "bouding_beuh" ])
+		const fridge = new PixiSprite(
+			{
+				size: factor * 0.7,
+				x: innerWidth * .365,
+				y: innerHeight * .67,
+			},
+			this.tl.assetArray[ "bounding_beuh" ]
+		)
 
 		ingredientsContainer.push({
 			// sprite: fridge.sprite,
 			bounds: fridge.sprite.getBounds(),
 			ingredientName: [ "tete_de_beuh", "beuh_grinde" ],
-			ingredientSize: [ 0.04, .06 ],
+			ingredientSize: [ 0.2, .35 ],
 			ingredientAction: [ "mixer", null ],
 			ingredientSound: "tomate",
 		})
 
-		const tiroir = new PixiSprite({
-			size: .7,
-			x: innerWidth * .6325,
-			y: innerHeight * .67,
-		}, this.tl.assetArray[ "bouding_beuh" ])
+		const tiroir = new PixiSprite(
+			{
+				size: factor * 0.7,
+				x: innerWidth * 0.6325,
+				y: innerHeight * 0.67,
+			},
+			this.tl.assetArray[ "bounding_beuh" ]
+		)
 
 		ingredientsContainer.push({
 			sprite: tiroir.sprite,
 			bounds: tiroir.sprite.getBounds(),
 			ingredientName: [ "feuilles_de_coca", "coco" ],
-			ingredientSize: [ 0.03 ],
+			ingredientSize: [ 0.15 ],
 			ingredientAction: [ "mixer", null ],
-			ingredientSound: "aubergine"
+			ingredientSound: "aubergine",
 		})
 
-		const oven = new PixiSprite({
-			size: 0.2,
-			x: innerWidth / 2 + 300,
-			y: innerHeight / 2,
-		}, this.tl.assetArray[ "cutter" ])
+		const oven = new PixiSprite(
+			{
+				size: factor * 0.2,
+				x: innerWidth / 2 + 300,
+				y: innerHeight / 2,
+			},
+			this.tl.assetArray[ "cutter" ]
+		)
 
 		ingredientsContainer.push({
 			sprite: oven.sprite,
@@ -72,42 +83,55 @@ export default class IngredientManager {
 			ingredientName: [ "flour" ],
 			ingredientSize: 0.2,
 			ingredientAction: [ "mixer" ],
-			ingredientSound: "courgette"
+			ingredientSound: "courgette",
 		})
 
-
-
-		ingredientsContainer.forEach(container => {
+		ingredientsContainer.forEach((container) => {
 			signal.on("releaseIngredient", (ingredient) => {
 				//if the player is in the same position as the container destroy
 				if (!ingredient?.pixiSprite) return
-				if (ingredient.pixiSprite.sprite.x >= container.bounds.x && ingredient.pixiSprite.sprite.x <= container.bounds.x + container.bounds.width && ingredient.pixiSprite.sprite.y >= container.bounds.y && ingredient.pixiSprite.sprite.y <= container.bounds.y + container.bounds.height) {
+				if (
+					ingredient.pixiSprite.sprite.x >= container.bounds.x &&
+					ingredient.pixiSprite.sprite.x <=
+						container.bounds.x + container.bounds.width &&
+					ingredient.pixiSprite.sprite.y >= container.bounds.y &&
+					ingredient.pixiSprite.sprite.y <=
+						container.bounds.y + container.bounds.height
+				) {
 					ingredient.destroy()
 				}
 			})
 		})
 
-
-
 		const handleKeydown = (player) => {
 			if (player.ingredientHold !== null) return
 			const playerPosition = {
 				x: player.pixiSprite.sprite.x,
-				y: player.pixiSprite.sprite.y
+				y: player.pixiSprite.sprite.y,
 			}
-			ingredientsContainer.forEach(container => {
-				if (playerPosition.x >= container.bounds.x && playerPosition.x <= container.bounds.x + container.bounds.width && playerPosition.y >= container.bounds.y && playerPosition.y <= container.bounds.y + container.bounds.height) {
+			ingredientsContainer.forEach((container) => {
+				if (
+					playerPosition.x >= container.bounds.x &&
+					playerPosition.x <=
+						container.bounds.x + container.bounds.width &&
+					playerPosition.y >= container.bounds.y &&
+					playerPosition.y <=
+						container.bounds.y + container.bounds.height
+				) {
 					const ingredient = new Ingredient(
 						this,
 						container.ingredientName,
 						container.ingredientSize,
 						playerPosition.x,
 						container.ingredientAction,
-						playerPosition.y,
+						playerPosition.y
 					)
 
 					ingredient.create()
-					this.#game.soundManager.playSingleSound(container.ingredientSound, .5)
+					this.#game.soundManager.playSingleSound(
+						container.ingredientSound,
+						0.5
+					)
 
 					this.#ingredients.push(ingredient)
 
@@ -118,10 +142,14 @@ export default class IngredientManager {
 			})
 		}
 		const buttonA = Axis.buttonManager.getButton("a", 1)
-		buttonA.addEventListener("keydown", () => handleKeydown(this.#game.player1))
+		buttonA.addEventListener("keydown", () =>
+			handleKeydown(this.#game.player1)
+		)
 
 		const buttonB = Axis.buttonManager.getButton("a", 2)
-		buttonB.addEventListener("keydown", () => handleKeydown(this.#game.player2))
+		buttonB.addEventListener("keydown", () =>
+			handleKeydown(this.#game.player2)
+		)
 	}
 
 	/**
@@ -143,16 +171,22 @@ export default class IngredientManager {
 
 			// Si des ingrédients manquent, on en génère un aléatoirement.
 			if (missingIngredients.length > 0) {
-				const randomIngredient = missingIngredients[ Math.floor(Math.random() * missingIngredients.length) ]
+				const randomIngredient =
+					missingIngredients[
+						Math.floor(Math.random() * missingIngredients.length)
+					]
 				const { name } = randomIngredient
 
 				// Trouve l'ingrédient dans la liste des recettes.
 				const ingredientRecipe = this.#recipes
-					.flatMap(recipe => recipe.ingredients)
-					.find(ingredient => ingredient.name === name)
+					.flatMap((recipe) => recipe.ingredients)
+					.find((ingredient) => ingredient.name === name)
 
 				if (ingredientRecipe) {
-					const x = window.innerWidth / 2 + Math.random() * this.dropZone - this.dropZone / 2
+					const x =
+						window.innerWidth / 2 +
+						Math.random() * this.dropZone -
+						this.dropZone / 2
 					const y = innerHeight / 2
 					const ingredient = new Ingredient(
 						this,
@@ -168,7 +202,8 @@ export default class IngredientManager {
 					await ingredient.create() // Crée l'ingrédient et l'ajoute au jeu.
 
 					this.#ingredients.push(ingredient)
-					this.#ingredientsSpawned[ name ] = (this.#ingredientsSpawned[ name ] || 0) + 1
+					this.#ingredientsSpawned[ name ] =
+						(this.#ingredientsSpawned[ name ] || 0) + 1
 					this.#lastSpawnTime = currentTime // Met à jour l'heure du dernier spawn.
 				}
 			}
@@ -182,8 +217,14 @@ export default class IngredientManager {
 	 */
 	getMissingIngredients() {
 		return Object.entries(this.#ingredientsToSpawn)
-			.filter(([ name, quantity ]) => (this.#ingredientsSpawned[ name ] || 0) < quantity)
-			.map(([ name, quantity ]) => ({ name, quantity: quantity - (this.#ingredientsSpawned[ name ] || 0) }))
+			.filter(
+				([ name, quantity ]) =>
+					(this.#ingredientsSpawned[ name ] || 0) < quantity
+			)
+			.map(([ name, quantity ]) => ({
+				name,
+				quantity: quantity - (this.#ingredientsSpawned[ name ] || 0),
+			}))
 	}
 
 	/**
@@ -209,7 +250,7 @@ export default class IngredientManager {
 	 */
 	removeIngredient(ingredient) {
 		const id = ingredient.getId()
-		const index = this.#ingredients.findIndex(ing => ing.getId() === id)
+		const index = this.#ingredients.findIndex((ing) => ing.getId() === id)
 
 		if (index !== -1) {
 			this.#ingredients.splice(index, 1)
@@ -232,7 +273,7 @@ export default class IngredientManager {
 		// }
 
 		// Met à jour chaque ingrédient.
-		this.#ingredients.forEach(ingredient => ingredient?.update(dt))
+		this.#ingredients.forEach((ingredient) => ingredient?.update(dt))
 	}
 
 	/**
@@ -311,7 +352,8 @@ export default class IngredientManager {
 	updateIngredientsToSpawn() {
 		this.#ingredientsToSpawn = this.#recipes.reduce((acc, recipe) => {
 			recipe.ingredients.forEach(({ name, quantity }) => {
-				const totalQuantity = quantity * 2 - recipe.nbOfPlayerHaveCompleted
+				const totalQuantity =
+					quantity * 2 - recipe.nbOfPlayerHaveCompleted
 				acc[ name ] = Math.min(totalQuantity, acc[ name ] || totalQuantity)
 			})
 			return acc

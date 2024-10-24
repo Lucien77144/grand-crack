@@ -34,9 +34,11 @@ export default class Ingredient {
 	constructor(ref, name, size, x, action, y) {
 		this.#game = new Game()
 		this.#id = uuidv4()
-		this.#name = [ ...name ]
-		this.#size = (Array.isArray(size) ? [ ...size ] : Array(size.length).fill(size)),
-		this.#action = action
+		this.#name = [ ...name ];
+		(this.#size = Array.isArray(size)
+			? [ ...size ]
+			: Array(size.length).fill(size)),
+		(this.#action = action)
 		this.#canMove = true
 
 		this.ref = ref
@@ -216,7 +218,9 @@ export default class Ingredient {
 					newTextureData.sheet?.animations?.[ this.#name[ 0 ] ]
 			} else {
 				this.pixiSprite.sprite.texture = newTextureData.texture
-				this.pixiSprite.sprite.scale = this.#size[ 0 ]
+				if (this.#size[ 0 ]) {
+					this.pixiSprite.sprite.scale = this.#size[ 0 ]
+				}
 			}
 		}
 		//remove action to #action

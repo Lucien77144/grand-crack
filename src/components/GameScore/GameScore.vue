@@ -15,7 +15,7 @@
 				{{ getFillValue(store.players[player - 1].score)
 				}}{{ store.players[player - 1].score }}
 			</p>
-			<img class="score__bg" src="/assets/img/score.png" alt="">
+			<!-- <img class="score__bg" src="/assets/img/score.png" alt=""> -->
 		</div>
 	</div>
 </template>
@@ -28,21 +28,21 @@
 		font-family: DigitalNumbers, sans-serif;
 		font-size: 2rem;
 		height: 4rem;
-		transition: opacity 0.5s;
+		opacity: 0.75;
 
 		&__wrapper {
-			bottom: 4.5rem;
+			bottom: 5.4rem;
 			position: fixed;
 			width: 11rem;
 
 			&.player-1 {
-				right: 2rem;
-				transform: rotateX(-11deg) rotateY(-8deg);
+				right: 2.75rem;
+				transform: rotateX(14deg) rotateY(-4deg);
 			}
 
 			&.player-2 {
-				left: 2rem;
-				transform: rotateX(11deg) rotateY(-8deg);
+				left: 3.25rem;
+				transform: rotateX(-4deg) rotateY(-4deg);
 			}
 		}
 

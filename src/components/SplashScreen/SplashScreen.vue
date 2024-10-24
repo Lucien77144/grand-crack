@@ -19,7 +19,7 @@
 		@include inset(0, fixed);
 
 		align-items: center;
-		background: rgb(0 0 0 / 60%);
+		background: rgb(0 0 0 / 82%);
 		color: white;
 		display: flex;
 		flex-direction: column;
