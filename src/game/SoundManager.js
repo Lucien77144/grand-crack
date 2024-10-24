@@ -148,6 +148,7 @@ export default class SoundManager {
 			loadAudio("samy", "/assets/sounds/samy.m4a", 0, false),
 			loadAudio("tomate", "/assets/sounds/tomate.m4a", 0, false),
 			loadAudio("sniff", "/assets/sounds/sniff.m4a", 0, false),
+			loadAudio("aaa", "/assets/sounds/aaa.m4a", 0, false),
 
 		])
 
