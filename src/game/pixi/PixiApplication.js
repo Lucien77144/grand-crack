@@ -67,6 +67,7 @@ export default class PixiApplication {
 
 		let progress = 0
 		let activeSide = ""
+		let timeout = 30000
 
 
 		const handleRandom = () => {
@@ -78,7 +79,7 @@ export default class PixiApplication {
 					x: 0,
 					delay: 1
 				})
-			}, 10000)
+			}, timeout)
 		}
 		handleRandom()
 
@@ -112,6 +113,7 @@ export default class PixiApplication {
 			activeSide = ""
 
 			game.soundManager.playSingleSound("aaa", 1)
+			timeout = Math.max(2000, timeout - 2000)
 
 			gsap.to(".bumper-left", {
 				x: -400,
