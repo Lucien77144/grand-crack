@@ -24,7 +24,11 @@
 <template>
 	<div class="ingredients__wrapper">
 		<div class="ingredients__item">
-			<img src="/assets/ui/game-over/leaderboard.svg" alt="" class="ingredients__img">
+			<img
+				src="/assets/ui/game-over/leaderboard.svg"
+				alt=""
+				class="ingredients__img"
+			>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -60,7 +64,11 @@
 			</svg>
 		</div>
 		<div class="ingredients__item">
-			<img src="/assets/ui/game-over/leaderboard.svg" alt="" class="ingredients__img">
+			<img
+				src="/assets/ui/game-over/leaderboard.svg"
+				alt=""
+				class="ingredients__img"
+			>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -96,12 +104,15 @@
 			</svg>
 		</div>
 		<div v-if="ingredients?.length > 2" class="ingredients__item">
-			<img src="/assets/ui/game-over/leaderboard.svg" alt="" class="ingredients__img">
+			<img
+				src="/assets/ui/game-over/leaderboard.svg"
+				alt=""
+				class="ingredients__img"
+			>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
 				viewBox="0 0 70 70"
-				class="ingredients__item"
 			>
 				<mask
 					id="a"

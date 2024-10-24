@@ -139,39 +139,40 @@
 </template>
 
 <style lang="scss" scoped>
-.bumper-left, .bumper-right {
-	position: absolute;
-	top: 40%;
-	left: 40px;
-
-	img {
+	.bumper-left,
+	.bumper-right {
+		bottom: 3rem;
+		left: 40px;
 		position: absolute;
-		top: 0;
-		left: -50px;
-		width: auto;
-		height: auto;
+		width: 12rem;
+
+		img {
+			height: auto;
+			left: -50px;
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+
+		img:nth-child(1) {
+			//width: 100px;
+		}
+
+		img:nth-child(2) {
+			//transition: clip-path 1s;
+			//clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+			clip-path: inset(0 0 0 0);
+			left: 20%;
+			top: 0.75rem;
+			width: 60%;
+		}
 	}
 
-	img:nth-child(1) {
-		//width: 100px;
+	.bumper-right {
+		left: auto;
+		right: 40px;
+		transform: scaleX(-1);
 	}
-
-	img:nth-child(2) {
-		width: 270px;
-		top: 20px;
-		left: 60px;
-		//transition: clip-path 1s;
-		//clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-		clip-path: inset(0 0 0 0);
-
-	}
-}
-
-.bumper-right{
-	left: auto;
-	right: 40px;
-	transform: scaleX(-1);
-}
 
 	.site-wrapper {
 		height: 100%;

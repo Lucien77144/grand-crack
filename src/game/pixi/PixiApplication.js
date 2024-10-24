@@ -1,9 +1,9 @@
 import * as PIXI from "pixi.js"
-import {ZoomBlurFilter} from "pixi-filters";
-import Axis from "axis-api";
-import {lerp} from "@/utils/maths";
-import gsap from "gsap";
-import {Game} from "@/game/Game";
+import { ZoomBlurFilter } from "pixi-filters"
+import Axis from "axis-api"
+import { lerp } from "@/utils/maths"
+import gsap from "gsap"
+import { Game } from "@/game/Game"
 
 export default class PixiApplication {
 	static instance
@@ -18,12 +18,12 @@ export default class PixiApplication {
 
 	async init(wrapper, color = "#000") {
 		this.app = new PIXI.Application()
-		await this.app.init({resizeTo: window,}).then(() => {
+		await this.app.init({ resizeTo: window, }).then(() => {
 			wrapper.appendChild(this.app.canvas)
 			this.canvas = this.app.canvas
 		})
 
-		await PIXI.Assets.load("/assets/img/background.jpg");
+		await PIXI.Assets.load("/assets/img/background.jpg")
 		// change background with an image /assets/img/office.webp
 		const assets = PIXI.Assets.get("/assets/img/background.jpg")
 		// get ratio of image
@@ -46,10 +46,10 @@ export default class PixiApplication {
 
 
 		const filter = new ZoomBlurFilter({
-			strength: 0.01, center: {x: window.innerWidth / 2, y: window.innerHeight / 2},
+			strength: 0.01, center: { x: window.innerWidth / 2, y: window.innerHeight / 2 },
 		})
 
-		this.app.stage.filters = [filter]
+		this.app.stage.filters = [ filter ]
 		let targetStrength = 0
 		let block = true
 
@@ -63,17 +63,17 @@ export default class PixiApplication {
 		let activeSide = ""
 
 		gsap.set(".bumper-left", {
-			x: -400,
+			x: "-100%",
 		})
 		gsap.set(".bumper-right", {
-			x: 400,
+			x: "100%",
 		})
 		const handleRandom = () => {
 			setTimeout(() => {
 				const randomSide = Math.random() > .5 ? "left" : "right"
 				activeSide = randomSide
 				block = false
-				gsap.to([`.bumper-${randomSide}`], {
+				gsap.to([ `.bumper-${ randomSide }` ], {
 					x: 0,
 					delay: 1
 				})
@@ -87,7 +87,6 @@ export default class PixiApplication {
 				game.soundManager.playSingleSound("sniff", 1)
 			}
 			leftPressed = true
-
 		})
 		buttonA.addEventListener("keyup", () => {
 			leftPressed = false
@@ -112,24 +111,22 @@ export default class PixiApplication {
 			activeSide = ""
 
 			gsap.to(".bumper-left", {
-				x: -400,
+				x: "-100%",
 				onComplete: () => {
 					leftCoke.style.clipPath = `inset(0 0% 0 0)`
 					rightCoke.style.clipPath = `inset(0 0% 0 0)`
 
 					handleRandom()
-
 				},
 			})
 			gsap.to(".bumper-right", {
-				x: 400,
+				x: "100%",
 			})
 		}
 
 
 		let latestTime = 0
 		const update = () => {
-
 			const currentTime = performance.now()
 			const delta = currentTime - latestTime
 			targetStrength += 0.00001 * delta
@@ -138,7 +135,7 @@ export default class PixiApplication {
 			filter.strength = lerp(filter.strength, targetStrength, 0.01 * delta)
 
 			if (leftPressed && activeSide === "left") {
-				leftCoke.style.clipPath = `inset(0 ${progress}% 0 0)`
+				leftCoke.style.clipPath = `inset(0 ${ progress }% 0 0)`
 				progress += 3
 				targetStrength -= 0.001
 				if (progress >= 100) {
@@ -146,7 +143,7 @@ export default class PixiApplication {
 				}
 			}
 			if (rightPressed && activeSide === "right") {
-				rightCoke.style.clipPath = `inset(0 ${progress}% 0 0)`
+				rightCoke.style.clipPath = `inset(0 ${ progress }% 0 0)`
 				progress += 3
 				targetStrength -= 0.001
 				if (progress >= 100) {
@@ -159,8 +156,6 @@ export default class PixiApplication {
 			requestAnimationFrame(update)
 		}
 		update()
-
-
 	}
 
 	appendToStage(elt) {
