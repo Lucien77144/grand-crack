@@ -24,9 +24,9 @@ export default class PixiApplication {
 			this.canvas = this.app.canvas
 		})
 
-		await PIXI.Assets.load("/assets/img/background.png")
+		await PIXI.Assets.load("/assets/img/background.jpg")
 		// change background with an image /assets/img/office.webp
-		const assets = PIXI.Assets.get("/assets/img/background.png")
+		const assets = PIXI.Assets.get("/assets/img/background.jpg")
 		// get ratio of image
 		const ratio = assets.width / assets.height
 		const slide = new PIXI.Sprite(assets)

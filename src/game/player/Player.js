@@ -272,9 +272,28 @@ export default class Player {
 		this.inputSet.addEvent("w", this.gainOxygen, this) // 'w' pour gagner de l'oxygen
 
 		this.inputSet.addEvent("a", () => {
+			console.log("a")
+			if (store.isTutorial3) {
+				store.isTutorial3 = false
+				this.game.soundManager.startXp("music", .4)
+				// store.isGameStarted = true
+			}
+
+			if (store.isTutorial2) {
+				store.isTutorial2 = false
+				store.isTutorial3 = true
+			}
+
+			if (store.isTutorial1) {
+				console.log("tuto")
+				store.isTutorial1 = false
+				store.isTutorial2 = true
+			}
+
 			if (store.isSplashScreen) {
 				store.isSplashScreen = false
-				this.game.soundManager.startXp("music", .4)
+				store.isTutorial1 = true
+				console.log(store.isTutorial1)
 			}
 
 			// TODO!! - le reload() est un hard reload du navigateur, il faut plutôt reset la partie

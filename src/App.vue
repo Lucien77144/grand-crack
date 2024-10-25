@@ -110,6 +110,33 @@
 				'is-visible': store.isSplashScreen,
 			}"
 		/>
+		<img
+			src="/assets/img/tuto1.png"
+			class="tutorial"
+			:class="{
+				'is-visible': store.isTutorial1,
+			}"
+		>
+		<img
+			src="/assets/img/tuto2.png"
+			class="tutorial"
+			:class="{
+				'is-visible': store.isTutorial2,
+			}"
+		>
+		<img
+			src="/assets/img/tuto3.png"
+			class="tutorial"
+			:class="{
+				'is-visible': store.isTutorial3,
+			}"
+		>
+		<div
+			class="overlay-tutorial"
+			:class="{
+				'is-visible': store.isTutorial3 || store.isTutorial2 || store.isTutorial1,
+			}"
+		/>
 		<GameOver
 			:class="{
 				'is-visible': store.isGameOver,
@@ -155,6 +182,39 @@
 			left: 20%;
 			top: 0.75rem;
 			width: 60%;
+		}
+	}
+
+	.tutorial {
+		height: 100%;
+		left: 0;
+		opacity: 0;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 1000000;
+
+		&.is-visible {
+			opacity: 1;
+			pointer-events: all;
+		}
+	}
+
+	.overlay-tutorial {
+		background-color: #000;
+		height: 100%;
+		left: 0;
+		opacity: 0;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 999999;
+
+		&.is-visible {
+			opacity: 0.7;
+			pointer-events: all;
 		}
 	}
 
