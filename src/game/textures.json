@@ -89,6 +89,22 @@
       "src": "/assets/img/pipe-a-crack.png"
     },
     {
+      "name": "ephedrine",
+      "src": "/assets/img/ephedrine.png"
+    },
+    {
+      "name": "plaque-de-meth",
+      "src": "/assets/img/plaque-de-meth.png"
+    },
+    {
+      "name": "cristaux_de_meth",
+      "src": "/assets/img/cristaux_de_meth.png"
+    },
+    {
+      "name": "seringue_vide",
+      "src": "/assets/img/seringue_vide.png"
+    },
+    {
       "name": "bounding_beuh",
       "src": "/assets/img/bounding_beuh.svg"
     },

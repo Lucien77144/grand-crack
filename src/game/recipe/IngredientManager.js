@@ -134,6 +134,40 @@ export default class IngredientManager {
 			ingredientSound: "courgette",
 		})
 
+		const ephedrineSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.935,
+				y: innerHeight * 0.41,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: ephedrineSprite.sprite,
+			bounds: ephedrineSprite.sprite.getBounds(),
+			ingredientId: [ "ephedrine", "plaque-de-meth", "cristaux_de_meth" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ "baker", "cutter", null ],
+			ingredientSound: "courgette",
+		})
+
+		const seringuesSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.815,
+				y: innerHeight * 0.7,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: seringuesSprite.sprite,
+			bounds: seringuesSprite.sprite.getBounds(),
+			ingredientId: [ "seringue_vide" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ null ],
+			ingredientSound: "courgette",
+		})
+
 		ingredientsContainer.forEach((container) => {
 			signal.on("releaseIngredient", (ingredient) => {
 				//if the player is in the same position as the container destroy
