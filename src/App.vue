@@ -81,6 +81,11 @@
 		game.value.destroy()
 	})
 
+	function onVideoEnd() {
+		store.isIntroVideo = false
+		store.isTutorial1 = true
+	}
+
 	function resize() {
 		if (!game.value || !$$canvas.value) return
 
@@ -109,6 +114,16 @@
 			:class="{
 				'is-visible': store.isSplashScreen,
 			}"
+		/>
+		<video
+			src="/assets/video/intro.mp4"
+			class="intro-video"
+			autoplay
+			muted
+			:class="{
+				'is-visible': store.isIntroVideo,
+			}"
+			@ended="onVideoEnd"
 		/>
 		<img
 			src="/assets/img/tuto1.png"
@@ -185,10 +200,11 @@
 		}
 	}
 
-	.tutorial {
+	.intro-video {
+		display: none;
 		height: 100%;
 		left: 0;
-		opacity: 0;
+		object-fit: cover;
 		pointer-events: none;
 		position: absolute;
 		top: 0;
@@ -196,8 +212,27 @@
 		z-index: 1000000;
 
 		&.is-visible {
-			opacity: 1;
+			display: block;
+		}
+	}
+
+	.tutorial {
+		height: 100%;
+		left: 0;
+
+		// opacity: 0;
+		pointer-events: none;
+		position: absolute;
+		top: 0;
+		transform: translateY(-100%);
+		transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+		width: 100%;
+		z-index: 1000000;
+
+		&.is-visible {
+			// opacity: 1;
 			pointer-events: all;
+			transform: translateY(0);
 		}
 	}
 

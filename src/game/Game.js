@@ -90,7 +90,7 @@ export class Game {
 	 * @param {Number} t - Le temps courant.
 	 */
 	update(dt, t) {
-		if (store.isSplashScreen || store.isTutorial3 || store.isTutorial2 || store.isTutorial1 || store.isGameOver) return
+		if (store.isSplashScreen || store.isIntroVideo || store.isTutorial3 || store.isTutorial2 || store.isTutorial1 || store.isGameOver) return
 		if (!store.isGameStarted) {
 			store.isGameStarted = true
 			this.kitchen.start()

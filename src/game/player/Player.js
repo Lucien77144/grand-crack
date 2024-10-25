@@ -60,7 +60,7 @@ export default class Player {
 		this.recipeList.push(recipe)
 
 		if (this.recipeList.length > MAX_RECIPES_ALLOWED) {
-//TODO : add song
+			//TODO : add song
 			this.game.soundManager.playSingleSound("paper", .5)
 			store.isGameOver = true
 			return this.recipeList
@@ -272,11 +272,8 @@ export default class Player {
 		this.inputSet.addEvent("w", this.gainOxygen, this) // 'w' pour gagner de l'oxygen
 
 		this.inputSet.addEvent("a", () => {
-			console.log("a")
 			if (store.isTutorial3) {
 				store.isTutorial3 = false
-				this.game.soundManager.startXp("music", .4)
-				// store.isGameStarted = true
 			}
 
 			if (store.isTutorial2) {
@@ -290,10 +287,15 @@ export default class Player {
 				store.isTutorial2 = true
 			}
 
+			if (store.isIntroVideo) {
+				store.isIntroVideo = false
+				store.isTutorial1 = true
+			}
+
 			if (store.isSplashScreen) {
 				store.isSplashScreen = false
-				store.isTutorial1 = true
-				console.log(store.isTutorial1)
+				store.isIntroVideo = true
+				this.game.soundManager.startXp("music", .4)
 			}
 
 			// TODO!! - le reload() est un hard reload du navigateur, il faut plutôt reset la partie
