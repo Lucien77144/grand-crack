@@ -41,6 +41,7 @@
 
 		img {
 			mix-blend-mode: luminosity;
+			width: 350px;
 		}
 
 		&-cutter {
