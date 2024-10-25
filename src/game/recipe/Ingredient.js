@@ -161,7 +161,7 @@ export default class Ingredient {
 					this.pixiSprite.sprite
 				)
 			) {
-				this.#game.soundManager.playSingleSound("hold", 0.25)
+				this.#game.soundManager.playSingleSound("hold", 0.2)
 				player.holdIngredient(this)
 				this.pixiSprite.sprite.zIndex = 3
 				store.players[ e.id - 1 ].action = this.#actionList

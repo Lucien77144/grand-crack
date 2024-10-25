@@ -135,9 +135,7 @@ export default class SoundManager {
 		// Chargement des sons dans la liste.
 		await Promise.all([
 			loadAudio("music", "/assets/sounds/music.mp3", 0, true),
-			loadAudio("cutting0", "/assets/sounds/cutting01.mp3", 0, false),
-			loadAudio("cutting1", "/assets/sounds/cutting02.mp3", 0, false),
-			loadAudio("cutting2", "/assets/sounds/cutting03.mp3", 0, false),
+			loadAudio("cutting", "/assets/sounds/cutting.m4a", 0, false),
 			loadAudio("hold", "/assets/sounds/hold.mp3", 0, false),
 			loadAudio("mixing", "/assets/sounds/mixing.mp3", 0, true),
 			loadAudio("bake", "/assets/sounds/bake.mp3", 0, false),
@@ -149,7 +147,7 @@ export default class SoundManager {
 			loadAudio("tomate", "/assets/sounds/tomate.m4a", 0, false),
 			loadAudio("sniff", "/assets/sounds/sniff.m4a", 0, false),
 			loadAudio("aaa", "/assets/sounds/aaa.m4a", 0, false),
-
+			loadAudio("paper", "/assets/sounds/paper.mp3", 0, false),
 		])
 
 		this.soundsList = tmp // Assigne la liste temporaire des sons à la liste de la classe.

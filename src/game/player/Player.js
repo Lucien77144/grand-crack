@@ -272,7 +272,7 @@ export default class Player {
 		this.inputSet.addEvent("a", () => {
 			if (store.isSplashScreen) {
 				store.isSplashScreen = false
-				this.game.soundManager.startXp("music", 1)
+				this.game.soundManager.startXp("music", .4)
 			}
 
 			// TODO!! - le reload() est un hard reload du navigateur, il faut plutôt reset la partie
