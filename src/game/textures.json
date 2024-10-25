@@ -29,11 +29,7 @@
       "atlasData": "/assets/sprites/mixer/mixer.json"
     },
     {
-      "name": "composerP1",
-      "src": "/assets/sprites/composer/composer.svg"
-    },
-    {
-      "name": "composerP2",
+      "name": "composer",
       "src": "/assets/sprites/composer/composer.svg"
     },
     {
@@ -53,8 +49,64 @@
       "src": "/assets/img/coco.png"
     },
     {
+      "name": "diamorphine",
+      "src": "/assets/img/diamorphine.png"
+    },
+    {
+      "name": "joint",
+      "src": "/assets/img/joint.png"
+    },
+    {
+      "name": "pochon_coke",
+      "src": "/assets/img/pochon_coke.png"
+    },
+    {
+      "name": "heroine",
+      "src": "/assets/img/heroine.png"
+    },
+    {
+      "name": "pipe-a-crack-remplie",
+      "src": "/assets/img/pipe-a-crack-remplie.png"
+    },
+    {
+      "name": "feuille_ouverte",
+      "src": "/assets/img/feuille_ouverte.png"
+    },
+    {
+      "name": "pocheton_vide",
+      "src": "/assets/img/pocheton_vide.png"
+    },
+    {
+      "name": "pipe-a-crack",
+      "src": "/assets/img/pipe-a-crack.png"
+    },
+    {
+      "name": "pipe-a-crack",
+      "src": "/assets/img/pipe-a-crack.png"
+    },
+    {
+      "name": "ephedrine",
+      "src": "/assets/img/ephedrine.png"
+    },
+    {
+      "name": "plaque-de-meth",
+      "src": "/assets/img/plaque-de-meth.png"
+    },
+    {
+      "name": "cristaux_de_meth",
+      "src": "/assets/img/cristaux_de_meth.png"
+    },
+    {
+      "name": "seringue_vide",
+      "src": "/assets/img/seringue_vide.png"
+    },
+    {
       "name": "bounding_beuh",
       "src": "/assets/img/bounding_beuh.svg"
+    },
+    {
+      "name": "bounding_square",
+      "src": "/assets/img/bounding_square.svg"
     }
   ]
 }

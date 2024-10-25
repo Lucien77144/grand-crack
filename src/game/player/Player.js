@@ -43,8 +43,8 @@ export default class Player {
 
 	setRecipeList() {
 		// if (!store.isGameStarted) return
-		const active = this.recipeList.map((r) => r.name)
-		const list = recipes.filter((r) => !active.includes(r.name))
+		const active = this.recipeList.map((r) => r.id)
+		const list = recipes.filter((r) => !active.includes(r.id))
 		const index = Math.floor(Math.random() * list.length)
 
 		const item = list[ index ]
@@ -69,13 +69,13 @@ export default class Player {
 		}
 	}
 
-	removeRecipeFromList(names = []) {
+	removeRecipeFromList(ids = []) {
 		this.recipeList = this.recipeList.filter(
-			(r) => !names.includes(r.name) || r.player !== this.id
+			(r) => !ids.includes(r.id) || r.player !== this.id
 		)
 		store.recipesList = [
 			...store.recipesList.filter(
-				(r) => !names.includes(r.name) || r.player !== this.id
+				(r) => !ids.includes(r.id) || r.player !== this.id
 			),
 		]
 
@@ -90,9 +90,9 @@ export default class Player {
 				x:
 					this.id === 1
 						? this.canvas.offsetWidth / 2 -
-						this.canvas.offsetWidth * 0.1
+						  this.canvas.offsetWidth * 0.1
 						: this.canvas.offsetWidth / 2 +
-						this.canvas.offsetWidth * 0.1,
+						  this.canvas.offsetWidth * 0.1,
 				y: 200,
 				size: CURSOR_BASE_SIZE * this.canvas.offsetWidth * 0.0005, // Taille du sprite ajustée selon la largeur de l'écran
 				animationName: `cursor${ this.id }`, // Animation liée à l'id du joueur
@@ -206,9 +206,26 @@ export default class Player {
 		}
 	}
 
+	setHoldedItem(value = null, storeTo = true) {
+		if (!value) {
+			if (storeTo) {
+				store.holdedItems = store.holdedItems.filter(
+					(v) => v.id !== this.ingredientHold?.id
+				)
+			}
+			this.ingredientHold = null
+		} else {
+			this.ingredientHold = value
+			this.ingredientHold.player = this.id
+			if (storeTo) {
+				store.holdedItems.push(this.ingredientHold)
+			}
+		}
+	}
+
 	onPlayerInteractCounter(isOut = true) {
 		// Gère l'interaction du joueur avec un compteur (par ex., pour déposer des ingrédients)
-		this.ingredientHold = null
+		this.setHoldedItem(null, isOut)
 		this.canMove = isOut
 		this.pixiSprite.sprite.visible = isOut // Cache ou montre le sprite selon l'état
 		this.allowGrab = isOut // Désactive ou active la capacité d'attraper
@@ -217,7 +234,8 @@ export default class Player {
 	holdIngredient(ingredient) {
 		// Attrape un ingrédient si aucun n'est déjà tenu
 		if (!this.ingredientHold && this.allowGrab) {
-			this.ingredientHold = ingredient
+			this.setHoldedItem(ingredient)
+
 			const distOffset = PixiSprite.updatePositionWithOffset(
 				this.pixiSprite.sprite,
 				this.ingredientHold.pixiSprite.sprite
@@ -235,7 +253,7 @@ export default class Player {
 			this.ingredientHold?.setCanMove(true) // Permet à l'ingrédient de bouger de nouveau
 			signal.emit("releaseIngredient", this.ingredientHold)
 			requestAnimationFrame(() => {
-				this.ingredientHold = null
+				this.setHoldedItem(null, this.allowGrab)
 			})
 			this.distIngredient = null
 			this.updateSpriteFrame(false) // Revient à l'animation par défaut
@@ -304,7 +322,7 @@ export default class Player {
 	reset() {
 		this.oxygen = 100
 		this.canMove = true
-		this.ingredientHold = null
+		this.setHoldedItem()
 		this.distIngredient = null
 		this.allowGrab = true
 		this.acceleration = 0

@@ -20,6 +20,9 @@
 					<h1 class="task__title">
 						{{ task.name }}
 					</h1>
+					<div class="task__score">
+						{{ task.score }}€
+					</div>
 					<div class="task__player">
 						<TaskPlayer :player="task.player" />
 					</div>

@@ -106,25 +106,26 @@ export class Kitchen {
 	createComposer() {
 		const width = Math.floor(this.canvas.offsetWidth)
 		const height = Math.floor(this.canvas.offsetHeight)
+		const factor = innerWidth / 2560
 		const size = 0.75
 
 		const player1 = this.game.player1
 		this.composer1 = new Composer({
-			x: (width * size) / 8,
-			y: height * size + (height * size) / 4,
-			size,
+			x: (width * size) * .15,
+			y: height * size + (height * size) * .25,
+			size: size * factor,
 			anchor: [ 0.5, 0.5 ],
-			action: "composerP1",
+			action: "composer",
 		})
 		this.composer1.assignPlayer(player1)
 
 		const player2 = this.game.player2
 		this.composer2 = new Composer({
-			x: width * size + (width * size) / 4,
-			y: height * size + (height * size) / 4,
-			size,
+			x: width * size + (width * size) * .1775,
+			y: height * size + (height * size) * .25,
+			size: size * factor,
 			anchor: [ 0.5, 0.5 ],
-			action: "composerP2",
+			action: "composer",
 		})
 		this.composer2.assignPlayer(player2)
 	}

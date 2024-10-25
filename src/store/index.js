@@ -3,6 +3,7 @@ import { computed, reactive } from "vue"
 export const store = reactive({
 	isGameStarted: false,
 	isSplashScreen: true,
+	holdedItems: [],
 	players: [
 		{
 			name: "Player 1",

@@ -6,10 +6,7 @@
 <template>
 	<div class="game-over">
 		<div class="leaderboard">
-			<img src="/assets/ui/game-over/leaderboard.svg">
-		</div>
-		<div class="play-again">
-			<img src="/assets/ui/game-over/play-again-button.svg">
+			<img class="over__img" src="/assets/ui/game-over/gameover.png">
 		</div>
 	</div>
 </template>
@@ -35,13 +32,26 @@
 		}
 
 		.leaderboard {
-			width: 50rem;
+			width: 50vw;
 		}
 
-		.play-again {
-			cursor: pointer;
-			margin-top: 2rem;
-			width: 10rem;
+		.over__img {
+			animation: appear 1s forwards;
+		}
+	}
+
+	@keyframes appear {
+		0% {
+			opacity: 0;
+			transform: translate(15%, 100%) rotate(15deg);
+		}
+
+		25% {
+			opacity: 1;
+		}
+
+		100% {
+			transform: translate(0%, 22%) rotate(3deg) scale(1.15);
 		}
 	}
 </style>

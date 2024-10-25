@@ -32,57 +32,139 @@ export default class IngredientManager {
 
 		// create a cube where the ingredient can be hold
 		const ingredientsContainer = []
-		const fridge = new PixiSprite(
+		const beuhSprite = new PixiSprite(
 			{
 				size: factor * 0.7,
-				x: innerWidth * .365,
-				y: innerHeight * .67,
+				x: innerWidth * 0.6325,
+				y: innerHeight * 0.635,
 			},
 			this.tl.assetArray[ "bounding_beuh" ]
 		)
-
 		ingredientsContainer.push({
 			// sprite: fridge.sprite,
-			bounds: fridge.sprite.getBounds(),
-			ingredientName: [ "tete_de_beuh", "beuh_grinde" ],
-			ingredientSize: [ 0.2, .35 ],
+			bounds: beuhSprite.sprite.getBounds(),
+			ingredientId: [ "tete_de_beuh", "beuh_grinde" ],
+			ingredientSize: [ 0.2, 0.35 ],
 			ingredientAction: [ "mixer", null ],
 			ingredientSound: "tomate",
 		})
 
-		const tiroir = new PixiSprite(
+		const cokeSprite = new PixiSprite(
 			{
 				size: factor * 0.7,
-				x: innerWidth * 0.6325,
+				x: innerWidth * 0.39,
 				y: innerHeight * 0.67,
 			},
 			this.tl.assetArray[ "bounding_beuh" ]
 		)
-
 		ingredientsContainer.push({
-			sprite: tiroir.sprite,
-			bounds: tiroir.sprite.getBounds(),
-			ingredientName: [ "feuilles_de_coca", "coco" ],
+			sprite: cokeSprite.sprite,
+			bounds: cokeSprite.sprite.getBounds(),
+			ingredientId: [ "feuilles_de_coca", "coco" ],
 			ingredientSize: [ 0.15 ],
 			ingredientAction: [ "mixer", null ],
 			ingredientSound: "aubergine",
 		})
 
-		const oven = new PixiSprite(
+		const heroSprite = new PixiSprite(
 			{
-				size: factor * 0.2,
-				x: innerWidth / 2 + 300,
-				y: innerHeight / 2,
+				size: factor,
+				x: innerWidth * 0.11,
+				y: innerHeight * 0.45,
 			},
-			this.tl.assetArray[ "cutter" ]
+			this.tl.assetArray[ "bounding_square" ]
 		)
-
 		ingredientsContainer.push({
-			sprite: oven.sprite,
-			bounds: oven.sprite.getBounds(),
-			ingredientName: [ "flour" ],
-			ingredientSize: 0.2,
-			ingredientAction: [ "mixer" ],
+			sprite: heroSprite.sprite,
+			bounds: heroSprite.sprite.getBounds(),
+			ingredientId: [ "diamorphine" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ null ],
+			ingredientSound: "courgette",
+		})
+
+		const sachetSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.22,
+				y: innerHeight * 0.45,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: sachetSprite.sprite,
+			bounds: sachetSprite.sprite.getBounds(),
+			ingredientId: [ "pocheton_vide" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ null ],
+			ingredientSound: "courgette",
+		})
+
+		const ocbSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.19,
+				y: innerHeight * 0.7,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: ocbSprite.sprite,
+			bounds: ocbSprite.sprite.getBounds(),
+			ingredientId: [ "feuille_ouverte" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ null ],
+			ingredientSound: "courgette",
+		})
+
+		const pipeSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.805,
+				y: innerHeight * 0.435,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: pipeSprite.sprite,
+			bounds: pipeSprite.sprite.getBounds(),
+			ingredientId: [ "pipe-a-crack" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ null ],
+			ingredientSound: "courgette",
+		})
+
+		const ephedrineSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.935,
+				y: innerHeight * 0.435,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: ephedrineSprite.sprite,
+			bounds: ephedrineSprite.sprite.getBounds(),
+			ingredientId: [ "ephedrine", "plaque-de-meth", "cristaux_de_meth" ],
+			ingredientSize: [ 0.1, 1.1, .5 ],
+			ingredientAction: [ "baker", "cutter", null ],
+			ingredientSound: "courgette",
+		})
+
+		const seringuesSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.815,
+				y: innerHeight * 0.7,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: seringuesSprite.sprite,
+			bounds: seringuesSprite.sprite.getBounds(),
+			ingredientId: [ "seringue_vide" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ null ],
 			ingredientSound: "courgette",
 		})
 
@@ -120,7 +202,8 @@ export default class IngredientManager {
 				) {
 					const ingredient = new Ingredient(
 						this,
-						container.ingredientName,
+						container.ingredientId,
+						container.ingredientId,
 						container.ingredientSize,
 						playerPosition.x,
 						container.ingredientAction,
@@ -175,12 +258,13 @@ export default class IngredientManager {
 					missingIngredients[
 						Math.floor(Math.random() * missingIngredients.length)
 					]
-				const { name } = randomIngredient
+				const { name, size, id, canMove, action, isCooked } =
+					randomIngredient
 
 				// Trouve l'ingrédient dans la liste des recettes.
 				const ingredientRecipe = this.#recipes
 					.flatMap((recipe) => recipe.ingredients)
-					.find((ingredient) => ingredient.name === name)
+					.find((ingredient) => ingredient.id === id)
 
 				if (ingredientRecipe) {
 					const x =
@@ -191,19 +275,20 @@ export default class IngredientManager {
 					const ingredient = new Ingredient(
 						this,
 						name,
-						ingredientRecipe.size,
+						id,
+						size,
 						x,
-						ingredientRecipe.canMove,
-						ingredientRecipe.action,
-						ingredientRecipe.isCooked,
+						canMove,
+						action,
+						isCooked,
 						y
 					)
 
 					await ingredient.create() // Crée l'ingrédient et l'ajoute au jeu.
 
 					this.#ingredients.push(ingredient)
-					this.#ingredientsSpawned[ name ] =
-						(this.#ingredientsSpawned[ name ] || 0) + 1
+					this.#ingredientsSpawned[ id ] =
+						(this.#ingredientsSpawned[ id ] || 0) + 1
 					this.#lastSpawnTime = currentTime // Met à jour l'heure du dernier spawn.
 				}
 			}
@@ -218,12 +303,12 @@ export default class IngredientManager {
 	getMissingIngredients() {
 		return Object.entries(this.#ingredientsToSpawn)
 			.filter(
-				([ name, quantity ]) =>
-					(this.#ingredientsSpawned[ name ] || 0) < quantity
+				([ id, quantity ]) =>
+					(this.#ingredientsSpawned[ id ] || 0) < quantity
 			)
-			.map(([ name, quantity ]) => ({
-				name,
-				quantity: quantity - (this.#ingredientsSpawned[ name ] || 0),
+			.map(([ id, quantity ]) => ({
+				id,
+				quantity: quantity - (this.#ingredientsSpawned[ id ] || 0),
 			}))
 	}
 
@@ -254,9 +339,8 @@ export default class IngredientManager {
 
 		if (index !== -1) {
 			this.#ingredients.splice(index, 1)
-			const name = ingredient.getName()
-			if (this.#ingredientsSpawned[ name ] !== undefined) {
-				this.#ingredientsSpawned[ name ]--
+			if (this.#ingredientsSpawned[ id ] !== undefined) {
+				this.#ingredientsSpawned[ id ]--
 			}
 		}
 	}
@@ -351,10 +435,10 @@ export default class IngredientManager {
 	 */
 	updateIngredientsToSpawn() {
 		this.#ingredientsToSpawn = this.#recipes.reduce((acc, recipe) => {
-			recipe.ingredients.forEach(({ name, quantity }) => {
+			recipe.ingredients.forEach(({ id, quantity }) => {
 				const totalQuantity =
 					quantity * 2 - recipe.nbOfPlayerHaveCompleted
-				acc[ name ] = Math.min(totalQuantity, acc[ name ] || totalQuantity)
+				acc[ id ] = Math.min(totalQuantity, acc[ id ] || totalQuantity)
 			})
 			return acc
 		}, {})
