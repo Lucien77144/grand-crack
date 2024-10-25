@@ -146,7 +146,7 @@ export default class IngredientManager {
 			sprite: ephedrineSprite.sprite,
 			bounds: ephedrineSprite.sprite.getBounds(),
 			ingredientId: [ "ephedrine", "plaque-de-meth", "cristaux_de_meth" ],
-			ingredientSize: [ 0.1, 1.1, .5 ],
+			ingredientSize: [ 0.1, 0.5, .3 ],
 			ingredientAction: [ "baker", "cutter", null ],
 			ingredientSound: "courgette",
 		})

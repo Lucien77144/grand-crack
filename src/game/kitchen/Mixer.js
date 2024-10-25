@@ -24,7 +24,7 @@ export class Mixer extends CookingStation {
 
 			if (!this.soundPlayed) {
 				this.soundPlayed = true
-				this.game.soundManager.playSingleSound("mixing", 1) // Joue le son de mélange
+				this.game.soundManager.playSingleSound("mixing", .5) // Joue le son de mélange
 			}
 
 			// Vérifie si les intensités d'entrée dépassent le seuil
