@@ -4,6 +4,23 @@
 	min-width: 10rem;
 	width: 10rem;
 
+	&__score {
+		color: white;
+		font-family: "Jersey 20", sans-serif;
+		left: 0.5rem;
+		position: absolute;
+		text-shadow:
+			2px 0 #000,
+			-2px 0 #000,
+			0 2px #000,
+			0 -2px #000,
+			1px 1px #000,
+			-1px -1px #000,
+			1px -1px #000,
+			-1px 1px #000;
+		top: 1rem;
+	}
+
 	&__container {
 		left: 0;
 		max-width: 100%;
