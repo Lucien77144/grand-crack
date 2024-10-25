@@ -142,11 +142,15 @@ export default class SoundManager {
 			loadAudio("recipeComplete", "/assets/sounds/recipeComplete.mp3", 0, false),
 			loadAudio("aubergine", "/assets/sounds/aubergine.m4a", 0, false),
 			loadAudio("courgette", "/assets/sounds/courgette.m4a", 0, false),
-			loadAudio("courgette", "/assets/sounds/courgette.m4a", 0, false),
 			loadAudio("samy", "/assets/sounds/samy.m4a", 0, false),
 			loadAudio("tomate", "/assets/sounds/tomate.m4a", 0, false),
 			loadAudio("sniff", "/assets/sounds/sniff.m4a", 0, false),
 			loadAudio("aaa", "/assets/sounds/aaa.m4a", 0, false),
+			loadAudio("dragon", "/assets/sounds/dragon.m4a", 0, false),
+			loadAudio("bakugan", "/assets/sounds/bakugan.m4a", 0, false),
+			loadAudio("kaki", "/assets/sounds/kaki.m4a", 0, false),
+			loadAudio("poire", "/assets/sounds/poire.m4a", 0, false),
+			loadAudio("carotte", "/assets/sounds/carotte.m4a", 0, false),
 			loadAudio("paper", "/assets/sounds/paper.mp3", 0, false),
 		])
 

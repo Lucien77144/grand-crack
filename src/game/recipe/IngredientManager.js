@@ -63,7 +63,7 @@ export default class IngredientManager {
 			ingredientId: [ "feuilles_de_coca", "coco" ],
 			ingredientSize: [ 0.15 ],
 			ingredientAction: [ "mixer", null ],
-			ingredientSound: "aubergine",
+			ingredientSound: "bakugan",
 		})
 
 		const heroSprite = new PixiSprite(
@@ -80,7 +80,7 @@ export default class IngredientManager {
 			ingredientId: [ "diamorphine" ],
 			ingredientSize: [ 0.1 ],
 			ingredientAction: [ null ],
-			ingredientSound: "courgette",
+			ingredientSound: "dragon",
 		})
 
 		const sachetSprite = new PixiSprite(
@@ -97,7 +97,7 @@ export default class IngredientManager {
 			ingredientId: [ "pocheton_vide" ],
 			ingredientSize: [ 0.15 ],
 			ingredientAction: [ null ],
-			ingredientSound: "courgette",
+			ingredientSound: "kaki",
 		})
 
 		const ocbSprite = new PixiSprite(
@@ -114,7 +114,7 @@ export default class IngredientManager {
 			ingredientId: [ "feuille_ouverte" ],
 			ingredientSize: [ 0.15 ],
 			ingredientAction: [ null ],
-			ingredientSound: "courgette",
+			ingredientSound: "poire",
 		})
 
 		const pipeSprite = new PixiSprite(
@@ -131,7 +131,7 @@ export default class IngredientManager {
 			ingredientId: [ "pipe-a-crack" ],
 			ingredientSize: [ 0.1 ],
 			ingredientAction: [ null ],
-			ingredientSound: "courgette",
+			ingredientSound: "carotte",
 		})
 
 		const ephedrineSprite = new PixiSprite(
@@ -165,7 +165,7 @@ export default class IngredientManager {
 			ingredientId: [ "seringue_vide" ],
 			ingredientSize: [ 0.1 ],
 			ingredientAction: [ null ],
-			ingredientSound: "courgette",
+			ingredientSound: "samy",
 		})
 
 		ingredientsContainer.forEach((container) => {

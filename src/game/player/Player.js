@@ -60,6 +60,8 @@ export default class Player {
 		this.recipeList.push(recipe)
 
 		if (this.recipeList.length > MAX_RECIPES_ALLOWED) {
+//TODO : add song
+			this.game.soundManager.playSingleSound("paper", .5)
 			store.isGameOver = true
 			return this.recipeList
 		} else {
