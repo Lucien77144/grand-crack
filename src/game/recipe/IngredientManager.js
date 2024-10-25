@@ -44,7 +44,7 @@ export default class IngredientManager {
 			// sprite: fridge.sprite,
 			bounds: beuhSprite.sprite.getBounds(),
 			ingredientId: [ "tete_de_beuh", "beuh_grinde" ],
-			ingredientSize: [ 0.2, 0.35 ],
+			ingredientSize: [ 0.15, 0.35 ],
 			ingredientAction: [ "mixer", null ],
 			ingredientSound: "tomate",
 		})
@@ -95,7 +95,7 @@ export default class IngredientManager {
 			sprite: sachetSprite.sprite,
 			bounds: sachetSprite.sprite.getBounds(),
 			ingredientId: [ "pocheton_vide" ],
-			ingredientSize: [ 0.1 ],
+			ingredientSize: [ 0.15 ],
 			ingredientAction: [ null ],
 			ingredientSound: "courgette",
 		})
@@ -112,7 +112,7 @@ export default class IngredientManager {
 			sprite: ocbSprite.sprite,
 			bounds: ocbSprite.sprite.getBounds(),
 			ingredientId: [ "feuille_ouverte" ],
-			ingredientSize: [ 0.1 ],
+			ingredientSize: [ 0.15 ],
 			ingredientAction: [ null ],
 			ingredientSound: "courgette",
 		})
@@ -213,7 +213,7 @@ export default class IngredientManager {
 					ingredient.create()
 					this.#game.soundManager.playSingleSound(
 						container.ingredientSound,
-						0.5
+						0.2
 					)
 
 					this.#ingredients.push(ingredient)

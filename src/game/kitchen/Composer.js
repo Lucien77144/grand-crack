@@ -77,6 +77,10 @@ export class Composer extends CookingStation {
 					this.addPlate(recipe)
 				} else {
 					newList.push(recipe)
+					requestAnimationFrame(() => {
+						this.playerAssign.releaseIngredient(true)
+					})
+
 				}
 			})
 			this.recipeList = newList

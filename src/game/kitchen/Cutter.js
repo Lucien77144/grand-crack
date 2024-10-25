@@ -51,7 +51,7 @@ export class Cutter extends CookingStation {
 				)
 				this.ingredient.pixiSprite.sprite.gotoAndStop(this.progress)
 				const rand = Math.floor(Math.random() * 3)
-				this.game.soundManager.playSingleSound(`cutting${ rand }`, 0.5)
+				this.game.soundManager.playSingleSound(`cutting`, 0.5)
 
 				// Vérifie si la découpe est terminée
 				if (
@@ -69,6 +69,7 @@ export class Cutter extends CookingStation {
 			this.ingredient.animOut()
 			this.player.onPlayerInteractCounter(true) // Indique que le joueur peut interagir à nouveau
 			this.ingredient.onInteractionCounterEnd("cutter") // Indique que l'interaction avec l'ingrédient est terminée
+			this.game.soundManager.playSingleSound(`cutting`, 0.5)
 			this.inCutter = false
 			this.progress = 0
 			this.player = null
