@@ -36,7 +36,7 @@ export default class IngredientManager {
 			{
 				size: factor * 0.7,
 				x: innerWidth * 0.6325,
-				y: innerHeight * 0.67,
+				y: innerHeight * 0.635,
 			},
 			this.tl.assetArray[ "bounding_beuh" ]
 		)
@@ -52,7 +52,7 @@ export default class IngredientManager {
 		const cokeSprite = new PixiSprite(
 			{
 				size: factor * 0.7,
-				x: innerWidth * 0.365,
+				x: innerWidth * 0.39,
 				y: innerHeight * 0.67,
 			},
 			this.tl.assetArray[ "bounding_beuh" ]
@@ -69,8 +69,8 @@ export default class IngredientManager {
 		const heroSprite = new PixiSprite(
 			{
 				size: factor,
-				x: innerWidth * 0.075,
-				y: innerHeight * 0.41,
+				x: innerWidth * 0.11,
+				y: innerHeight * 0.45,
 			},
 			this.tl.assetArray[ "bounding_square" ]
 		)
@@ -83,28 +83,11 @@ export default class IngredientManager {
 			ingredientSound: "courgette",
 		})
 
-		const ocbSprite = new PixiSprite(
-			{
-				size: factor,
-				x: innerWidth * 0.19,
-				y: innerHeight * 0.41,
-			},
-			this.tl.assetArray[ "bounding_square" ]
-		)
-		ingredientsContainer.push({
-			sprite: ocbSprite.sprite,
-			bounds: ocbSprite.sprite.getBounds(),
-			ingredientId: [ "feuille_ouverte" ],
-			ingredientSize: [ 0.1 ],
-			ingredientAction: [ null ],
-			ingredientSound: "courgette",
-		})
-
 		const sachetSprite = new PixiSprite(
 			{
 				size: factor,
-				x: innerWidth * 0.19,
-				y: innerHeight * 0.7,
+				x: innerWidth * 0.22,
+				y: innerHeight * 0.45,
 			},
 			this.tl.assetArray[ "bounding_square" ]
 		)
@@ -117,11 +100,28 @@ export default class IngredientManager {
 			ingredientSound: "courgette",
 		})
 
+		const ocbSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.19,
+				y: innerHeight * 0.7,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: ocbSprite.sprite,
+			bounds: ocbSprite.sprite.getBounds(),
+			ingredientId: [ "feuille_ouverte" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ null ],
+			ingredientSound: "courgette",
+		})
+
 		const pipeSprite = new PixiSprite(
 			{
 				size: factor,
-				x: innerWidth * 0.815,
-				y: innerHeight * 0.41,
+				x: innerWidth * 0.805,
+				y: innerHeight * 0.435,
 			},
 			this.tl.assetArray[ "bounding_square" ]
 		)
@@ -138,7 +138,7 @@ export default class IngredientManager {
 			{
 				size: factor,
 				x: innerWidth * 0.935,
-				y: innerHeight * 0.41,
+				y: innerHeight * 0.435,
 			},
 			this.tl.assetArray[ "bounding_square" ]
 		)
@@ -146,7 +146,7 @@ export default class IngredientManager {
 			sprite: ephedrineSprite.sprite,
 			bounds: ephedrineSprite.sprite.getBounds(),
 			ingredientId: [ "ephedrine", "plaque-de-meth", "cristaux_de_meth" ],
-			ingredientSize: [ 0.1 ],
+			ingredientSize: [ 0.1, 1.1, .5 ],
 			ingredientAction: [ "baker", "cutter", null ],
 			ingredientSound: "courgette",
 		})

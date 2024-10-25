@@ -15,10 +15,6 @@ export class Composer extends CookingStation {
 	constructor({ ...props }) {
 		super({ ...props })
 		this.tl = new TextureLoader()
-
-		setTimeout(() => {
-			this.addPlate(this.recipeList[ 0 ])
-		})
 	}
 
 	start() {

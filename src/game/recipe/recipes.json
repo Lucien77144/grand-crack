@@ -72,9 +72,9 @@
     "score": 500,
     "ingredients": [
       {
-        "id": "crystal",
-        "name": "crystal",
-        "cover": "/assets/img/crystal.png",
+        "id": "cristaux_de_meth",
+        "name": "cristaux_de_meth",
+        "cover": "/assets/img/cristaux_de_meth.png",
         "size": 0.2,
         "color": "#032826",
         "canMove": true,

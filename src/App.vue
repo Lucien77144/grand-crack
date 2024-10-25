@@ -124,8 +124,7 @@
 			<img src="/assets/img/base.png">
 			<img src="/assets/img/coke.png">
 		</div>
-		<!-- <CookingInstruction :player="1" />
-		<CookingInstruction :player="2" /> -->
+		<CookingInstruction v-if="!store.isSplashScreen" />
 	</main>
 </template>
 

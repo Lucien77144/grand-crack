@@ -1,70 +1,70 @@
 <script setup>
-	import { ref, computed } from "vue"
-	import Signal from "@/utils/signal"
+	import { store } from "@/store"
+	import InstructionPlayer from "./InstructionPlayer/InstructionPlayer.vue"
 
-	const player1Action = ref(null)
-	const player2Action = ref(null)
+	const getCutterPlayer = () => {
+		return store.holdedItems.find((e) => e.action === "cutter")?.player
+	}
 
-	Signal.on(":actionPlayer1", (payload) => {
-		player1Action.value = payload
-	})
+	const getMixerPlayer = () => {
+		return store.holdedItems.find((e) => e.action === "mixer")?.player
+	}
 
-	Signal.on(":actionPlayer2", (payload) => {
-		player2Action.value = payload
-	})
-
-	const props = defineProps({
-		player: {
-			type: Number,
-			required: true,
-		},
-	})
-
-	const action = computed(() => props.player === 1 ? player1Action.value : player2Action.value)
-
-	const actionImage = computed(() => {
-		if (!action.value) return null
-
-		return new URL(`/assets/ui/instructions/${ action.value }.svg`, import.meta.url).href
-	})
+	const getBakerPlayer = () => {
+		return store.holdedItems.find((e) => e.action === "baker")?.player
+	}
 </script>
 
 <template>
-	<div
-		class="instruction-container"
-		:class="'player-' + player"
-	>
-		<img v-if="actionImage" :src="actionImage" alt="Instruction">
-
-		<div>
-			<p v-if="action === 'cutter'">
-				Click on at the right pace to cut
-			</p>
-			<p v-else-if="action === 'mixer'">
-				Use your joystick to mix mix
-			</p>
-			<p v-else-if="action === 'baker'">
-				Baking...
-			</p>
+	<div class="instruction-container">
+		<div v-if="getCutterPlayer()" class="instruction instruction-cutter">
+			<InstructionPlayer :player="getCutterPlayer()" />
+			<img src="/assets/img/break.png" alt="">
+		</div>
+		<div v-if="getMixerPlayer()" class="instruction instruction-mixer">
+			<InstructionPlayer :player="getMixerPlayer()" />
+			<img src="/assets/img/mix.png" alt="">
+		</div>
+		<div v-if="getBakerPlayer()" class="instruction instruction-baker">
+			<InstructionPlayer :player="getBakerPlayer()" />
+			<img src="/assets/img/heat.png" alt="">
 		</div>
 	</div>
 </template>
 
 <style lang="scss" scoped>
-.instruction-container {
-	position: absolute;
-	bottom: 1rem;
+	.instruction {
+		animation: appear 0.5s ease-in-out forwards;
+		bottom: 0.25rem;
+		position: absolute;
+		transform: translate(-50%, -50%);
 
-	&.player-1 {
-		left: 1rem;
+		img {
+			mix-blend-mode: luminosity;
+		}
+
+		&-cutter {
+			left: 25%;
+		}
+
+		&-mixer {
+			left: 42.5%;
+		}
+
+		&-baker {
+			left: 60%;
+		}
 	}
 
-	&.player-2 {
-		right: 1rem;
-	}
+	@keyframes appear {
+		0% {
+			opacity: 0;
+			transform: translateY(100%);
+		}
 
-	p {
-		color: white;
+		100% {
+			opacity: 0.9;
+			transform: translateY(0);
+		}
 	}
-}
 </style>

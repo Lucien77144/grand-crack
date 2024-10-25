@@ -206,9 +206,26 @@ export default class Player {
 		}
 	}
 
+	setHoldedItem(value = null, storeTo = true) {
+		if (!value) {
+			if (storeTo) {
+				store.holdedItems = store.holdedItems.filter(
+					(v) => v.id !== this.ingredientHold?.id
+				)
+			}
+			this.ingredientHold = null
+		} else {
+			this.ingredientHold = value
+			this.ingredientHold.player = this.id
+			if (storeTo) {
+				store.holdedItems.push(this.ingredientHold)
+			}
+		}
+	}
+
 	onPlayerInteractCounter(isOut = true) {
 		// Gère l'interaction du joueur avec un compteur (par ex., pour déposer des ingrédients)
-		this.ingredientHold = null
+		this.setHoldedItem(null, isOut)
 		this.canMove = isOut
 		this.pixiSprite.sprite.visible = isOut // Cache ou montre le sprite selon l'état
 		this.allowGrab = isOut // Désactive ou active la capacité d'attraper
@@ -217,7 +234,8 @@ export default class Player {
 	holdIngredient(ingredient) {
 		// Attrape un ingrédient si aucun n'est déjà tenu
 		if (!this.ingredientHold && this.allowGrab) {
-			this.ingredientHold = ingredient
+			this.setHoldedItem(ingredient)
+
 			const distOffset = PixiSprite.updatePositionWithOffset(
 				this.pixiSprite.sprite,
 				this.ingredientHold.pixiSprite.sprite
@@ -235,7 +253,7 @@ export default class Player {
 			this.ingredientHold?.setCanMove(true) // Permet à l'ingrédient de bouger de nouveau
 			signal.emit("releaseIngredient", this.ingredientHold)
 			requestAnimationFrame(() => {
-				this.ingredientHold = null
+				this.setHoldedItem(null, this.allowGrab)
 			})
 			this.distIngredient = null
 			this.updateSpriteFrame(false) // Revient à l'animation par défaut
@@ -304,7 +322,7 @@ export default class Player {
 	reset() {
 		this.oxygen = 100
 		this.canMove = true
-		this.ingredientHold = null
+		this.setHoldedItem()
 		this.distIngredient = null
 		this.allowGrab = true
 		this.acceleration = 0

@@ -9,9 +9,9 @@ export default class Ingredient {
 	#id // Identifiant unique de l'ingrédient
 	#idList // Liste des identifiants uniques de l'ingrédient
 	#size // Nom de l'ingrédient.
+	#actionList
 	#name // Nom de l'ingrédient (lié à sa texture ou animation).
 	#canMove // Indique si l'ingrédient peut se déplacer.
-	#action // Action associée à l'ingrédient (peut changer en fonction de l'état).
 	#isCooked = false // Indique si l'ingrédient est cuit.
 	#inCooking = false // Indique si l'ingrédient est en cours de cuisson.
 	#onPlate = false // Indique si l'ingrédient est sur une assiette.
@@ -31,7 +31,7 @@ export default class Ingredient {
 	 * @param {string[]} action - Action associée à l'ingrédient.
 	 * @param {Boolean} isCooked - Indique si l'ingrédient est déjà cuit (par défaut false).
 	 */
-	constructor(ref, name, idList, size, x, action, y) {
+	constructor(ref, name, idList, size, x, actionList, y) {
 		this.#game = new Game()
 		this.#name = [ ...name ]
 		this.#idList = [ ...idList ]
@@ -39,7 +39,8 @@ export default class Ingredient {
 		this.#size = Array.isArray(size)
 			? [ ...size ]
 			: Array(size.length).fill(size)
-		this.#action = action
+		this.#actionList = [ ...actionList ]
+		this.action = this.#actionList[ 0 ]
 		this.#canMove = true
 
 		this.ref = ref
@@ -163,7 +164,7 @@ export default class Ingredient {
 				this.#game.soundManager.playSingleSound("hold", 0.25)
 				player.holdIngredient(this)
 				this.pixiSprite.sprite.zIndex = 3
-				store.players[ e.id - 1 ].action = this.#action
+				store.players[ e.id - 1 ].action = this.#actionList
 			} else {
 				store.players[ e.id - 1 ].action = null
 			}
@@ -213,6 +214,8 @@ export default class Ingredient {
 			this.#size.shift()
 			this.#idList.shift()
 			this.#id = this.#idList[ 0 ]
+			this.#actionList.shift()
+			this.action = this.#actionList[ 0 ]
 
 			const newTextureData = this.tl.assetArray[ this.#id ]
 
@@ -226,9 +229,9 @@ export default class Ingredient {
 				}
 			}
 		}
-		//remove action to #action
-		this.#action = this.#action.filter((a) => a !== action)
-		if (this.#action.length === 0) {
+		//remove action to actions list
+		this.#actionList = this.#actionList.filter((a) => a !== action)
+		if (this.#actionList.length === 0) {
 			this.setIsCooked(true)
 		}
 	}
@@ -264,7 +267,7 @@ export default class Ingredient {
 	}
 
 	setAction(action) {
-		this.#action = action
+		this.#actionList = action
 	}
 
 	getOnPlate() {
@@ -276,7 +279,7 @@ export default class Ingredient {
 	}
 
 	getAction() {
-		return this.#action
+		return this.#actionList
 	}
 
 	setIsCooked(isCooked) {
