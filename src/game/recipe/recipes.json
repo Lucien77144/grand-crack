@@ -115,8 +115,8 @@
         "quantity": 1
       },
       {
-        "id": "pochon_coke",
-        "name": "pochon_coke",
+        "id": "pocheton_vide",
+        "name": "pocheton_vide",
         "cover": "/assets/img/pochon_coke.png",
         "size": 0.2,
         "color": "#505A58",
