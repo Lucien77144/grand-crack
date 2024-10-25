@@ -36,7 +36,7 @@ export default class IngredientManager {
 			{
 				size: factor * 0.7,
 				x: innerWidth * 0.6325,
-				y: innerHeight * 0.635,
+				y: innerHeight * 0.56
 			},
 			this.tl.assetArray[ "bounding_beuh" ]
 		)
@@ -53,7 +53,7 @@ export default class IngredientManager {
 			{
 				size: factor * 0.7,
 				x: innerWidth * 0.39,
-				y: innerHeight * 0.67,
+				y: innerHeight * 0.56,
 			},
 			this.tl.assetArray[ "bounding_beuh" ]
 		)
