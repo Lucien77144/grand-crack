@@ -20,7 +20,7 @@ export class Composer extends CookingStation {
 	start() {
 		if (store.isGameOver) return
 		const rdm = Math.floor(Math.random() * 25) * 1000
-		const min = 10000
+		const min = 15000
 		const speed =
 			(this.game.recipesDone - (this.playerAssign.id - 1)) * 1000
 
@@ -80,7 +80,6 @@ export class Composer extends CookingStation {
 					requestAnimationFrame(() => {
 						this.playerAssign.releaseIngredient(true)
 					})
-
 				}
 			})
 			this.recipeList = newList
