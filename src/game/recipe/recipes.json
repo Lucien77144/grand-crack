@@ -1,6 +1,6 @@
 [
   {
-    "id": "bedo",
+    "id": "joint",
     "name": "Le GROS Dodo",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/joint.png",
@@ -32,7 +32,7 @@
     ]
   },
   {
-    "id": "hero",
+    "id": "heroine",
     "name": "El Biberon",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/heroine.png",
@@ -64,7 +64,7 @@
     ]
   },
   {
-    "id": "crack",
+    "id": "pipe-a-crack-remplie",
     "name": "Surprise 2 Papy",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/pipe-a-crack-remplie.png",
@@ -96,7 +96,7 @@
     ]
   },
   {
-    "id": "coke",
+    "id": "pochon_coke",
     "name": "Banane En Poudre",
     "nbOfPlayerHaveCompleted": 0,
     "cover": "/assets/img/pochon_coke.png",

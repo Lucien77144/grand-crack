@@ -100,6 +100,40 @@ export default class IngredientManager {
 			ingredientSound: "courgette",
 		})
 
+		const sachetSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.19,
+				y: innerHeight * 0.7,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: sachetSprite.sprite,
+			bounds: sachetSprite.sprite.getBounds(),
+			ingredientId: [ "pocheton_vide" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ null ],
+			ingredientSound: "courgette",
+		})
+
+		const pipeSprite = new PixiSprite(
+			{
+				size: factor,
+				x: innerWidth * 0.815,
+				y: innerHeight * 0.41,
+			},
+			this.tl.assetArray[ "bounding_square" ]
+		)
+		ingredientsContainer.push({
+			sprite: pipeSprite.sprite,
+			bounds: pipeSprite.sprite.getBounds(),
+			ingredientId: [ "pipe-a-crack" ],
+			ingredientSize: [ 0.1 ],
+			ingredientAction: [ null ],
+			ingredientSound: "courgette",
+		})
+
 		ingredientsContainer.forEach((container) => {
 			signal.on("releaseIngredient", (ingredient) => {
 				//if the player is in the same position as the container destroy

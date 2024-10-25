@@ -15,6 +15,10 @@ export class Composer extends CookingStation {
 	constructor({ ...props }) {
 		super({ ...props })
 		this.tl = new TextureLoader()
+
+		setTimeout(() => {
+			this.addPlate(this.recipeList[ 0 ])
+		})
 	}
 
 	start() {
@@ -97,32 +101,55 @@ export class Composer extends CookingStation {
 	}
 
 	addPlate(recipe) {
-		this.textureData =
-			this.tl.assetArray[ recipe.id ] || this.tl.assetArray[ recipe.id ]
+		this.textureData = this.tl.assetArray[ recipe.id ]
 		if (!this.textureData) return
+		const dir = this.playerAssign.id === 1 ? 1 : -1 // 1 = left; -1 = right;
+		const size = 0.4
+		const margin = 300
+		const size2 = size * (innerWidth * 0.1)
+		const toRight = dir < 0 ? innerWidth : 0
+		const offset = (size2 + margin) * dir
+		const x = offset + toRight
+
 		this.plate = new PixiSprite(
 			{
-				x: this.pixiSprite.sprite.x,
-				y: this.pixiSprite.sprite.y,
-				size: 0.45,
+				x,
+				y: innerHeight - this.pixiSprite.sprite.height * 0.35,
+				size,
 				anchor: [ 0.5, 0.5 ],
 			},
 			this.textureData
 		)
 		this.plate.sprite.zIndex = 4
-		const orientation = this.playerAssign.id === 1 ? -1 : 1
 
-		gsap.to(this.plate.sprite, {
-			x: this.plate.sprite.x + 300 * orientation,
-			ease: "power2.in",
-			duration: 0.5,
-			delay: 1.5,
-		})
-
-		setTimeout(() => {
-			this.plate.sprite.destroy()
-			this.plate = null
-		}, 5000)
+		const tl = gsap
+			.timeline()
+			.to(
+				this.plate.sprite,
+				{
+					x: x - offset * 2,
+					ease: "power2.in",
+					duration: 0.5,
+					delay: 1.5,
+				},
+				0
+			)
+			.to(
+				this.plate.sprite.scale,
+				{
+					x: size * 0.1,
+					y: size * 0.1,
+					ease: "power2.in",
+					duration: 0.5,
+					delay: 1.5,
+					onComplete: () => {
+						this.plate.sprite.destroy()
+						this.plate = null
+						tl.kill()
+					},
+				},
+				0
+			)
 	}
 
 	checkCanInteractWithIngredient(player, ingredient) {
@@ -139,14 +166,11 @@ export class Composer extends CookingStation {
 					this.pixiSprite.sprite
 				)
 
-			const isCook = true
-
 			// const isCook =
 			// 	ingredient.getInCooking() === false &&
 			// 	ingredient.getIsCooked() === true &&
 			// 	!ingredient.getOnPlate()
 
-			console.log(this.recipeList)
 			const inRecipe = this.recipeList.some((recipe) =>
 				recipe.ingredients.some((i) => i.id === ingredient.getId())
 			)
@@ -154,21 +178,8 @@ export class Composer extends CookingStation {
 				ingredient.getId()
 			)
 
-			console.log(
-				"ingredient",
-				ingredient,
-				"overlapping",
-				overlapping,
-				"isCook",
-				isCook,
-				"inRecipe",
-				inRecipe,
-				"notAlreadyIn",
-				notAlreadyIn
-			)
-
-
 			return (
+				// ingredient && overlapping && inRecipe && notAlreadyIn && isCook
 				ingredient && overlapping && inRecipe && notAlreadyIn
 			)
 		} else {

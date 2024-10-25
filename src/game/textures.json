@@ -57,8 +57,36 @@
       "src": "/assets/img/ocb.png"
     },
     {
+      "name": "joint",
+      "src": "/assets/img/joint.png"
+    },
+    {
+      "name": "pochon_coke",
+      "src": "/assets/img/pochon_coke.png"
+    },
+    {
+      "name": "heroine",
+      "src": "/assets/img/heroine.png"
+    },
+    {
+      "name": "pipe-a-crack-remplie",
+      "src": "/assets/img/pipe-a-crack-remplie.png"
+    },
+    {
       "name": "feuille_ouverte",
       "src": "/assets/img/feuille_ouverte.png"
+    },
+    {
+      "name": "pocheton_vide",
+      "src": "/assets/img/pocheton_vide.png"
+    },
+    {
+      "name": "pipe-a-crack",
+      "src": "/assets/img/pipe-a-crack.png"
+    },
+    {
+      "name": "pipe-a-crack",
+      "src": "/assets/img/pipe-a-crack.png"
     },
     {
       "name": "bounding_beuh",
