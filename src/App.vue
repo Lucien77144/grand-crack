@@ -158,7 +158,7 @@
 <style lang="scss" scoped>
 	.bumper-left,
 	.bumper-right {
-		bottom: 3rem;
+		bottom: 15rem;
 		left: 40px;
 		position: absolute;
 		width: 15rem;
